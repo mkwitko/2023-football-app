@@ -57,15 +57,15 @@ export default function Footer() {
                 else Browser.open({ url: e.link });
               }
             }}
-            className={`flex flex-col items-center justify-center gap-1
+            className={`flex flex-col items-center justify-center
               ${
                 e.highlight
                   ? 'mt-[-3.5rem] bg-white shadow-box rounded-full p-2'
-                  : ''
+                  : 'px-4 py-6   max-w-[4rem]'
               }
               ${
                 e.path === location.pathname
-                  ? 'bg-white px-4 py-6 max-w-[4rem] shadow-convenienceShadow rounded-[0.625rem]'
+                  ? 'bg-white shadow-convenienceShadow rounded-[0.625rem]'
                   : ''
               }
               `}

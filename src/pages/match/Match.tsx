@@ -3,38 +3,48 @@ import { getCache } from '../../services/Cache';
 import {
   IonPage,
   IonContent,
-  IonLabel,
+  IonHeader,
+  IonToolbar,
+  IonMenuButton,
+  IonButtons,
   IonSegment,
   IonSegmentButton,
 } from '@ionic/react';
-import Header from '../../components/core/header/Header';
 import Footer from '../../components/core/footer/Footer';
 import { Context } from '../../context/Context';
+import MatchCardFull from '../../components/home/cards/MatchCardFull';
+import Stats from './(sections)/Stats/Stats';
+import { otherTeamId } from '../../utils/FootballUtils';
+import Head2Head from './(sections)/Head2Head/Head2Head';
+import LineUp from './(sections)/LineUp/LineUp';
 
 export default function Match() {
   const tabs = [
     {
-      title: 'Escalação',
-    },
-    {
       title: 'Estatísticas',
     },
     {
-      title: 'Head2Head',
+      title: 'Confronto',
+    },
+    {
+      title: 'Escalação',
+    },
+    {
+      title: 'Enquete',
     },
   ];
 
   const { head2Head } = useContext(Context);
   const match = getCache('match');
   const other_team_cache = getCache('other_team_id');
+
+  const [currentView, setCurrentView] = useState<string>(tabs[0].title);
   const [head2head, setHead2head] = useState([]);
 
-  const other_team_id =
-    match.match_hometeam_id === process.env.REACT_APP_FOOTBALL_API_CLUB
-      ? match.match_awayteam_id
-      : match.match_hometeam_id;
+  const other_team_id = otherTeamId(match);
 
   const getHead2Head = async () => {
+    console.log(other_team_cache, other_team_id);
     if (other_team_cache !== other_team_id) {
       await head2Head(
         process.env.REACT_APP_FOOTBALL_API_CLUB,
@@ -47,8 +57,10 @@ export default function Match() {
     }
   };
 
-  console.log('match - ', match);
-  //   console.log('head 2 head - ', head2head);
+  console.log(match);
+
+  const isHome =
+    match.match_hometeam_id === process.env.REACT_APP_FOOTBALL_API_CLUB;
 
   useEffect(() => {
     getHead2Head();
@@ -56,95 +68,60 @@ export default function Match() {
 
   return (
     <IonPage>
-      <Header />
+      <IonHeader>
+        <IonToolbar className="bg-primary-700">
+          <IonButtons slot="start">
+            <IonMenuButton className="text-white bg-primary-700 shadow-md rounded-full h-12 w-12 my-1 ml-1" />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen>
-        <div className="flex flex-col">
-          <div
-            id={match.match_id}
-            className="flex flex-col"
-          >
-            <div className="flex w-full justify-between items-center bg-primary-700 px-4 py-1 font-bold text-white">
-              <p>
-                {match.league_name.includes('-')
-                  ? match.league_name.substring(
-                      0,
-                      match.league_name.indexOf('-')
-                    )
-                  : match.league_name}
-                {}
-              </p>
-              <p className="text-[0.725rem]">
-                {new Date(match.match_date).toLocaleDateString()}
-              </p>
+        <MatchCardFull match={match} />
+        <IonSegment
+          value={currentView}
+          className="match-segment rounded-none divide-x bg-primary-300"
+          onIonChange={(e: any) => {
+            const title: string = e.detail.value;
+            setCurrentView(title);
+          }}
+        >
+          {tabs.map((e) => (
+            <IonSegmentButton
+              value={e.title}
+              key={e.title}
+              className="rounded-none"
+            >
+              <p className="text-white">{e.title}</p>
+            </IonSegmentButton>
+          ))}
+        </IonSegment>
+
+        <div className="m-4">
+          {currentView === tabs[0].title && (
+            <div className="flex flex-col gap-4 p-4 bg-white rounded-[0.625rem] w-full">
+              <Stats
+                stats={match.statistics}
+                isHome={isHome}
+              />
             </div>
-            <div className="w-full border-t-0 p-4 rounded-b-[0.625rem]">
-              <div className="flex gap-4 justify-between items-center">
-                <div className="flex flex-col items-center gap-4 w-full">
-                  <img
-                    className="w-16 h-16"
-                    src={match.team_home_badge}
-                    alt=""
-                  />
-                  <p className="text-[.75rem]">{match.match_hometeam_name}</p>
-                </div>
-
-                <div className="flex flex-col items-center gap-4 w-full">
-                  <div className="flex items-center justify-center gap-4">
-                    {match.match_status !== '' ? (
-                      <>
-                        <div className="flex items-center justify-center w-[3rem] h-[3rem] rounded-[0.625rem rounded-[0.625rem] bg-white ">
-                          <p className="text-[2rem] text-center font-semibold">
-                            {match.match_hometeam_score}
-                          </p>
-                        </div>
-                        <div className="flex items-center justify-center w-[3rem] h-[3rem] rounded-[0.625rem] bg-white">
-                          <p className="text-[2rem] text-center font-semibold">
-                            {match.match_awayteam_score}
-                          </p>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="flex items-center justify-center w-[7rem] h-[3rem] rounded-[0.625rem] bg-primary-700">
-                        <p className="text-[2rem] text-center text-white font-semibold">
-                          {match.match_time}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  {match.match_live === '1' && (
-                    <div className="px-4 bg-primary-700 rounded-[0.325rem]">
-                      <p className="text-[.6rem] py-1 text-white uppercase font-bold animate-pulse">
-                        AO VIVO
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col items-center gap-4 w-full">
-                  <img
-                    className="w-16 h-16"
-                    src={match.team_away_badge}
-                    alt=""
-                  />
-                  <p className="text-[.75rem]">{match.match_awayteam_name}</p>
-                </div>
-              </div>
+          )}
+          {currentView === tabs[1].title && (
+            <div className="flex flex-col gap-4 p-4 bg-white rounded-[0.625rem] w-full">
+              <Head2Head
+                head2head={head2head}
+                isHome={isHome}
+                match={match}
+              />
             </div>
-          </div>
-
-          <IonSegment
-            className="bg-primary-100"
-            value={tabs[0].title}
-          >
-            {tabs.map((e, i: number) => (
-              <IonSegmentButton
-                key={i}
-                value={e.title}
-              >
-                <IonLabel className="text-primary-900">{e.title}</IonLabel>
-              </IonSegmentButton>
-            ))}
-          </IonSegment>
+          )}
+          {currentView === tabs[2].title && (
+            <div className="flex flex-col">
+              <LineUp
+                match={match}
+                isHome={isHome}
+              />
+            </div>
+          )}
         </div>
       </IonContent>
       <Footer />

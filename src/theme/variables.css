@@ -37,6 +37,10 @@ div {
   ) !important;
 }
 
+.match-segment ::part(indicator-background) {
+  background-color: #bc0606;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
