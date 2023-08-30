@@ -14,14 +14,14 @@ export default function MatchCard({ match }: { match: any }) {
         navigateTo('matchDetails');
       }}
     >
-      <div className="flex w-full justify-between items-center bg-primary-700 rounded-t-[0.625rem] px-4 py-1 font-bold text-white">
-        <p>
+      <div className="flex w-full justify-between items-center bg-primary-700 rounded-t-[0.625rem] px-4 py-1 font-bold ">
+        <p className="text-white">
           {match.league_name.includes('-')
             ? match.league_name.substring(0, match.league_name.indexOf('-'))
             : match.league_name}
           {}
         </p>
-        <p className="text-[0.725rem]">
+        <p className="text-[0.725rem] text-white">
           {new Date(match.match_date).toLocaleDateString()}
         </p>
       </div>

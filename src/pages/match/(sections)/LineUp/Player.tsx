@@ -28,7 +28,7 @@ export default function Player({
           {team.lineup.starting_lineups[index].lineup_number}
         </p>
       </div>
-      <p className="text-center text-white font-bold text-[0.75rem] max-w-[90%]">
+      <p className="text-center text-white font-bold text-[0.75rem] max-w-[90%] ">
         {team.lineup.starting_lineups[index].lineup_player}
       </p>
     </div>

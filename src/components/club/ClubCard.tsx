@@ -34,8 +34,8 @@ export default function ClubCard() {
                     Av. Ipiranga, 6681 - Partenon, Porto Alegre - PUCRS
                   </p>
                 </div>
-                <button className="bg-primary-700 text-white p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]">
-                  <p>Acessar</p>
+                <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]">
+                  <p className="text-white">Acessar</p>
                 </button>
               </div>
             </div>

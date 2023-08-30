@@ -79,7 +79,7 @@ export default function Match() {
         <MatchCardFull match={match} />
         <IonSegment
           value={currentView}
-          className="match-segment rounded-none divide-x bg-primary-300"
+          className="match-segment rounded-none bg-primary-300 "
           onIonChange={(e: any) => {
             const title: string = e.detail.value;
             setCurrentView(title);
@@ -98,7 +98,7 @@ export default function Match() {
 
         <div className="m-4">
           {currentView === tabs[0].title && (
-            <div className="flex flex-col gap-4 p-4 bg-white rounded-[0.625rem] w-full">
+            <div className="flex flex-col gap-4 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
               <Stats
                 stats={match.statistics}
                 isHome={isHome}
@@ -106,7 +106,7 @@ export default function Match() {
             </div>
           )}
           {currentView === tabs[1].title && (
-            <div className="flex flex-col gap-4 p-4 bg-white rounded-[0.625rem] w-full">
+            <div className="flex flex-col gap-4 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
               <Head2Head
                 head2head={head2head}
                 isHome={isHome}

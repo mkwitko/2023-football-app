@@ -10,6 +10,7 @@ module.exports = {
       },
       backgroundImage: {
         firstHeader: "url('/public/assets/header1.jpeg')",
+        field: "url('/public/field.jpg')",
       },
       colors: {
         primary: {

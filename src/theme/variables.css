@@ -24,8 +24,9 @@ h3,
 label,
 span,
 ion-label,
-div {
-  color: #121212;
+div,
+p {
+  color: #4f0202;
 }
 
 .card.image-full:before {

@@ -26,10 +26,10 @@ export default function LineUp({
 
   const tabs = [
     {
-      title: ourTeam.name,
+      title: isHome ? ourTeam.name : otherTeam.name,
     },
     {
-      title: otherTeam.name,
+      title: !isHome ? ourTeam.name : otherTeam.name,
     },
   ];
 
@@ -39,7 +39,7 @@ export default function LineUp({
     <div className="flex flex-col gap-4">
       <IonSegment
         value={currentView}
-        className="match-segment rounded-none divide-x bg-primary-300"
+        className="match-segment rounded-none bg-transparent"
         onIonChange={(e: any) => {
           const title: string = e.detail.value;
           setCurrentView(title);
@@ -51,12 +51,18 @@ export default function LineUp({
             key={e.title}
             className="rounded-none"
           >
-            <p className="text-white">{e.title}</p>
+            <p
+              className={`${
+                e.title === currentView ? 'text-white' : 'text-primary-900'
+              }`}
+            >
+              {e.title}
+            </p>
           </IonSegmentButton>
         ))}
       </IonSegment>
 
-      <div className="flex flex-col justify-evenly bg-green-900 h-full gap-8 rounded-[0.625rem] w-full py-8">
+      <div className="flex flex-col justify-evenly bg-green-900 gap-8 rounded-[0.625rem] w-full py-8 h-[41rem] bg-cover bg-no-repeat bg-field">
         {currentView === ourTeam.name && eachTeam(ourTeam, true)}
         {currentView === otherTeam.name && eachTeam(otherTeam, false)}
       </div>

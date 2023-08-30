@@ -6,14 +6,14 @@ export default function MatchCardFull({ match }: { match: any }) {
       id={match.match_id}
       className="flex flex-col"
     >
-      <div className="flex w-full justify-between items-center bg-primary-700 px-4 py-1 font-bold text-white">
-        <p>
+      <div className="flex w-full justify-between items-center bg-primary-700 px-4 py-1 font-bold ">
+        <p className="text-white">
           {match.league_name.includes('-')
             ? match.league_name.substring(0, match.league_name.indexOf('-'))
             : match.league_name}
           {}
         </p>
-        <p className="text-[0.725rem]">
+        <p className="text-[0.725rem] text-white">
           {new Date(match.match_date).toLocaleDateString()}
         </p>
       </div>

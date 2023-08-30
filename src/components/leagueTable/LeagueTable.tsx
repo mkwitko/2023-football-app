@@ -15,14 +15,14 @@ export default function LeagueTable({ league }: any) {
 
   return (
     <div className="flex flex-col w-full gap-4 mb-8">
-      <div className="grid grid-cols-12 gap-2 bg-primary-700 text-white font-bold capitalize py-1 items-center justify-center mb-[-.5rem] px-6">
-        <p className="col-span-1"></p>
-        <p className="col-span-6">Time</p>
-        <p className="col-span-1">PG</p>
-        <p className="col-span-1">PJ</p>
-        <p className="col-span-1">V</p>
-        <p className="col-span-1">E</p>
-        <p className="col-span-1">D</p>
+      <div className="grid grid-cols-12 gap-2 bg-primary-700  font-bold capitalize py-1 items-center justify-center mb-[-.5rem] px-6">
+        <p className="col-span-1 text-white"></p>
+        <p className="col-span-6 text-white">Time</p>
+        <p className="col-span-1 text-white">PG</p>
+        <p className="col-span-1 text-white">PJ</p>
+        <p className="col-span-1 text-white">V</p>
+        <p className="col-span-1 text-white">E</p>
+        <p className="col-span-1 text-white">D</p>
       </div>
       {league &&
         league.length > 0 &&

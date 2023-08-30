@@ -15,25 +15,12 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import {
-  archiveOutline,
-  archiveSharp,
-  bookmarkOutline,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-} from 'ionicons/icons';
+import { mailOutline, mailSharp } from 'ionicons/icons';
 import './Menu.css';
 import Auth from '../../../services/Auth';
 import Navigation from '../../../services/Navigation';
 import { menuOnOff } from '../../../services/Menu';
+import { BsFillCalendarCheckFill } from 'react-icons/bs';
 
 interface AppPage {
   url: string;
@@ -80,9 +67,13 @@ const Menu: React.FC = () => {
       type="overlay"
     >
       <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
+        <div className="flex flex-col">
+          <div className="p-4 py-12 bg-primary">
+            <p className="text-[1.5rem] font-bold text-white">
+              Renanzinho maravila
+            </p>
+            <p className="text-[0.75rem] text-white">bananinha137@gmail.com</p>
+          </div>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle
@@ -92,25 +83,22 @@ const Menu: React.FC = () => {
                 <IonItem
                   className={`
                   ${location.pathname === appPage.url ? 'selected' : ''}
-                  ${index === 0 ? 'mt-8 border-t pt-4' : ''}
-                  `}
+                  ${index === 0 ? 'mt-4' : ''}
+                  flex`}
                   routerLink={appPage.url}
                   routerDirection="none"
                   lines="none"
                   detail={false}
                 >
-                  <IonIcon
-                    aria-hidden="true"
-                    slot="start"
-                    ios={appPage.iosIcon}
-                    md={appPage.mdIcon}
-                  />
-                  <IonLabel>{appPage.title}</IonLabel>
+                  <div className="text-[1.25rem] text-primary-700 mr-4">
+                    <BsFillCalendarCheckFill />
+                  </div>
+                  <p>{appPage.title}</p>
                 </IonItem>
               </IonMenuToggle>
             );
           })}
-        </IonList>
+        </div>
       </IonContent>
       <IonFooter>
         <IonToolbar

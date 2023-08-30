@@ -16,7 +16,7 @@ export default function Head2Head({
         <p className="font-bold uppercase">15 Partidas Jogadas</p>
         <p className="text-[0.75rem]">Contando todas as competições</p>
       </div>
-      <div className="flex items-center justify-between gap-12 my-2">
+      <div className="flex gap-4 my-2">
         <StatsSquare
           stats={7}
           name="Vitórias"
@@ -30,7 +30,7 @@ export default function Head2Head({
           name="Derrotas"
         />
       </div>
-      <div className="flex flex-col divide-y-2">
+      <div className="flex flex-col divide-y">
         <StatsLine
           stats={25}
           name="Gols Pró"
@@ -45,7 +45,7 @@ export default function Head2Head({
         />
       </div>
 
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center mt-2">
         <p className="font-bold uppercase">Forma Atual</p>
         <p className="text-[0.75rem]">Contando todas as competições</p>
       </div>
@@ -149,7 +149,7 @@ export default function Head2Head({
 
 const StatsSquare = ({ stats, name }: { stats: any; name: string }) => {
   return (
-    <div className="flex flex-col items-center justify-center bg-primary-800 w-full rounded-[0.625rem] p-2">
+    <div className="flex flex-col items-center justify-center bg-primary-800 w-full rounded-[0.625rem] p-2 gap-1 aspect-square">
       <p className="text-[2rem] text-primary-200 font-bold">{stats}</p>
       <p className="text-white font-semibold">{name}</p>
     </div>
@@ -158,10 +158,8 @@ const StatsSquare = ({ stats, name }: { stats: any; name: string }) => {
 
 const StatsLine = ({ stats, name }: { stats: any; name: string }) => {
   return (
-    <div className="flex items-center justify-between w-full py-4">
-      <p className="text-primary-800 font-bold uppercase text-[0.75rem]">
-        {name}
-      </p>
+    <div className="flex items-center justify-between w-full py-2">
+      <p className="text-primary-800 font-bold uppercase text-[1rem]">{name}</p>
       <p className="text-primary-800 font-bold uppercase text-[1.25rem]">
         {stats}
       </p>

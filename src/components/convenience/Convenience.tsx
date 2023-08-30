@@ -18,8 +18,8 @@ export default function ConvenienceCard() {
           </label>
           <p className="text-white w-full">10% de desconto no Xis Carne</p>
           <div className="flex items-end justify-end h-full">
-            <button className="bg-primary-700 text-white p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]">
-              <p>Ver mais</p>
+            <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]">
+              <p className="text-white">Ver mais</p>
             </button>
           </div>
         </div>
