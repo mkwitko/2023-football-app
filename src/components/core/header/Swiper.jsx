@@ -6,6 +6,7 @@ import { Context } from '../../../context/Context';
 
 export default function HeaderSwiper() {
   const { banner } = useContext(Context);
+  console.log(banner.hook.data);
   return (
     <>
       <Swiper
@@ -13,7 +14,7 @@ export default function HeaderSwiper() {
           console.log('a');
         }}
         autoplay={{
-          delay: 3000,
+          delay: banner.hook.data.length > 0 ? 3000 : 0,
         }}
         speed={1500}
         loop={true}
@@ -21,19 +22,20 @@ export default function HeaderSwiper() {
       >
         <SwiperSlide className="bg-firstHeader bg-cover bg-no-repeat"></SwiperSlide>
 
-        {banner.hook.data.map((e, i) => {
-          return (
-            <SwiperSlide
-              key={i}
-              className="bg-no-repeat bg-cover"
-              style={{
-                backgroundImage: `url(${e.url})`,
-              }}
-            >
-              {/* <InsideHeader /> */}
-            </SwiperSlide>
-          );
-        })}
+        {banner.hook.data.length > 0 &&
+          banner.hook.data.map((e, i) => {
+            return (
+              <SwiperSlide
+                key={i}
+                className="bg-no-repeat bg-cover"
+                style={{
+                  backgroundImage: `url(${e.url})`,
+                }}
+              >
+                {/* <InsideHeader /> */}
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
       <IonToolbar className="h-full absolute top-0">
         <IonButtons slot="start">

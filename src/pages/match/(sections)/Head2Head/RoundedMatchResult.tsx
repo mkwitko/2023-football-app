@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function RoundedMatchResult({ match }: any) {
+export default function RoundedMatchResult({ match, club }: any) {
   const findWinner = () => {
     if (+match.match_hometeam_score > +match.match_awayteam_score) {
       return match.match_hometeam_id;
@@ -12,12 +12,15 @@ export default function RoundedMatchResult({ match }: any) {
   };
 
   const winner = findWinner();
+
+  console.log('winner - ', winner, ' - match - ', match);
+
   return (
     <div
       key={match.match_id}
       className="rounded-full"
     >
-      {winner === process.env.REACT_APP_FOOTBALL_API_CLUB && (
+      {winner === club && (
         <div className="flex items-center justify-center w-[1.25rem] h-[1.25rem] rounded-full bg-green-500">
           <p className="text-[0.75rem] text-center text-white font-semibold">
             V
@@ -32,7 +35,7 @@ export default function RoundedMatchResult({ match }: any) {
         </div>
       )}
 
-      {winner !== process.env.REACT_APP_FOOTBALL_API_CLUB && winner !== '0' && (
+      {winner !== club && winner !== '0' && (
         <div className="flex items-center justify-center w-[1.25rem] h-[1.25rem] rounded-full bg-red-500">
           <p className="text-[0.75rem] text-center text-white font-semibold">
             D

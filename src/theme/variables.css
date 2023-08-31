@@ -49,8 +49,8 @@ p {
   --ion-color-primary-rgb: 249, 57, 57;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #db3232;
-  --ion-color-primary-tint: #fa4d4d;
+  --ion-color-primary-shade: #bc0606;
+  --ion-color-primary-tint: #f93939;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;

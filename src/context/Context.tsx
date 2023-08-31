@@ -1,4 +1,5 @@
 import BannerClass from '../classes/Banners/BannerClass';
+import EventosClass from '../classes/Eventos/EventosClass';
 import NoticiasClass from '../classes/Noticias/NoticiaClass';
 import NotificacoesClass from '../classes/Notificacoes/NotificacoesClass';
 import PropagandaClass from '../classes/Propaganda/PropagandaClass';
@@ -18,6 +19,7 @@ interface ContextProps {
   propaganda: PropagandaClass;
   redirecionamentos: RedirecionamentoClass;
   user: UserClass;
+  eventos: EventosClass;
   findGames: any;
   findTable: any;
   head2Head: any;
@@ -33,6 +35,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     banner,
     noticias,
     notificacoes,
+    eventos,
     propaganda,
     redirecionamentos,
     user,
@@ -69,6 +72,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         propaganda,
         redirecionamentos,
         user,
+        eventos,
         findGames,
         findTable,
         head2Head,

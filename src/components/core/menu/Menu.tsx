@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  IonAvatar,
   IonContent,
   IonFooter,
   IonIcon,
@@ -21,38 +22,54 @@ import Auth from '../../../services/Auth';
 import Navigation from '../../../services/Navigation';
 import { menuOnOff } from '../../../services/Menu';
 import { BsFillCalendarCheckFill } from 'react-icons/bs';
+import { AiFillHome } from 'react-icons/ai';
 
 interface AppPage {
   url: string;
-  iosIcon: string;
-  mdIcon: string;
+  icon: any;
   title: string;
 }
 
 const appPages: AppPage[] = [
   {
+    title: 'Home',
+    url: '/',
+    icon: <AiFillHome />,
+  },
+  {
     title: 'Perfil',
     url: '/profile',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    icon: <AiFillHome />,
+  },
+  {
+    title: 'Carteira VDG',
+    url: '/profile',
+    icon: <AiFillHome />,
+  },
+  {
+    title: 'Playlists',
+    url: '/profile',
+    icon: <AiFillHome />,
+  },
+  {
+    title: 'Playlists de Membros',
+    url: '/profile',
+    icon: <AiFillHome />,
   },
   {
     title: 'Configurações',
     url: '/profile',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    icon: <AiFillHome />,
   },
   {
     title: 'Métodos de Pagamento',
     url: '/profile',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    icon: <AiFillHome />,
   },
   {
     title: 'Histórico de Compras',
     url: '/profile',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    icon: <AiFillHome />,
   },
 ];
 
@@ -68,40 +85,47 @@ const Menu: React.FC = () => {
     >
       <IonContent>
         <div className="flex flex-col">
-          <div className="p-4 py-12 bg-primary">
-            <p className="text-[1.5rem] font-bold text-white">
-              Renanzinho maravila
-            </p>
-            <p className="text-[0.75rem] text-white">bananinha137@gmail.com</p>
+          <div className="flex flex-col items-center gap-4">
+            <IonAvatar>
+              <img src="https://www.gravatar.com/avatar?d=mp" />
+            </IonAvatar>
+            <p className="text-white font-bold">Nome do Usuário aqui</p>
           </div>
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle
-                key={index}
-                autoHide={false}
-              >
-                <IonItem
-                  className={`
+          <div className="flex flex-col gap-4 overflow-y-auto mt-8">
+            {appPages.map((appPage, index) => {
+              return (
+                <IonMenuToggle
+                  className="bg-transparent"
+                  key={index}
+                  autoHide={false}
+                >
+                  <IonItem
+                    color="transparent"
+                    className={`
                   ${location.pathname === appPage.url ? 'selected' : ''}
                   ${index === 0 ? 'mt-4' : ''}
-                  flex`}
-                  routerLink={appPage.url}
-                  routerDirection="none"
-                  lines="none"
-                  detail={false}
-                >
-                  <div className="text-[1.25rem] text-primary-700 mr-4">
-                    <BsFillCalendarCheckFill />
-                  </div>
-                  <p>{appPage.title}</p>
-                </IonItem>
-              </IonMenuToggle>
-            );
-          })}
+                  flex bg-transparent`}
+                    routerLink={appPage.url}
+                    routerDirection="none"
+                    lines="none"
+                    detail={false}
+                  >
+                    <div className="flex gap-6 items-center font-semibold">
+                      <div className="text-[1.25rem] text-white/90">
+                        {appPage.icon}
+                      </div>
+                      <p className="text-white/90">{appPage.title}</p>
+                    </div>
+                  </IonItem>
+                </IonMenuToggle>
+              );
+            })}
+          </div>
         </div>
       </IonContent>
       <IonFooter>
         <IonToolbar
+          className="border-t border-white "
           onClick={() => {
             signOut().then((res) => {
               menuOnOff(false);
@@ -109,9 +133,10 @@ const Menu: React.FC = () => {
               navigateTo('/login');
             });
           }}
-          color="primary"
         >
-          <IonTitle>Sair</IonTitle>
+          <div className="flex items-center justify-center">
+            <p className="text-white font-bold uppercase">Sair</p>
+          </div>
         </IonToolbar>
       </IonFooter>
     </IonMenu>

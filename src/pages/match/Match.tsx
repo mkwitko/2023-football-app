@@ -36,6 +36,9 @@ export default function Match() {
 
   const { head2Head } = useContext(Context);
   const match = getCache('match');
+
+  const willUseTabs = match.statistics.length > 0;
+
   const other_team_cache = getCache('other_team_id');
 
   const [currentView, setCurrentView] = useState<string>(tabs[0].title);
@@ -44,7 +47,6 @@ export default function Match() {
   const other_team_id = otherTeamId(match);
 
   const getHead2Head = async () => {
-    console.log(other_team_cache, other_team_id);
     if (other_team_cache !== other_team_id) {
       await head2Head(
         process.env.REACT_APP_FOOTBALL_API_CLUB,
@@ -57,7 +59,7 @@ export default function Match() {
     }
   };
 
-  console.log(match);
+  console.log('head 2 head - ', head2head);
 
   const isHome =
     match.match_hometeam_id === process.env.REACT_APP_FOOTBALL_API_CLUB;
@@ -85,19 +87,20 @@ export default function Match() {
             setCurrentView(title);
           }}
         >
-          {tabs.map((e) => (
-            <IonSegmentButton
-              value={e.title}
-              key={e.title}
-              className="rounded-none"
-            >
-              <p className="text-white">{e.title}</p>
-            </IonSegmentButton>
-          ))}
+          {willUseTabs &&
+            tabs.map((e) => (
+              <IonSegmentButton
+                value={e.title}
+                key={e.title}
+                className="rounded-none"
+              >
+                <p className="text-white">{e.title}</p>
+              </IonSegmentButton>
+            ))}
         </IonSegment>
 
         <div className="m-4">
-          {currentView === tabs[0].title && (
+          {willUseTabs && currentView === tabs[0].title && (
             <div className="flex flex-col gap-4 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
               <Stats
                 stats={match.statistics}
@@ -105,7 +108,7 @@ export default function Match() {
               />
             </div>
           )}
-          {currentView === tabs[1].title && (
+          {!willUseTabs && (
             <div className="flex flex-col gap-4 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
               <Head2Head
                 head2head={head2head}
@@ -114,7 +117,16 @@ export default function Match() {
               />
             </div>
           )}
-          {currentView === tabs[2].title && (
+          {willUseTabs && currentView === tabs[1].title && (
+            <div className="flex flex-col gap-4 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
+              <Head2Head
+                head2head={head2head}
+                isHome={isHome}
+                match={match}
+              />
+            </div>
+          )}
+          {willUseTabs && currentView === tabs[2].title && (
             <div className="flex flex-col">
               <LineUp
                 match={match}
