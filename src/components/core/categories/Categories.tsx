@@ -1,7 +1,6 @@
 import React from 'react';
-import { BsFillPersonVcardFill, BsFillCalendarCheckFill } from 'react-icons/bs';
-import { FaNewspaper } from 'react-icons/fa';
-import { GiPodium } from 'react-icons/gi';
+import { BsFillTicketPerforatedFill } from 'react-icons/bs';
+import { AiFillShop, AiFillTrophy, AiFillCarryOut } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
 export default function Categories() {
@@ -10,22 +9,22 @@ export default function Categories() {
     {
       title: 'Loja',
       url: '/store',
-      icon: <FaNewspaper />,
+      icon: <AiFillShop />,
     },
     {
       title: 'Convênios',
       url: '/convenience',
-      icon: <BsFillPersonVcardFill />,
+      icon: <BsFillTicketPerforatedFill />,
     },
     {
       title: 'Tabela',
       url: '/table',
-      icon: <GiPodium />,
+      icon: <AiFillTrophy />,
     },
     {
       title: 'Calendário',
       url: '/calendar',
-      icon: <BsFillCalendarCheckFill />,
+      icon: <AiFillCarryOut />,
     },
   ];
   return (

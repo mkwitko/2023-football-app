@@ -64,8 +64,8 @@ export default function FootballApiUtils({ apiFootball }: any) {
     if (w.includes('Gaúcho')) who = 'Gauchão';
     if (w.includes('Libertadores')) who = 'Libertadores';
     // if (w.includes('Semi-finals')) who += ' Semi Final';
-    if (w.includes('Copa do Brasil')) who = 'Copa do Brasil';
-    if (w.includes('Serie A')) who = 'Serie A';
+    // if (w.includes('Copa do Brasil')) who = 'Copa do Brasil';
+    if (w.includes('Serie A')) who = 'Brasileiro';
     if (w.includes('Serie B')) who = 'Serie B';
     if (w.includes('Serie C')) who = 'Serie C';
     if (w.includes('Serie D')) who = 'Serie D';

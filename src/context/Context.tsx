@@ -47,7 +47,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     console.log('called');
     delete classes['user'];
     Object.keys(classes).forEach((classe: any) => {
-      classes[classe].setClass(false).then((res: any) => {
+      classes[classe].setClass(true).then((res: any) => {
         if (res && res.length > 0) {
           classes[classe].hook.setData(res);
         }
