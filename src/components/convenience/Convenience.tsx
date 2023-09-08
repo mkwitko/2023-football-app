@@ -12,16 +12,18 @@ export default function ConvenienceCard({ data }: { data: any }) {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
-        className="flex flex-col w-full rounded-[0.625rem] h-[12.5rem] shadow-convenienceShadow"
+        className="flex flex-col w-full rounded-[0.625rem] h-[13rem] shadow-convenienceShadow p-4"
       >
-        <div className="flex flex-col h-full m-4 gap-2">
-          <label className="text-[1.75rem] text-white font-bold">
-            {data.title}
-          </label>
-          <p className="text-white w-full">{StringCutter(data.text, 125)}</p>
-          <div className="flex items-end justify-end h-full">
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex flex-col gap-2">
+            <label className="text-[1.75rem] text-white font-bold">
+              {data.title}
+            </label>
+            <p className="text-white w-full">{StringCutter(data.text, 125)}</p>
+          </div>
+          <div className="flex items-end justify-end mt-auto">
             {data.url && (
-              <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]">
+              <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem] mt-auto">
                 <p className="text-white">Ver mais</p>
               </button>
             )}

@@ -59,7 +59,7 @@ export default function NewsDetails() {
                   Publicado em{' '}
                   {new Date(news.created_at.seconds).toLocaleDateString()}
                 </p>
-                <p className="text-base">{news.text}</p>
+                <p className="text-base whitespace-break-spaces">{news.text}</p>
               </div>
             </div>
           </div>

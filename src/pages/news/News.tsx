@@ -16,7 +16,7 @@ export default function News() {
     <IonPage>
       <Header />
       <IonContent fullscreen>
-        <div className="flex flex-col gap-8 p-8">
+        <div className="flex flex-col p-8">
           {noticias.hook.data.map((e: any, i: number) => (
             <VirtualScrollChild
               height={450}
@@ -27,7 +27,7 @@ export default function News() {
                   setCache('newsDetails', e);
                   history.push('newsDetails');
                 }}
-                className="max-w-sm rounded-[0.625rem] border border-borderColor/20 shadow-md"
+                className="max-w-sm h-[25rem] rounded-[0.625rem] border border-borderColor/20 shadow-md"
               >
                 <img
                   className="w-full rounded-t-[0.625rem]"
@@ -35,8 +35,10 @@ export default function News() {
                   alt={e.title}
                 />
                 <div className="px-6 py-4">
-                  <div className="flex items-center justify-between font-bold text-xl text-primary-900">
-                    <p>{e.title}</p>
+                  <div className="flex items-center justify-between font-bold text-primary-900">
+                    <div className="font-bold mb-2 text-[0.75rem]">
+                      <p>{StringCutter(e.title, 75, '...')}</p>
+                    </div>
                     <button
                       type="button"
                       className="bg-primary text-white p-2 rounded-full mt-[-4rem] shadow-md"
@@ -44,20 +46,7 @@ export default function News() {
                       <AiOutlineShareAlt className="text-[1.5rem]" />
                     </button>
                   </div>
-                  <p className="text-gray-700 text-base">
-                    {StringCutter(e.text, 100)}
-                  </p>
-                </div>
-                <div className="px-6 pt-4 pb-2">
-                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-primary/80 bg-primary/10 mr-2 mb-2">
-                    #photography
-                  </span>
-                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-primary/80 bg-primary/10 mr-2 mb-2">
-                    #travel
-                  </span>
-                  <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-primary/80 bg-primary/10 mr-2 mb-2">
-                    #winter
-                  </span>
+                  <p className="text-[0.75rem]">{StringCutter(e.text, 200)}</p>
                 </div>
               </div>
             </VirtualScrollChild>

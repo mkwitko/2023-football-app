@@ -38,14 +38,14 @@ export default function Head2Head({
     }
   };
 
+  const [hasLoaded, setHasLoaded] = React.useState<boolean>(false);
+
   let wins = 0;
   let draws = 0;
   let loses = 0;
   let goalsFor = 0;
   let goalsAgainst = 0;
   let cleanSheets = 0;
-
-  console.log(head2head.firstTeam_lastResults);
 
   const makeHead2HeadStats = () => {
     if (head2head.length === 0) return;
@@ -59,7 +59,7 @@ export default function Head2Head({
 
   makeHead2HeadStats();
 
-  return (
+  return head2head.length !== 0 ? (
     <>
       <div className="flex flex-col items-center justify-center">
         <p className="font-bold uppercase">
@@ -188,6 +188,22 @@ export default function Head2Head({
         </>
       )}
     </>
+  ) : (
+    <div className="border border-borderColor/20 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+      <div className="animate-pulse flex space-x-4">
+        <div className="rounded-full bg-slate-300 h-10 w-10"></div>
+        <div className="flex-1 space-y-6 py-1">
+          <div className="h-2 bg-slate-300 rounded"></div>
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="h-2 bg-slate-300 rounded col-span-2"></div>
+              <div className="h-2 bg-slate-300 rounded col-span-1"></div>
+            </div>
+            <div className="h-2 bg-slate-300 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

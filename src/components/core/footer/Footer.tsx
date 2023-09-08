@@ -29,7 +29,7 @@ export default function Footer() {
     },
     {
       title: 'Loja',
-      path: 'https://www.google.com.br',
+      link: 'https://loja.vozesdogigante.com.br/',
       icon: <FaShoppingBag />,
     },
     {

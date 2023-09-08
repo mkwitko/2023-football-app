@@ -13,32 +13,23 @@ export default function NewsCard({ noticias }: { noticias: any }) {
             .map((e: any, i: number) => (
               <div
                 key={i}
-                className="flex flex-col"
+                className="flex flex-col "
                 onClick={() => {
                   setCache('newsDetails', e);
                   history.push('newsDetails');
                 }}
               >
-                <div className="w-[55vw] rounded-[0.625rem] overflow-hidden border border-borderColor/20 shadow-lg">
+                <div className="h-[20rem] w-[55vw] rounded-[0.625rem] overflow-hidden border border-borderColor/20 shadow-lg">
                   <img
                     className="w-full"
                     src={e.url}
                     alt="Sunset in the mountains"
                   />
                   <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">{e.title}</div>
-                    <p className="text-base">{StringCutter(e.text, 50)}</p>
-                  </div>
-                  <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-primary-100 rounded-full px-3 py-1 text-sm font-semibold text-primary-700 mr-2 mb-2">
-                      #photography
-                    </span>
-                    <span className="inline-block bg-primary-100 rounded-full px-3 py-1 text-sm font-semibold text-primary-700 mr-2 mb-2">
-                      #travel
-                    </span>
-                    <span className="inline-block bg-primary-100 rounded-full px-3 py-1 text-sm font-semibold text-primary-700 mr-2 mb-2">
-                      #winter
-                    </span>
+                    <div className="font-bold mb-2 text-[0.75rem]">
+                      {StringCutter(e.title, 75, '...')}
+                    </div>
+                    <p className="text-[0.75rem]">{StringCutter(e.text, 50)}</p>
                   </div>
                 </div>
               </div>

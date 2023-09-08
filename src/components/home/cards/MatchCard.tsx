@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Navigation from '../../../services/Navigation';
 import { setCache } from '../../../services/Cache';
-import { Context } from '../../../context/Context';
+import { setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils';
 
 export default function MatchCard({ match }: { match: any }) {
+  console.log('match - ', match);
+  //   const { name, city } = stadiumName(match);
+  const name = stadiumName(match.match_stadium);
   const { navigateTo } = Navigation();
   return (
     <div
@@ -16,9 +19,7 @@ export default function MatchCard({ match }: { match: any }) {
     >
       <div className="flex w-full justify-between items-center bg-primary-700 rounded-t-[0.625rem] px-4 py-1 font-bold ">
         <p className="text-white">
-          {match.league_name.includes('-')
-            ? match.league_name.substring(0, match.league_name.indexOf('-'))
-            : match.league_name}
+          {setNomeCompeticao(match.league_name)}
           {}
         </p>
         <p className="text-[0.725rem] text-white">
@@ -33,7 +34,9 @@ export default function MatchCard({ match }: { match: any }) {
               src={match.team_home_badge}
               alt=""
             />
-            <p className="text-[.75rem]">{match.match_hometeam_name}</p>
+            <p className="text-[.75rem] text-center">
+              {match.match_hometeam_name}
+            </p>
           </div>
 
           <div className="flex flex-col items-center gap-4">
@@ -52,10 +55,16 @@ export default function MatchCard({ match }: { match: any }) {
                   </div>
                 </>
               ) : (
-                <div className="flex items-center justify-center w-[7rem] h-[3rem] rounded-[0.625rem] bg-primary-700">
-                  <p className="text-[2rem] text-center text-white font-semibold">
-                    {match.match_time}
+                <div className="flex flex-col gap-2 items-center">
+                  <p className="text-[0.75rem] text-center font-semibold  leading-[0.75rem]">
+                    {name}
                   </p>
+
+                  <div className="flex items-center justify-center w-[7rem] h-[3rem] rounded-[0.625rem] bg-primary-700">
+                    <p className="text-[2rem] text-center text-white font-semibold">
+                      {match.match_time}
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

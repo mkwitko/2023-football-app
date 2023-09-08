@@ -8,7 +8,7 @@ export default function Categories() {
   const categories = [
     {
       title: 'Loja',
-      url: '/store',
+      link: 'https://loja.vozesdogigante.com.br/',
       icon: <AiFillShop />,
     },
     {
@@ -34,7 +34,11 @@ export default function Categories() {
           key={i}
           onClick={(click) => {
             click.preventDefault();
-            history.push(e.url);
+            if (e.url) history.push(e.url);
+            if (e.link) {
+              // TODO navegação para fora do app
+              window.open(e.link, '_blank');
+            }
           }}
           className={`flex flex-col items-center justify-center rounded-[0.625rem] gap-2 w-[5rem] h-[5rem] aspect-square shadow-md border border-white/50`}
         >

@@ -1,5 +1,7 @@
 import React from 'react';
 import { StringCutter } from '../../utils/StringUtils';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 export default function ClubCard({ data }: { data: any }) {
   return (
@@ -32,9 +34,18 @@ export default function ClubCard({ data }: { data: any }) {
                     Av. Ipiranga, 6681 - Partenon, Porto Alegre - PUCRS
                   </p>
                 </div>
-                <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]">
-                  <p className="text-white">Acessar</p>
-                </button>
+                {data.link && (
+                  <button
+                    onClick={() => {
+                      if (Capacitor.getPlatform() === 'web')
+                        window.open(data.link);
+                      else Browser.open({ url: data.link });
+                    }}
+                    className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]"
+                  >
+                    <p className="text-white">Acessar</p>
+                  </button>
+                )}
               </div>
             </div>
           </div>
