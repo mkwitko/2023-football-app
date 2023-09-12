@@ -29,6 +29,10 @@ p {
   color: #4f0202;
 }
 
+div.text-white p {
+  color: inherit; /* or whatever color value you want to set, or 'initial' to reset to the browser's default */
+}
+
 .card.image-full:before {
   opacity: 0 !important;
   background: linear-gradient(

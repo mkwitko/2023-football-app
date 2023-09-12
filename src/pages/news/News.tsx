@@ -46,7 +46,12 @@ export default function News() {
                       <AiOutlineShareAlt className="text-[1.5rem]" />
                     </button>
                   </div>
-                  <p className="text-[0.75rem]">{StringCutter(e.text, 200)}</p>
+                  <div
+                    className="text-[0.75rem]"
+                    dangerouslySetInnerHTML={{
+                      __html: StringCutter(e.text, 200, '...'),
+                    }}
+                  ></div>
                 </div>
               </div>
             </VirtualScrollChild>

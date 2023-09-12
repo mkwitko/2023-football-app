@@ -45,7 +45,7 @@ export default function NewsDetails() {
                 src={news.url}
                 alt="Sunset in the mountains"
               />
-              <div className="p-4">
+              <div className="p-4 pb-40">
                 <div className="flex items-center justify-between font-bold text-xl text-primary-900">
                   <p>{news.title}</p>
                   <button
@@ -59,7 +59,11 @@ export default function NewsDetails() {
                   Publicado em{' '}
                   {new Date(news.created_at.seconds).toLocaleDateString()}
                 </p>
-                <p className="text-base whitespace-break-spaces">{news.text}</p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: news.text,
+                  }}
+                ></div>
               </div>
             </div>
           </div>

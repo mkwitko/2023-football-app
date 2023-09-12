@@ -29,7 +29,12 @@ export default function NewsCard({ noticias }: { noticias: any }) {
                     <div className="font-bold mb-2 text-[0.75rem]">
                       {StringCutter(e.title, 75, '...')}
                     </div>
-                    <p className="text-[0.75rem]">{StringCutter(e.text, 50)}</p>
+
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: StringCutter(e.text, 100, '...'),
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>

@@ -19,7 +19,12 @@ export default function ConvenienceCard({ data }: { data: any }) {
             <label className="text-[1.75rem] text-white font-bold">
               {data.title}
             </label>
-            <p className="text-white w-full">{StringCutter(data.text, 125)}</p>
+            <div
+              className="text-white"
+              dangerouslySetInnerHTML={{
+                __html: StringCutter(data.text, 125),
+              }}
+            ></div>
           </div>
           <div className="flex items-end justify-end mt-auto">
             {data.url && (
