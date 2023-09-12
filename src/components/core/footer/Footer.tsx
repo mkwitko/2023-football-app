@@ -3,9 +3,7 @@ import { IonFooter } from '@ionic/react';
 import React from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import { IoNewspaper } from 'react-icons/io5';
-import { FaShoppingBag } from 'react-icons/fa';
-import { AiOutlineYoutube } from 'react-icons/ai';
-import { FaMoneyCheck } from 'react-icons/fa';
+import { AiFillIdcard, AiOutlineYoutube, AiFillShop } from 'react-icons/ai';
 import { useHistory, useLocation } from 'react-router';
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
@@ -30,12 +28,12 @@ export default function Footer() {
     {
       title: 'Loja',
       link: 'https://loja.vozesdogigante.com.br/',
-      icon: <FaShoppingBag />,
+      icon: <AiFillShop />,
     },
     {
       title: 'Clube',
       path: '/club',
-      icon: <FaMoneyCheck />,
+      icon: <AiFillIdcard />,
     },
   ];
 

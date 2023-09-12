@@ -21,8 +21,8 @@ import './Menu.css';
 import Auth from '../../../services/Auth';
 import Navigation from '../../../services/Navigation';
 import { menuOnOff } from '../../../services/Menu';
-import { AiFillIdcard, AiFillSetting } from "react-icons/ai";
-import { BsFillHouseFill, BsPersonCircle, BsYoutube } from "react-icons/bs";
+import { AiFillIdcard, AiFillSetting, AiFillTrophy, AiFillCarryOut } from "react-icons/ai";
+import { BsFillHouseFill, BsPersonCircle, BsFillTicketPerforatedFill, BsYoutube } from "react-icons/bs";
 import { MdOutlinePayment, MdWorkHistory } from "react-icons/md";
 
 interface AppPage {
@@ -44,27 +44,42 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Clube VDG',
-    url: '/profile',
+    url: '/club',
     icon: <AiFillIdcard />,
   },
   {
+    title: 'Convênios',
+    url: '/convenience',
+    icon: <BsFillTicketPerforatedFill />,
+  },
+  {
+    title: 'Tabela',
+    url: '/table',
+    icon: <AiFillTrophy />,
+  },
+  {
+    title: 'Calendário',
+    url: '/calendar',
+    icon: <AiFillCarryOut />,
+  },
+  {
     title: 'Canal Vozes do Gigante',
-    url: '/profile',
+    url: '/',
     icon: <BsYoutube />,
   },
   {
     title: 'Configurações',
-    url: '/profile',
+    url: '/',
     icon: <AiFillSetting />,
   },
   {
     title: 'Métodos de Pagamento',
-    url: '/profile',
+    url: '/',
     icon: <MdOutlinePayment />,
   },
   {
     title: 'Histórico de Compras',
-    url: '/profile',
+    url: '/',
     icon: <MdWorkHistory />,
   },
 ];
