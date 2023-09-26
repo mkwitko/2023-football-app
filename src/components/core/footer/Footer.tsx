@@ -7,6 +7,7 @@ import { AiFillIdcard, AiOutlineYoutube, AiFillShop } from 'react-icons/ai';
 import { useHistory, useLocation } from 'react-router';
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
+import { Context } from '../../../context/Context';
 
 export default function Footer() {
   const footer = [
@@ -40,6 +41,13 @@ export default function Footer() {
   const location = useLocation();
   const history = useHistory();
 
+  const { youtube } = React.useContext(Context);
+
+  const isLive =
+    youtube.hook.live &&
+    youtube.hook.live.snippet &&
+    youtube.hook.live.snippet.liveBroadcastContent === 'live';
+
   return (
     <IonFooter className="h-[7%] bg-primary-500">
       <div className="flex items-center justify-evenly h-full ">
@@ -47,12 +55,26 @@ export default function Footer() {
           <div
             key={i}
             onClick={() => {
-              if (e.path) {
-                history.push(e.path);
-              }
-              if (e.link) {
-                if (Capacitor.getPlatform() === 'web') window.open(e.link);
-                else Browser.open({ url: e.link });
+              if (e.highlight && isLive) {
+                if (Capacitor.getPlatform() === 'web')
+                  window.open(
+                    'https://youtube.com/watch?v=' +
+                      youtube.hook.live.id.videoId
+                  );
+                else
+                  Browser.open({
+                    url:
+                      'https://youtube.com/watch?v=' +
+                      youtube.hook.live.id.videoId,
+                  });
+              } else {
+                if (e.path) {
+                  history.push(e.path);
+                }
+                if (e.link) {
+                  if (Capacitor.getPlatform() === 'web') window.open(e.link);
+                  else Browser.open({ url: e.link });
+                }
               }
             }}
             className={`flex flex-col items-center justify-center
@@ -69,7 +91,7 @@ export default function Footer() {
               `}
           >
             <div
-              className={`text-[1.25rem]     
+              className={`text-[1.25rem]   relative   
                 ${e.path === location.pathname ? 'text-primary' : 'text-white'}
                 ${
                   e.highlight
@@ -78,6 +100,12 @@ export default function Footer() {
                 }
                `}
             >
+              {e.highlight && isLive && (
+                <div>
+                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-400 animate-ping"></div>
+                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-400"></div>
+                </div>
+              )}
               {e.icon}
             </div>
             {e.title && (

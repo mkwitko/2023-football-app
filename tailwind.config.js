@@ -33,6 +33,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    // ...
+    'postcss-import': {},
   ],
 };

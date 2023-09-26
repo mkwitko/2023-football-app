@@ -5,8 +5,8 @@ import NotificacoesClass from '../classes/Notificacoes/NotificacoesClass';
 import PropagandaClass from '../classes/Propaganda/PropagandaClass';
 import RedirecionamentoClass from '../classes/Redirecionamentos/RedirecionamentoClass';
 import UserClass from '../classes/User/UserClass';
+import YoutubeClass from '../classes/Youtube/YoutubeClass';
 import Authentication from '../services/Auth';
-import { getCache } from '../services/Cache';
 import FootballApi from '../services/FootballApi/FootballApi';
 import Classes from './../classes';
 
@@ -24,6 +24,7 @@ interface ContextProps {
   findTable: any;
   head2Head: any;
   hook: any;
+  youtube: YoutubeClass;
 }
 
 export const Context = React.createContext({} as ContextProps);
@@ -39,13 +40,14 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     propaganda,
     redirecionamentos,
     user,
+    youtube,
   }: ContextProps = classes;
 
   const { findGames, findTable, head2Head, hook }: any = FootballApi();
 
   useEffect(() => {
-    console.log('called');
     delete classes['user'];
+    delete classes['youtube'];
     Object.keys(classes).forEach((classe: any) => {
       classes[classe].setClass(true).then((res: any) => {
         if (res && res.length > 0) {
@@ -57,6 +59,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     auth.onAuthStateChanged((res: any) => {
       if (res) {
         user.setClassById(true, res.uid);
+        youtube.getLive();
       }
     });
 
@@ -76,6 +79,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         findGames,
         findTable,
         head2Head,
+        youtube,
         hook,
       }}
     >

@@ -6,7 +6,6 @@ import { Context } from '../../../context/Context';
 
 export default function HeaderSwiper() {
   const { banner } = useContext(Context);
-  console.log(banner.hook.data);
   return (
     <>
       <Swiper

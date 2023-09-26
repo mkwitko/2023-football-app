@@ -4,7 +4,6 @@ import { setCache } from '../../../services/Cache';
 import { setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils';
 
 export default function MatchCard({ match }: { match: any }) {
-  console.log('match - ', match);
   //   const { name, city } = stadiumName(match);
   const name = stadiumName(match.match_stadium);
   const { navigateTo } = Navigation();

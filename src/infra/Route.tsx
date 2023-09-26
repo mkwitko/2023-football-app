@@ -12,6 +12,7 @@ import Match from '../pages/match/Match';
 import Profile from '../pages/profile/Profile';
 import Convenience from '../pages/convenience/Convenience';
 import Club from '../pages/club/Club';
+import Live from '../pages/live/Live';
 
 export default function Routing({ isLogged }: { isLogged: boolean }) {
   return (
@@ -83,6 +84,13 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
         exact={true}
       >
         {!isLogged ? <Redirect to="/login" /> : <Club />}
+      </Route>
+
+      <Route
+        path="/live"
+        exact={true}
+      >
+        {!isLogged ? <Redirect to="/login" /> : <Live />}
       </Route>
 
       <Route
