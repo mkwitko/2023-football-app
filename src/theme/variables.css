@@ -1,9 +1,18 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
+
+.modal-default {
+  max-height: 40rem;
+  width: 95%;
+  border-radius: 0.625rem !important;
+  top: calc(50% - 20rem);
+  margin: 0 auto;
+  --backdrop-opacity: 0;
+}
 
 ion-header ion-toolbar {
   --background: transparent;
@@ -27,6 +36,10 @@ ion-label,
 div,
 p {
   color: #4f0202;
+}
+
+.modal-default button span {
+  color: #fff;
 }
 
 div.text-white p {

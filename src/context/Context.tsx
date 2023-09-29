@@ -58,7 +58,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
     auth.onAuthStateChanged((res: any) => {
       if (res) {
-        user.setClassById(true, res.uid);
+        user.setClassById(true, res.uid).then((res) => {
+          if (res) {
+            user.hook.setData(res);
+          }
+        });
         youtube.getLive();
       }
     });

@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        box: 'rgba(0, 0, 0, 0.24) 0px 3px 8px;',
+        box: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
         convenienceShadow:
-          'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;',
+          'rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
       },
       backgroundImage: {
         firstHeader: "url('/public/assets/header1.jpeg')",
@@ -31,8 +31,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    'postcss-import': {},
-  ],
+  plugins: [require('@tailwindcss/typography')],
 };

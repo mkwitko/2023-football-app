@@ -56,17 +56,7 @@ export default function Footer() {
             key={i}
             onClick={() => {
               if (e.highlight && isLive) {
-                if (Capacitor.getPlatform() === 'web')
-                  window.open(
-                    'https://youtube.com/watch?v=' +
-                      youtube.hook.live.id.videoId
-                  );
-                else
-                  Browser.open({
-                    url:
-                      'https://youtube.com/watch?v=' +
-                      youtube.hook.live.id.videoId,
-                  });
+                history.push('/live');
               } else {
                 if (e.path) {
                   history.push(e.path);

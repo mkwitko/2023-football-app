@@ -1,7 +1,9 @@
+import CoreClass from '../Core/CoreClass';
 import useYoutubeHook from './useYoutubeHook';
 
-export default class YoutubeClass {
-  hook = useYoutubeHook();
+export default class YoutubeClass extends CoreClass {
+  override collection = 'youtube';
+  override hook = useYoutubeHook();
   getLive = () => {
     const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCLgti7NuK0RuW9wty-fxPjQ&key=AIzaSyD4XNAsWgDTTboqXSi77cv4FHUdp6BcHkk`;
 
