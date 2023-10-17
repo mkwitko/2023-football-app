@@ -1,6 +1,7 @@
 import React from 'react';
 import { BsFillTicketPerforatedFill } from 'react-icons/bs';
 import { AiFillShop, AiFillTrophy, AiFillCarryOut } from 'react-icons/ai';
+import { BiSolidWallet } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 
 export default function Categories() {
@@ -26,6 +27,11 @@ export default function Categories() {
       url: '/calendar',
       icon: <AiFillCarryOut />,
     },
+    {
+        title: 'Carteira',
+        url: '/wallet',
+        icon: <BiSolidWallet />,
+      },
   ];
   return (
     <div className="flex overflow-x-auto gap-4 py-2">

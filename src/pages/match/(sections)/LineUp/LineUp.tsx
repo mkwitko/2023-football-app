@@ -47,6 +47,7 @@ export default function LineUp({
       >
         {tabs.map((e) => (
           <IonSegmentButton
+          mode='ios'
             value={e.title}
             key={e.title}
             className="rounded-none"
@@ -88,11 +89,11 @@ const eachTeam = (team: any, isHome: boolean) => {
         >
           {Array(each)
             .fill(0)
-            .map((e: any, i: number) => {
+            .map(() => {
               count++;
               return (
                 <Player
-                  key={`Player_${index}`}
+                  key={`Player_${index}_${team.lineup.starting_lineups[count].lineup_player}`}
                   team={team}
                   isHome={isHome}
                   index={count}

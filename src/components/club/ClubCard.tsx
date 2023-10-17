@@ -10,7 +10,7 @@ export default function ClubCard({ data }: { data: any }) {
         <div
           className="w-full h-40 bg-top bg-cover rounded-t-[0.625rem]"
           style={{
-            backgroundImage: `url(${data.url})`,
+            backgroundImage: `url(${data.imagePath})`,
           }}
         ></div>
         <div className="flex flex-col w-full md:flex-row">
@@ -20,7 +20,7 @@ export default function ClubCard({ data }: { data: any }) {
           <div className="flex flex-col gap-4 p-4 font-norma md:w-3/4">
             <div
               dangerouslySetInnerHTML={{
-                __html: StringCutter(data.text, 265),
+                __html: StringCutter(data.description, 265),
               }}
             ></div>
             <div className="flex flex-col">
@@ -32,7 +32,7 @@ export default function ClubCard({ data }: { data: any }) {
                   </p>
                   <p className="text-[0.75rem] font-bold text-primary-900 w-4/5 mt-4">
                     {/* TODO adicionar endereço que vem do back ( ainda nao tem ) */}
-                    Av. Ipiranga, 6681 - Partenon, Porto Alegre - PUCRS
+                    {data.local} - {data.neighborhood} - {data.number} - {data.address} - {data.city} 
                   </p>
                 </div>
                 {data.link && (

@@ -38,8 +38,6 @@ export default function Head2Head({
     }
   };
 
-  const [hasLoaded, setHasLoaded] = React.useState<boolean>(false);
-
   let wins = 0;
   let draws = 0;
   let loses = 0;
@@ -62,7 +60,7 @@ export default function Head2Head({
   return head2head.length !== 0 ? (
     <>
       <div className="flex flex-col items-center justify-center">
-        <p className="font-bold uppercase">
+        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem]">
           {head2head.length !== 0 && head2head.firstTeam_VS_secondTeam.length}{' '}
           Partidas Jogadas
         </p>
@@ -98,7 +96,7 @@ export default function Head2Head({
       </div>
 
       <div className="flex flex-col items-center justify-center mt-2">
-        <p className="font-bold uppercase">Forma Atual</p>
+        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem]">Forma Atual</p>
         <p className="text-[0.75rem]">Contando todas as competições</p>
       </div>
 
@@ -210,8 +208,8 @@ export default function Head2Head({
 const StatsSquare = ({ stats, name }: { stats: any; name: string }) => {
   return (
     <div className="flex flex-col items-center justify-center bg-primary-800 w-full rounded-[0.625rem] p-2 gap-1 aspect-square">
-      <p className="text-[2rem] text-primary-200 font-bold">{stats}</p>
-      <p className="text-white font-semibold">{name}</p>
+      <p className="text-[1.5rem] sm:text-[2rem] text-primary-200 font-bold">{stats}</p>
+      <p className="text-white font-semibold text-[0.85rem] sm:text-[1rem]">{name}</p>
     </div>
   );
 };
@@ -219,8 +217,8 @@ const StatsSquare = ({ stats, name }: { stats: any; name: string }) => {
 const StatsLine = ({ stats, name }: { stats: any; name: string }) => {
   return (
     <div className="flex items-center justify-between w-full py-2">
-      <p className="text-primary-800 font-bold uppercase text-[1rem]">{name}</p>
-      <p className="text-primary-800 font-bold uppercase text-[1.25rem]">
+      <p className="text-primary-800 font-bold uppercase text-[0.85rem] sm:text-[1rem]">{name}</p>
+      <p className="text-primary-800 font-bold uppercase text-[1rem] sm:text-[1.25rem]">
         {stats}
       </p>
     </div>

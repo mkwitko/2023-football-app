@@ -10,7 +10,7 @@ export default function MatchCard({ match }: { match: any }) {
   return (
     <div
       id={match.match_id}
-      className="flex flex-col px-8"
+      className="flex flex-col px-4 sm:px-8"
       onClick={async () => {
         setCache('match', match);
         navigateTo('matchDetails');

@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import Auth from '../../../../../services/Auth';
 import Classes from '../../../../../classes';
 import Navigation from '../../../../../services/Navigation';
+import { createDateFromNow } from 'src/utils/DateUtils';
+
 
 export default function RegisterForm() {
   const { signUp } = Auth();
@@ -25,7 +27,7 @@ export default function RegisterForm() {
       {
         id: res?.result?.user.uid,
         email,
-        created_at: new Date(),
+        createdAt: createDateFromNow(),
       },
       user.collection,
       res?.result?.user.uid

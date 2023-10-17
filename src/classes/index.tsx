@@ -1,10 +1,13 @@
 import BannerClass from './Banners/BannerClass';
 import EventosClass from './Eventos/EventosClass';
+import FeedsClass from './Feeds/FeedsClass';
 import NoticiasClass from './Noticias/NoticiaClass';
 import NotificacoesClass from './Notificacoes/NotificacoesClass';
+import OrdersClass from './Orders/OrdersClass';
 import PropagandaClass from './Propaganda/PropagandaClass';
-import RedirecionamentoClass from './Redirecionamentos/RedirecionamentoClass';
+import SurveysClass from './Surveys/SurverysClass';
 import UserClass from './User/UserClass';
+import WalletClass from './Wallet/WalletClass';
 import YoutubeClass from './Youtube/YoutubeClass';
 
 export default function Classes() {
@@ -13,9 +16,12 @@ export default function Classes() {
   const eventos = new EventosClass();
   const notificacoes = new NotificacoesClass();
   const propaganda = new PropagandaClass();
-  const redirecionamentos = new RedirecionamentoClass();
   const user = new UserClass();
   const youtube = new YoutubeClass();
+  const feeds = new FeedsClass();
+  const surveys = new SurveysClass();
+  const wallets = new WalletClass();
+  const orders = new OrdersClass();
 
   return {
     banner,
@@ -23,8 +29,11 @@ export default function Classes() {
     notificacoes,
     eventos,
     propaganda,
-    redirecionamentos,
     user,
+    orders,
     youtube,
+    feeds,
+    surveys,
+    wallets,
   };
 }

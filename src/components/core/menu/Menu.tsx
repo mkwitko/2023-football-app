@@ -63,6 +63,11 @@ const appPages: AppPage[] = [
     icon: <AiFillCarryOut />,
   },
   {
+    title: 'Enquetes',
+    url: '/surveys',
+    icon: <BsYoutube />,
+  },
+  {
     title: 'Canal Vozes do Gigante',
     url: '/',
     icon: <BsYoutube />,
@@ -71,11 +76,6 @@ const appPages: AppPage[] = [
     title: 'Configurações',
     url: '/',
     icon: <AiFillSetting />,
-  },
-  {
-    title: 'Métodos de Pagamento',
-    url: '/',
-    icon: <MdOutlinePayment />,
   },
   {
     title: 'Histórico de Compras',
@@ -140,7 +140,6 @@ const Menu: React.FC = () => {
           onClick={() => {
             signOut().then((res) => {
               menuOnOff(false);
-              console.log('sign out - ', res);
               navigateTo('/login');
             });
           }}

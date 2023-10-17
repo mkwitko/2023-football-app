@@ -1,18 +1,14 @@
-import { IonPage, IonContent } from '@ionic/react';
+import { IonContent } from '@ionic/react';
 import React from 'react';
-import Footer from '../../components/core/footer/Footer';
-import Header from '../../components/core/header/Header';
 import ProfileForm from './form/useForm';
 import { AiFillEdit } from 'react-icons/ai';
 
 export default function Profile() {
   const [edit, setEdit] = React.useState(false);
   const { register, handleSubmit, errors, isSubmitting, submit } =
-    ProfileForm();
+    ProfileForm({setEdit});
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
+    <IonContent fullscreen>
         <div className="flex flex-col gap-8 p-8">
           <form
             className="space-y-6"
@@ -68,12 +64,12 @@ export default function Profile() {
                 </label>
                 <div className="mt-2">
                   <input
-                    disabled={!edit || isSubmitting}
+                    disabled={true}
                     id="email"
                     {...register('email')}
                     type="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 bg-white pl-2"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 bg-zinc-200 pl-2"
                   />
                   {errors.email && (
                     <p className="text-red-500 text-[0.75rem] w-full mt-1">
@@ -179,7 +175,5 @@ export default function Profile() {
           </form>
         </div>
       </IonContent>
-      <Footer />
-    </IonPage>
   );
 }

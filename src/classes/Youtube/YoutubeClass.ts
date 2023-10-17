@@ -5,7 +5,7 @@ export default class YoutubeClass extends CoreClass {
   override collection = 'youtube';
   override hook = useYoutubeHook();
   getLive = () => {
-    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCLgti7NuK0RuW9wty-fxPjQ&key=AIzaSyD4XNAsWgDTTboqXSi77cv4FHUdp6BcHkk`;
+    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UC40TUSUx490U5uR1lZt3Ajg&key=AIzaSyD4XNAsWgDTTboqXSi77cv4FHUdp6BcHkk`;
 
     return fetch(url)
       .then((response) => response.json())

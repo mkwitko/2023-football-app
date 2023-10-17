@@ -11,7 +11,6 @@ export default function Player({
   index: number;
   lineHas?: number;
 }) {
-  console.log(lineHas);
   return (
     <div
       className="flex flex-col justify-center items-center gap-2"

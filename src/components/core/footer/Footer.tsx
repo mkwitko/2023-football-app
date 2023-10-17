@@ -32,7 +32,7 @@ export default function Footer() {
       icon: <AiFillShop />,
     },
     {
-      title: 'Clube',
+      title: 'Eventos',
       path: '/club',
       icon: <AiFillIdcard />,
     },
@@ -92,8 +92,8 @@ export default function Footer() {
             >
               {e.highlight && isLive && (
                 <div>
-                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-400 animate-ping"></div>
-                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-400"></div>
+                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-700 animate-ping"></div>
+                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-700"></div>
                 </div>
               )}
               {e.icon}

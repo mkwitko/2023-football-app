@@ -1,137 +1,162 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
-import React from 'react';
 import { Payment, initMercadoPago } from '@mercadopago/sdk-react';
+import React, { useEffect } from 'react';
+import { AiOutlineCopy } from 'react-icons/ai';
 
 import {
-  IonPage,
-  IonToolbar,
-  IonContent,
-  IonHeader,
-  IonButtons,
-  IonButton,
+    IonPage,
+    IonContent,
 } from '@ionic/react';
 
 import QRCode from 'qrcode.react';
+import { checkClipboard, writeToClipboard } from './Clipboard';
+import Toast from './Toast';
 
 export default function MercadoPago({ componentProps }) {
-  const [value, setValue] = React.useState(10);
-  const [qrCode, setQrCode] = React.useState(null);
+    const key = 'APP_USR-d575b9e1-4fc1-447f-8ef7-51fc0f6e4a5e'
+    initMercadoPago(key);
 
-  const key = 'TEST-e665ba26-48bc-4bc0-aef3-2be1d76fb7c6';
-  initMercadoPago(key);
+    const [qrCode, setQrCode] = React.useState(null);
 
-  const initialization = {
-    amount: 100,
-  };
-  const customization = {
-    paymentMethods: {
-      bankTransfer: 'all',
-    },
-    visual: {
-      defaultPaymentOption: {
-        bankTransfer: true,
-      },
-      style: {
-        customVariables: {
-          textPrimaryColor: '#340202',
-          textSecondaryColor: '#340202',
-          buttonTextColor: '#fff',
-          baseColor: '#340202',
-          borderRadiusFull: '0.625rem',
-          formBackgroundColor: 'transparent',
-        },
-      },
-    },
-  };
-  const onSubmit = async ({ selectedPaymentMethod, formData }) => {
-    formData = {
-      ...formData,
-      transaction_amount: value,
+    const initialization = {
+        amount: componentProps.value,
     };
-    // callback chamado ao clicar no botão de submissão dos dados
-    return new Promise((resolve, reject) => {
-      fetch('https://api.mercadopago.com/v1/payments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${'TEST-7219221164481546-092509-47bda7c77276066bbb6194a5b9b3cf92-1133343639'}`,
+    const customization = {
+        paymentMethods: {
+            bankTransfer: "all",
+            creditCard: "all",
         },
-        body: JSON.stringify({
-          description: 'Pagamento de teste',
-          installments: 1,
-          payer: {
-            email: 'oficialkwitko@gmail.com',
-          },
-          payment_method_id: 'pix',
-          transaction_amount: +value,
-        }),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          // receber o resultado do pagamento
-          console.log(response.point_of_interaction.transaction_data);
-          setQrCode(response.point_of_interaction.transaction_data.qr_code);
-          resolve(response);
-        })
-        .catch((error) => {
-          // lidar com a resposta de erro ao tentar criar o pagamento
-          reject();
-        });
-    });
-  };
-  const onError = async (error) => {
-    // callback chamado para todos os casos de erro do Brick
-    console.log(error);
-  };
-  const onReady = async () => {
-    /*
-      Callback chamado quando o Brick estiver pronto.
-      Aqui você pode ocultar loadings do seu site, por exemplo.
-    */
-  };
+        visual: {
+            defaultPaymentOption: {
+                bankTransfer: true,
+            },
+            style: {
+                customVariables: {
+                    textPrimaryColor: '#340202',
+                    textSecondaryColor: '#340202',
+                    buttonTextColor: '#fff',
+                    baseColor: '#F93939',
+                    borderRadiusFull: '0.625rem',
+                    formBackgroundColor: 'transparent',
+                },
+            },
+        },
+    };
+    const onSubmit = async ({ selectedPaymentMethod, formData }) => {
+        let bodyJson = {
+            description: 'Pagamento de teste',
+            installments: formData.installments || 1,
+            payer: {
+                email: formData.payer.email,
+                identification: formData.payer.identification
+            },
+            token: formData.token || '',
+            issuer_id: formData.issuer_id || '',
+            payment_method_id: formData.payment_method_id || '',
+            transaction_amount: +componentProps.value,
+            user_id: componentProps.id,
+        }
+        if (selectedPaymentMethod === 'bank_transfer')
+            delete bodyJson.issuer_id;
 
-  return (
-    <IonPage>
-      <IonContent>
-        <div className="bg-white z-50">
-          <div className="flex items-start gap-4 flex-col p-4 pb-0">
-            <button
-              type="button"
-              className="p-2 self-end z-50"
-              onClick={() => {
-                console.log('aaa');
-                componentProps.close();
-              }}
-            >
-              Fechar
-            </button>
-          </div>
-          {qrCode ? (
+
+
+        return new Promise((resolve, reject) => {
+            const url = 'https://football-back.fly.dev';
+            // const url = 'http://localhost:3000';
+            fetch(`${url}/payments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    bodyJson),
+            })
+                .then((res) => {
+                    res.json().then((data) => {
+                        if (data.type === 'pix') {
+                            setQrCode(data.qr_code);
+                        }
+                        console.log(data);
+                        resolve(true);
+                    });
+                })
+                .catch((error) => {
+                    reject();
+                }).finally(() => {
+                    // componentProps.close();
+                });
+        });
+    };
+    const onError = async (error) => {
+        // callback chamado para todos os casos de erro do Brick
+        console.log(error);
+    };
+    const onReady = async () => {
+        /*
+          Callback chamado quando o Brick estiver pronto.
+          Aqui você pode ocultar loadings do seu site, por exemplo.
+        */
+    };
+
+    return (
+        <IonPage>
+            <IonContent>
+                <div className="bg-white z-50">
+                    <div className="flex items-start gap-4 flex-col p-4 pb-0">
+                        <button
+                            type="button"
+                            className="p-2 self-end z-50 text-[0.75rem]"
+                            onClick={() => {
+                                componentProps.close();
+                            }}
+                        >
+                            Fechar
+                        </button>
+                    </div>
+                    {qrCode ? (
+                        <QrCodeContainer qrCode={qrCode} />
+                    ) : (
+                        <Payment
+                            initialization={initialization}
+                            customization={customization}
+                            locale="pt-BR"
+                            onSubmit={onSubmit}
+                            onReady={onReady}
+                            onError={onError}
+                        />
+                    )}
+                </div>
+            </IonContent>
+        </IonPage>
+    );
+}
+
+
+const QrCodeContainer = ({ qrCode }) => {
+    return (
+        <div className='flex flex-col justify-center items-center p-4 gap-8'>
             <QRCode value={qrCode} />
-          ) : (
-            <>
-              <p className="text-[1.125rem] font-semibold text-[#340202]">
-                Valor
-              </p>
-              <input
-                className="bg-transparent p-4 border border-borderColor/20 rounded-[0.625rem] w-full focus:ring-0 focus:border-transparent"
-                type="text"
-                placeholder="R$10.00"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-              />
-              <Payment
-                initialization={initialization}
-                customization={customization}
-                locale="pt-BR"
-                onSubmit={onSubmit}
-                onReady={onReady}
-                onError={onError}
-              />
-            </>
-          )}
+
+            <div className='flex items-center justify-between border w-full rounded-[0.625rem] p-2 gap-4'>
+                <p className='whitespace-nowrap overflow-hidden'>{qrCode}</p>
+                <div className='flex p-2 border rounded-[0.625rem] bg-primary cursor-pointer'>
+                    <AiOutlineCopy onClick={() => {
+                        writeToClipboard({
+                            value: qrCode,
+                        }).then(async () => {
+                            const { value } = await checkClipboard();
+                            if (value) {
+                                Toast().success('Copiado para área de transferência');
+                            } else {
+                                Toast().error('Falha ao copiar');
+                            }
+                        });
+                    }} className='w-6 h-6 text-white' />
+                </div>
+            </div>
         </div>
-      </IonContent>
-    </IonPage>
-  );
+
+    )
 }

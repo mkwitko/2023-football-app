@@ -1,10 +1,8 @@
-import Header from './../../components/core/header/Header';
-import { IonPage, IonContent } from '@ionic/react';
-import React, { useEffect } from 'react';
+import { IonContent } from '@ionic/react';
+import React from 'react';
 import useFootballApiHook from '../../services/FootballApi/useFootballApiHook';
 import MatchCard from '../../components/home/cards/MatchCard';
 import Navigation from '../../services/Navigation';
-import Footer from '../../components/core/footer/Footer';
 
 export default function Calendar() {
   const { games } = useFootballApiHook();
@@ -27,20 +25,16 @@ export default function Calendar() {
   else findNextGame();
 
   return (
-    <IonPage>
-      <Header />
-      <IonContent fullscreen>
-        <div className="flex flex-col gap-8 py-8">
-          {Object.keys(games).length > 0 &&
-            games.map((e: any) => (
-              <MatchCard
-                key={e.match_id}
-                match={e}
-              />
-            ))}
-        </div>
-      </IonContent>
-      <Footer />
-    </IonPage>
+    <IonContent fullscreen>
+    <div className="flex flex-col gap-8 py-8">
+      {Object.keys(games).length > 0 &&
+        games.map((e: any) => (
+          <MatchCard
+            key={e.match_id}
+            match={e}
+          />
+        ))}
+    </div>
+  </IonContent>
   );
 }

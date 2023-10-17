@@ -5,6 +5,7 @@ export default function Navigation() {
 
   function navigateTo(path: string) {
     history.push(path);
+    
   }
 
   return {
