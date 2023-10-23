@@ -12,7 +12,7 @@ export default function HeaderSwiper() {
 
     const swiper = cache ? cache : 0;
 
-    const banners = banner.hook.data.filter((e) => e.active);
+    const banners = banner.hook.data && banner.hook.data.filter((e) => e.active);
 
     return (
         <>

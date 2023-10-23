@@ -11,7 +11,6 @@ export default function Convenience() {
       {propaganda.hook.data.map((e: any, i: number) => (
         <ConvenienceCard
           data={e}
-          index={i}
           key={i}
         /> 
       ))}

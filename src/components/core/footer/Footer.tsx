@@ -49,7 +49,7 @@ export default function Footer() {
     youtube.hook.live.snippet.liveBroadcastContent === 'live';
 
   return (
-    <IonFooter className="h-[7%] bg-primary-500">
+    <IonFooter className="h-16 bg-primary-500">
       <div className="flex items-center justify-evenly h-full ">
         {footer.map((e: any, i: number) => (
           <div

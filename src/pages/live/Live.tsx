@@ -69,11 +69,6 @@ export default function Live() {
                 }
             })
         });
-
-        fetch('https://yt.lemnoslife.com/noKey/liveChat/messages?liveChatId=Cg0KC1VMUWh2SUdHMjdRKicKGFVDU0o0Z2tWQzZOcnZJSTh1bXp0ZjBPdxILVUxRaHZJR0cyN1E&part=id%2C%20snippet%2C%20authorDetails&time=5000').then(async (res) => {
-            const data = await res.json();
-            console.log(data);
-        })
     }, [])
 
 
