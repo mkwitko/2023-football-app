@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StringCutter } from '../../utils/StringUtils';
 import ModalProsper from '../Shadcn/Modal';
 import QRCode from 'qrcode.react';
+import { Context } from 'src/context/Context';
+import Navigation from 'src/services/Navigation';
 
 export default function ConvenienceCard({ data }: { data: any }) {
+    const { propaganda } = useContext(Context);    
+    const { navigateTo } = Navigation();
+
     return (
         <>
-            <div
+            <div onClick={() => {
+                propaganda.hook.setCurrent(data);
+                navigateTo('/convenience/details')
+            }}
                 style={{
                     backgroundImage: `linear-gradient(180deg, rgba(79,2,2,0.8) 20%, rgba(254,215,215, 0.5) 100%), url(${data.imagePath})`,
                     backgroundSize: 'cover',

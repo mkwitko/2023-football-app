@@ -15,8 +15,7 @@ import React, { useEffect } from 'react';
 import WalletClass from 'src/classes/Wallet/WalletClass';
 import OrdersClass from 'src/classes/Orders/OrdersClass';
 import { decrypt } from 'src/services/Encrypt';
-import { getFirestore } from 'firebase/firestore';
-import firebase_app from 'src/infra/Firebase';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 
 interface ContextProps {
     banner: BannerClass;
@@ -57,6 +56,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
     const { findGames, findTable, head2Head, hook }: any = FootballApi();
 
+    const [isLogout, setIsLogout] = React.useState(false);
+
 
     useEffect(() => {
         delete classes['user'];
@@ -92,6 +93,32 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         findGames();
     }, []);
 
+    const login =
+        useGoogleLogin({
+            onSuccess: tokenResponse => {
+                fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokenResponse.access_token).then(response => {
+                    response.json().then(data => {
+                        console.log(data);
+                    })
+                })
+            },
+            scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl',
+        });
+
+    useEffect(() => {
+        if (user.hook.data && user.hook.data.access_token) {
+            fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + user.hook.data.access_token).then(response => {
+                response.json().then(data => {
+                    if (data.error) {
+                        setIsLogout(true);
+                        // login();
+                    } else
+                        console.log('logged gmail user - ', data);
+                })
+            })
+        }
+    }, [user.hook.data])
+
     return (
         <Context.Provider
             value={{
@@ -112,6 +139,17 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                 wallets
             }}
         >
+            {isLogout && (
+                <GoogleLogin auto_select useOneTap
+                    onSuccess={credentialResponse => {
+                        console.log(credentialResponse);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                />
+            )}
+
             {children}
         </Context.Provider>
     );

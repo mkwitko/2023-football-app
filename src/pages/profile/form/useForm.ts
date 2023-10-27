@@ -16,6 +16,7 @@ export default function ProfileForm({ setEdit }: any) {
         resolver: zodResolver(Schema),
         defaultValues: {
             avatar: user?.hook?.data?.avatar || '',
+            avatarChanged: false,
             username: user?.hook?.data?.username || '',
             email: user?.hook?.data?.email || '',
             youtubeEmail: user?.hook?.data?.youtubeEmail || '',
@@ -38,29 +39,42 @@ export default function ProfileForm({ setEdit }: any) {
         youtubeEmail,
         cpf,
         cellphone,
-        avatar
+        avatar,
+        avatarChanged,
+        access_token
     }: Form) => {
         let imagePath = '';
-        if (avatar) {
-            if(user.hook.data.fileName) {
-                user.deleteFile(user.hook.data.fileName);
-            }
-            await user.upload(avatar).then((res: any) => {
-                imagePath = res;
-            })
-        }
-        await user.update({
+
+        let data: any = {
             id: user?.hook?.data?.id || '',
             name: username,
             youtubeEmail,
             cpf,
             cellphone,
-            avatar: imagePath,
-            fileName: avatar.name
-        }).then(() => {
+            access_token
+        }
+        if (avatarChanged) {
+            console.log('entered');
+            if(user.hook.data.fileName) {
+                user.deleteFile(user.hook.data.fileName);
+            }
+            await user.upload(avatar, 'users/' + user.hook.data.id).then((res: any) => {
+                imagePath = res
+            })
+
+            data = {
+                ...data,
+                avatar: imagePath,
+                fileName:  user.hook.data.id + '/' + avatar.name
+            }
+        }
+
+       
+        await user.update(data).then(() => {
             user.setClassById(true, user?.hook?.data?.id).then((res) => {
                 user.hook.setData(res);
                 setEdit(false);
+                setValue('avatarChanged', false);
             });
         })
     };

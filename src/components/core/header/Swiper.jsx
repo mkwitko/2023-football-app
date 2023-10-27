@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IonButtons, IonMenuButton, IonToolbar } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Context } from '../../../context/Context';
@@ -10,35 +10,48 @@ export default function HeaderSwiper() {
 
     const cache = getCache('swiper');
 
-    const swiper = cache ? cache : 0;
-
     const banners = banner.hook.data && banner.hook.data.filter((e) => e.active);
+
+    useEffect(() => {
+        console.log(banners);
+    }, [])
 
     return (
         <>
             <Swiper
-                onSlideChange={(e) => {
-                    setCache('swiper', e.activeIndex)
-                }}
-                autoplay
                 speed={1500}
                 loop={true}
                 className="h-full z-10"
+                autoplay={{
+                    delay: 500,
+                }}
+                onSlideChange={(e) => {
+                    const index = e.realIndex - 1;
+                    if(banners[index] !== undefined) {
+                        e.autoplay.stop();
+                        setTimeout(() => {
+                            e.autoplay.start();
+                          }, banners[index].highlighted ? 10000 : 5000);
+                    } else {
+                        e.autoplay.stop();
+                        setTimeout(() => {
+                            e.autoplay.start();
+                          }, 5000);
+                    }
+                }}
             >
                 <SwiperSlide className="bg-firstHeader bg-cover bg-no-repeat"></SwiperSlide>
 
                 {banners.length > 0 &&
-                   banners.map((e, i) => {
+                    banners.map((e, i) => {
                         return (
                             <SwiperSlide
-                                delay={e.highlighted ? 10000 : 3000}
                                 key={i}
                                 className="bg-no-repeat bg-cover"
                                 style={{
                                     backgroundImage: `url(${e.imagePath})`,
                                 }}
                             >
-                                {/* <InsideHeader /> */}
                             </SwiperSlide>
                         );
                     })}

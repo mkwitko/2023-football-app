@@ -2,7 +2,7 @@ import {
     IonContent,
     IonTextarea,
 } from '@ionic/react';
-import React, { createRef, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Iframe from '../../components/youtube/Iframe';
 import { Context } from '../../context/Context';
 import { getFirestore, collection, query, onSnapshot } from 'firebase/firestore';
@@ -47,6 +47,9 @@ export default function Live() {
                 })
             })
         }
+        
+        if(user.hook.data.access_token && youtube.hook.liveChatId)
+            youtube.sendComment(comment, user.hook.data.access_token, youtube.hook.liveChatId);
     };
 
     const db = getFirestore(firebase_app);

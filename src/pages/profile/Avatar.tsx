@@ -9,6 +9,7 @@ interface AvatarProps extends ComponentProps<'input'> {
   errorMessage?: string | null | undefined
   disabled?: boolean
   register?: UseFormRegisterReturn<string>
+  setValue: any
 }
 
 export function Avatar({
@@ -17,6 +18,7 @@ export function Avatar({
   imagePreview = null,
   register,
   disabled = false,
+  setValue,
   ...props
 }: AvatarProps) {
   const customId = useId()
@@ -71,7 +73,10 @@ export function Avatar({
         <input
           type="file"
           className="sr-only"
-          onChange={(event) => createPreviewUrl(event.target.files)}
+          onChange={(event) => {
+            createPreviewUrl(event.target.files)
+            setValue('avatarChanged', true);
+          }}
           disabled={disabled}
           {...register}
           {...props}

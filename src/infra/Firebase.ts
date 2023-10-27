@@ -15,4 +15,5 @@ const FirebaseCredentials = {
 const firebase_app =
   getApps().length === 0 ? initializeApp(FirebaseCredentials) : getApps()[0];
 
+
 export default firebase_app;

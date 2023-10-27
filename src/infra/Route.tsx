@@ -25,7 +25,7 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
     return (
         <>
             <IonPage>
-                {!isLogged ? <Redirect to="/login" /> : (
+                {isLogged ? (
                     <>
                         <Header />
                         <Switch>
@@ -132,14 +132,16 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
                         </Switch>
                         <Footer />
                     </>
+                ) : (
+                    <Route
+                        path="/login"
+                        exact={true}
+                    >
+                        <AuthPage />
+                    </Route>
                 )}
 
-                <Route
-                    path="/login"
-                    exact={true}
-                >
-                    {isLogged ? <Redirect to="/home" /> : <AuthPage />}
-                </Route>
+
             </IonPage>
         </>
     );

@@ -89,6 +89,7 @@ export default function FootballApiUtils({ apiFootball }: any) {
   const findCompetitions = (games: any) => {
     const aux_competitions: any = [];
     const competitions: any = [];
+    if(games.length === 0 || Object.keys(games).length === 0) return competitions;
     games.map((game: any) => {
       if (!aux_competitions.includes(game.league_id)) {
         aux_competitions.push(game.league_id);

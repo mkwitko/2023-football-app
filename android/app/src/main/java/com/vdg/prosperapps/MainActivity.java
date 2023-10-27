@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.vdg.prosperapps;
 
 import com.getcapacitor.BridgeActivity;
 

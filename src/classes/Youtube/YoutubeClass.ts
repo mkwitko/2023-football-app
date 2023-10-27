@@ -17,10 +17,11 @@ export default class YoutubeClass extends CoreClass {
                 });
                 this.hook.setLive(findLive);
 
-                fetch(`${'https://yt.lemnoslife.com/noKey/'}videos?part=liveStreamingDetails&id=${findLive.id.videoId}`).then((response) => response.json()).then((data) => {
-                    this.hook.setLiveChatId(data.items[0].liveStreamingDetails.activeLiveChatId);
-                    this.sendComment(data.items[0].liveStreamingDetails.activeLiveChatId);
-                })
+                if(findLive) {
+                    fetch(`${'https://yt.lemnoslife.com/noKey/'}videos?part=liveStreamingDetails&id=${findLive.id.videoId}`).then((response) => response.json()).then((data) => {
+                        this.hook.setLiveChatId(data.items[0].liveStreamingDetails.activeLiveChatId);
+                    })
+                }
 
                 return findLive;
             })
@@ -29,8 +30,8 @@ export default class YoutubeClass extends CoreClass {
             });
     };
 
-    sendComment = (id?: string) => {
-        const url = `${'https://youtube.googleapis.com/youtube/v3/'}liveChat/messages?part=snippet&key=${process.env.REACT_APP_YOUTUBE_KEY}`;
+    sendComment = (text: string, access_token: string, id?: string) => {
+        const url = `${'https://youtube.googleapis.com/youtube/v3/'}liveChat/messages?part=snippet`;
         fetch(url, {
             method: 'POST',
             body: JSON.stringify({
@@ -38,10 +39,14 @@ export default class YoutubeClass extends CoreClass {
                     liveChatId: id || this.hook.liveChatId,
                     type: 'textMessageEvent',
                     textMessageDetails: {
-                        messageText: 'test',
+                        messageText: text,
                     },
                 },
-            })
+            }),
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                'Content-Type': 'application/json',
+            }
         }).then((response) => response.json()).then((data) => console.log('send comment - ', data))
     }
 }

@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'football-app',
+  appId: 'com.vdg.prosperapps',
+  appName: 'Vozes do Gigante',
   webDir: 'build',
   server: {
     androidScheme: 'https'

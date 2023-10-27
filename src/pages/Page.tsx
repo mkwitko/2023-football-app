@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IonContent } from '@ionic/react';
 import Categories from '../components/core/categories/Categories';
 import NewsCard from '../components/home/cards/NewsCard';
 import { Context } from '../context/Context';
 import HomeMatchCardSwiper from './components/HomeMatchCardSwiper';
 import Feed from './components/Feed';
+import Navigation from 'src/services/Navigation';
+import Toast from 'src/services/Toast';
+import Cookies from 'js-cookie';
 
 const Page: React.FC = () => {
-    const { noticias, hook, feeds } = useContext(Context);
+    const { user, noticias, hook, feeds } = useContext(Context);
 
     const findMatches = () => {
         const nextGame = hook.games.findIndex((e: any) => {
@@ -18,6 +21,17 @@ const Page: React.FC = () => {
         return [...pastGamesToShow, ...postGamesToShow];
     };
     const gamesToShow = findMatches();
+
+
+    const { navigateTo } = Navigation();
+
+    useEffect(() => {
+        if (user.hook.data && !user.hook.data.youtubeEmail && Cookies.get('showProfileToast') !== 'true') {
+            Toast().info('Preencha o seu perfil e sincronize sua conta do Youtube para aproveitar todas funcionalidades da aplicação.');
+            navigateTo('/profile');
+            Cookies.set('showProfileToast', 'true', { expires: 1 });
+        }
+    }, [user.hook.data])
 
     return (
         <IonContent fullscreen>
