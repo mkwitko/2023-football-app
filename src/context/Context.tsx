@@ -16,6 +16,7 @@ import WalletClass from 'src/classes/Wallet/WalletClass';
 import OrdersClass from 'src/classes/Orders/OrdersClass';
 import { decrypt } from 'src/services/Encrypt';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass';
 
 interface ContextProps {
     banner: BannerClass;
@@ -23,6 +24,7 @@ interface ContextProps {
     notificacoes: NotificacoesClass;
     propaganda: PropagandaClass;
     user: UserClass;
+    userPurchases: UserPurchaseClass;
     eventos: EventosClass;
     findGames: any;
     findTable: any;
@@ -47,6 +49,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         eventos,
         propaganda,
         user,
+        userPurchases,
         youtube,
         feeds,
         orders,
@@ -61,6 +64,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         delete classes['user'];
+        delete classes['userPurchases'];
         delete classes['wallets'];
         Object.keys(classes).forEach((classe: any) => {
             classes[classe].setClass(true).then((res: any) => {
@@ -77,6 +81,9 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                         user.hook.setData(res);
                     }
                 });
+                userPurchases.setClassById(true, res.uid).then((res) => {
+                    if (res) userPurchases.hook.setData(res.historic);
+                })
                 wallets.getHttp(res.uid).then((res: any) => {
                     if (res) {
                         const balance = +decrypt(res.balance);
@@ -93,25 +100,41 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         findGames();
     }, []);
 
-    const login =
-        useGoogleLogin({
-            onSuccess: tokenResponse => {
-                fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokenResponse.access_token).then(response => {
-                    response.json().then(data => {
-                        console.log(data);
-                    })
-                })
-            },
-            scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl',
-        });
-
     useEffect(() => {
         if (user.hook.data && user.hook.data.access_token) {
+            fetch('https://www.googleapis.com/youtube/v3/members', {
+                headers: {
+                    Authorization: 'Bearer ' + user.hook.data.access_token
+                }
+            }).then(response => {
+                response.json().then(data => {
+                    console.log('members - ', data);
+                })
+            })
             fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + user.hook.data.access_token).then(response => {
                 response.json().then(data => {
                     if (data.error) {
-                        setIsLogout(true);
-                        // login();
+                        fetch('https://accounts.google.com/o/oauth2/token', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                client_id: '74278825081-0vk8jpjve3talba3gdtgbuaot5o5f39p.apps.googleusercontent.com',
+                                client_secret: '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',
+                                refresh_token: user.hook.data.refresh_token,
+                                grant_type: 'refresh_token',
+                            })
+                        }).then(response => {
+                            response.json().then(data => {
+                                user.update({
+                                    access_token: data.access_token
+                                })
+                                user.hook.setData((prevData: any) => {
+                                    return {
+                                        ...prevData,
+                                        access_token: data.access_token
+                                    }
+                                })
+                            })
+                        })
                     } else
                         console.log('logged gmail user - ', data);
                 })
@@ -127,6 +150,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                 notificacoes,
                 propaganda,
                 user,
+                userPurchases,
                 eventos,
                 findGames,
                 findTable,

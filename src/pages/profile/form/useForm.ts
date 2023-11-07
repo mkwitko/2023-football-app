@@ -41,7 +41,8 @@ export default function ProfileForm({ setEdit }: any) {
         cellphone,
         avatar,
         avatarChanged,
-        access_token
+        access_token,
+        refresh_token
     }: Form) => {
         let imagePath = '';
 
@@ -51,10 +52,10 @@ export default function ProfileForm({ setEdit }: any) {
             youtubeEmail,
             cpf,
             cellphone,
-            access_token
+            access_token,
+            refresh_token
         }
         if (avatarChanged) {
-            console.log('entered');
             if(user.hook.data.fileName) {
                 user.deleteFile(user.hook.data.fileName);
             }

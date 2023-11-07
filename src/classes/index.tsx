@@ -7,6 +7,7 @@ import OrdersClass from './Orders/OrdersClass';
 import PropagandaClass from './Propaganda/PropagandaClass';
 import SurveysClass from './Surveys/SurverysClass';
 import UserClass from './User/UserClass';
+import UserPurchaseClass from './UserPurchase/UserPurchasesClass';
 import WalletClass from './Wallet/WalletClass';
 import YoutubeClass from './Youtube/YoutubeClass';
 
@@ -17,6 +18,7 @@ export default function Classes() {
   const notificacoes = new NotificacoesClass();
   const propaganda = new PropagandaClass();
   const user = new UserClass();
+  const userPurchases = new UserPurchaseClass();
   const youtube = new YoutubeClass();
   const feeds = new FeedsClass();
   const surveys = new SurveysClass();
@@ -30,6 +32,7 @@ export default function Classes() {
     eventos,
     propaganda,
     user,
+    userPurchases,
     orders,
     youtube,
     feeds,

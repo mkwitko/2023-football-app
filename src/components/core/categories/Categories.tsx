@@ -3,6 +3,8 @@ import { BsFillTicketPerforatedFill } from 'react-icons/bs';
 import { AiFillShop, AiFillTrophy, AiFillCarryOut } from 'react-icons/ai';
 import { BiSolidWallet } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 export default function Categories() {
   const history = useHistory();
@@ -42,8 +44,8 @@ export default function Categories() {
             click.preventDefault();
             if (e.url) history.push(e.url);
             if (e.link) {
-              // TODO navegação para fora do app
-              window.open(e.link, '_blank');
+                if (Capacitor.getPlatform() === 'web') window.open(e.link);
+                else Browser.open({ url: e.link });
             }
           }}
           className={`flex flex-col items-center justify-center rounded-[0.625rem] gap-2 w-[5rem] h-[5rem] aspect-square shadow-md border border-white/50`}

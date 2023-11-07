@@ -31,9 +31,9 @@ export default function News() {
                             />
                             <div className="px-6 py-4">
                                 <div className='flex items-center gap-2 mb-2'>
-                                    <img className='rounded-full h-8 w-8' src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg" alt="" />
+                                    <img className='rounded-full h-8 w-8' src={e.author && e.author.avatar ? e.author.avatar : 'https://shorturl.at/qGJRY'} alt="" />
                                     <div className='flex flex-col'>
-                                        <span className='text-primary-900 text-[0.75rem] font-bold'>Nome do autor</span>
+                                        <span className='text-primary-900 text-[0.75rem] font-bold'>{e.author && e.author.name ? e.author.name : 'Autor Desconhecido'}</span>
                                         <span className='text-primary-900 text-[0.6rem]'>
                                             {e.createdAt}
                                         </span>

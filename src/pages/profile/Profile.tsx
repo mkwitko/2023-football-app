@@ -14,32 +14,31 @@ export default function Profile() {
 
     const login = useGoogleLogin({
         onSuccess: tokenResponse => {
-            console.log(tokenResponse);
-            // fetch('http://localhost:3000/google-oauth', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({
-            //         code: tokenResponse.code,
-            //     })
-            // }).then(response => {
-            //     response.json().then(data => {
-            //         console.log(data);
-            //     })
-            // }) 
-            fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + tokenResponse.access_token).then(response => {
-                response.json().then(data => {
-                    if (data.email) {
-                        setValue('youtubeEmail', data.email);
-                        setValue('access_token', tokenResponse.access_token);
-                        Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
-                    }
+            fetch('http://localhost:3000/google-oauth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    code: tokenResponse.code,
                 })
-            })
+            }).then(response => {
+                response.json().then(data => {
+                    setValue('access_token', data.access_token);
+                    setValue('refresh_token', data.refresh_token);
+                    fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
+                        response.json().then(data => {
+                            if (data.email) {
+                                setValue('youtubeEmail', data.email);
+                                Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                            }
+                        })
+                    })
+                })
+            }) 
         },
-        scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl',
-        // flow: 'auth-code',
+        scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
+        flow: 'auth-code',
     });
 
     return (

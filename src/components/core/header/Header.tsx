@@ -2,9 +2,11 @@ import React from 'react';
 import { IonHeader } from '@ionic/react';
 import HeaderSwiper from './Swiper';
 
-const Header = () => {
+const Header = ({className = ''}: {
+    className?: string;
+}) => {
   return (
-    <IonHeader className="h-[15%]">
+    <IonHeader className={`${className} h-[15%]`}>
       <HeaderSwiper />
     </IonHeader>
   );

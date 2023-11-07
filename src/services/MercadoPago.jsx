@@ -14,7 +14,7 @@ import { checkClipboard, writeToClipboard } from './Clipboard';
 import Toast from './Toast';
 
 export default function MercadoPago({ componentProps }) {
-    const key = 'APP_USR-d575b9e1-4fc1-447f-8ef7-51fc0f6e4a5e'
+    const key = 'TEST-e665ba26-48bc-4bc0-aef3-2be1d76fb7c6'
     initMercadoPago(key);
 
     const [qrCode, setQrCode] = React.useState(null);
@@ -63,8 +63,8 @@ export default function MercadoPago({ componentProps }) {
 
 
         return new Promise((resolve, reject) => {
-            const url = 'https://football-back.fly.dev';
-            // const url = 'http://localhost:3000';
+            // const url = 'https://football-back.fly.dev';
+            const url = 'http://localhost:3000';
             fetch(`${url}/payments`, {
                 method: 'POST',
                 headers: {
@@ -78,15 +78,15 @@ export default function MercadoPago({ componentProps }) {
                         if (data.type === 'pix') {
                             setQrCode(data.qr_code);
                         }
-                        console.log(data);
                         resolve(true);
                     });
                 })
                 .catch((error) => {
                     reject();
                 }).finally(() => {
-                    // componentProps.close();
-                });
+                    if(!selectedPaymentMethod === 'bank_transfer')
+                    componentProps.close();
+                })
         });
     };
     const onError = async (error) => {

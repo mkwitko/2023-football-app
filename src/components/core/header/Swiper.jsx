@@ -3,18 +3,11 @@ import React, { useContext, useEffect } from 'react';
 import { IonButtons, IonMenuButton, IonToolbar } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Context } from '../../../context/Context';
-import { getCache, setCache } from 'src/services/Cache';
 
 export default function HeaderSwiper() {
     const { banner } = useContext(Context);
 
-    const cache = getCache('swiper');
-
     const banners = banner.hook.data && banner.hook.data.filter((e) => e.active);
-
-    useEffect(() => {
-        console.log(banners);
-    }, [])
 
     return (
         <>

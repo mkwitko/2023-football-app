@@ -42,9 +42,9 @@ export default function NewsDetails() {
                         />
                         <div className="p-4 pb-40">
                             <div className='flex items-center gap-2 mb-2'>
-                                <img className='rounded-full h-8 w-8' src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg" alt="" />
+                                <img className='rounded-full h-8 w-8' src={news.author && news.author.avatar ? news.author.avatar : 'https://shorturl.at/qGJRY'} alt="" />
                                 <div className='flex flex-col'>
-                                    <span className='text-primary-900 text-[0.75rem] font-bold'>Nome do autor</span>
+                                <span className='text-primary-900 text-[0.75rem] font-bold'>{news.author && news.author.name ? news.author.name : 'Autor Desconhecido'}</span>
                                     <span className='text-primary-900 text-[0.6rem]'>
                                         {news.createdAt}
                                     </span>

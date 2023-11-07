@@ -18,7 +18,7 @@ export default function Wallet() {
         componentProps: {
             id: user.hook.data ? user.hook.data.id : '',
             close: () => handleCloseModal(),
-            value: Number(value.replace('R$', ''))
+            value: parseInt(value.replace('R$', '').replace(/\./g, ""), 10) / 100
         },
         onDismiss: () => dismiss(),
     });
@@ -32,7 +32,7 @@ export default function Wallet() {
         present({
             onDidDismiss: () => {
                 wallets.getHttp(user.hook.data.id).then((res: any) => {
-                    if(res){
+                    if (res) {
                         const balance = +decrypt(res.balance);
                         wallets.hook.setData({
                             id: res.id,
@@ -47,57 +47,59 @@ export default function Wallet() {
     const db = getFirestore(firebase_app);
 
     useEffect(() => {
-        const q = query(collection(db, "wallets"),
-            where('id', '==', user.hook.data.id || ''));
-        onSnapshot(q, (querySnapshot) => {
-            querySnapshot.docChanges().forEach((change) => {
-                const data = change.doc.data();
-                if (change.type === "modified") {
-                    const balance = +decrypt(data.balance);
-                    wallets.hook.setData({
-                        id: user.hook.data.id,
-                        balance
-                    });
-                    Toast().success('Saldo atualizado');
-                    dismiss();
-                }
-            })
-        });
-    }, [])
+        if (user.hook.data && user.hook.data.id) {
+            const q = query(collection(db, "wallets"),
+                where('id', '==', user.hook.data.id || ''));
+            onSnapshot(q, (querySnapshot) => {
+                querySnapshot.docChanges().forEach((change) => {
+                    const data = change.doc.data();
+                    if (change.type === "modified") {
+                        const balance = +decrypt(data.balance);
+                        wallets.hook.setData({
+                            id: user.hook.data.id,
+                            balance
+                        });
+                        Toast().success('Saldo atualizado');
+                        dismiss();
+                    }
+                })
+            });
+        }
+    }, [user.hook.data])
 
     return (
         <IonContent fullscreen>
-        <div className='flex flex-col p-8 gap-8'>
-            <div className='flex flex-col'>
-                <p className='text-primary font-bold'>Carteira</p>
-                <p className='text-[0.75rem]'>Nossas diretrizes respondem todas as dúvidas, antes de fazer pagamentos pelo aplicativo por favor, <a href='https://www.google.com.br' className='text-[0.75rem] text-primary'>leia elas aqui.</a></p>
-            </div>
-            <div className='flex items-center w-full justify-between'>
-                <p className='text-primary font-bold'>Saldo em conta</p>
-                <p className='text-primary font-bold'>R${(+wallets.hook.data.balance).toFixed(2) || 0}</p>
-            </div>
-            <div className='flex flex-col gap-8'>
-                <div>
-                    <p className='text-primary font-bold'>Adicionar Saldo</p>
-                    <div className='flex items-center w-full justify-between'>
-                        <p className='text-primary-900 text-[0.75rem] font-bold w-full'>Quantia a ser adicionada</p>
-                        <input step="0.5" className='border-b p-2 pb-0 w-[45%] text-end bg-transparent font-bold text-primary-900' type="text" value={value} onChange={(e) => {
-                            const mask = moneyMask(e.target.value);
-                            setValue(mask);
-                        }} />
-                    </div>
+            <div className='flex flex-col p-8 gap-8'>
+                <div className='flex flex-col'>
+                    <p className='text-primary font-bold'>Carteira</p>
+                    <p className='text-[0.75rem]'>Nossas diretrizes respondem todas as dúvidas, antes de fazer pagamentos pelo aplicativo por favor, <a href='https://www.google.com.br' className='text-[0.75rem] text-primary'>leia elas aqui.</a></p>
+                </div>
+                <div className='flex items-center w-full justify-between'>
+                    <p className='text-primary font-bold'>Saldo em conta</p>
+                    <p className='text-primary font-bold'>R${wallets.hook.data.balance ? (+wallets.hook.data.balance).toFixed(2) : 0}</p>
                 </div>
                 <div className='flex flex-col gap-8'>
-                    <div onClick={() => {
-                        openModal();
-                    }} className='flex items-center justify-center border bg-primary border-primary rounded-[0.625rem] px-6 py-3 cursor-pointer'>
-                        <button type='button' className='text-white font-bold h-full w-full'>
-                            Ir para o pagamento
-                        </button>
+                    <div>
+                        <p className='text-primary font-bold'>Adicionar Saldo</p>
+                        <div className='flex items-center w-full justify-between'>
+                            <p className='text-primary-900 text-[0.75rem] font-bold w-full'>Quantia a ser adicionada</p>
+                            <input step="0.5" className='p-2 pb-0 w-[45%] text-end bg-transparent font-bold text-primary-900' type="text" value={value} onChange={(e) => {
+                                const mask = moneyMask(e.target.value);
+                                setValue(mask);
+                            }} />
+                        </div>
+                    </div>
+                    <div className='flex flex-col gap-8'>
+                        <div onClick={() => {
+                            openModal();
+                        }} className='flex items-center justify-center border bg-primary border-primary rounded-[0.625rem] px-6 py-3 cursor-pointer'>
+                            <button type='button' className='text-white font-bold h-full w-full'>
+                                Ir para o pagamento
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </IonContent>
+        </IonContent>
     )
 }

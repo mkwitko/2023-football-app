@@ -4,12 +4,13 @@ import { useHistory } from 'react-router';
 import { setCache } from '../../../services/Cache';
 
 export default function NewsCard({ noticias }: { noticias: any }) {
+    console.log(noticias.hook.data);
     const history = useHistory();
     const limit = 2;
     return (
         <div className="flex overflow-x-auto gap-4">
             {noticias.hook.data.length > 0
-                ? noticias.hook.data
+                ? noticias.hook.data.sort((a: any, b: any) => b.timestamp - a.timestamp)
                     .map((e: any, i: number) => (
                         <div
                             key={i}
@@ -27,9 +28,9 @@ export default function NewsCard({ noticias }: { noticias: any }) {
                                 />
                                 <div className="flex flex-col gap-2 p-4">
                                     <div className='flex items-center gap-2'>
-                                        <img className='rounded-full h-8 w-8' src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg" alt="" />
+                                        <img className='rounded-full h-8 w-8' src={e.author && e.author.avatar ? e.author.avatar : 'https://shorturl.at/qGJRY'} alt="" />
                                         <div className='flex flex-col'>
-                                            <span className='text-primary-900 text-[0.75rem] font-bold'>Nome do autor</span>
+                                            <span className='text-primary-900 text-[0.75rem] font-bold'>{e.author && e.author.name ? e.author.name : 'Autor Desconhecido'}</span>
                                             <span className='text-primary-900 text-[0.6rem]'>
                                                 {e.createdAt}
                                             </span>

@@ -28,7 +28,8 @@ export const Schema = z.object({
   }),
   avatar: z.any(),
   avatarChanged: z.boolean(),
-  access_token: z.string()
+  access_token: z.string(),
+  refresh_token: z.string(),
 }).superRefine((data, ctx) => {
     if (data.avatar && data.avatar !== '') {
       if (data.avatar && typeof data.avatar !== 'string') {

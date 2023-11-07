@@ -1,5 +1,5 @@
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Page from '../pages/Page';
 import About from '../pages/about/About';
 import Calendar from '../pages/calendar/Calendar';
@@ -20,14 +20,25 @@ import SurveysPage from 'src/pages/surveys/Surveys';
 import Header from 'src/components/core/header/Header';
 import { IonPage } from '@ionic/react';
 import Footer from 'src/components/core/footer/Footer';
+import ClubDetails from 'src/pages/club/ClubDetails';
+import Purchases from 'src/pages/purchases/Purchases';
+import Channels from 'src/pages/channels/Channels';
 
 export default function Routing({ isLogged }: { isLogged: boolean }) {
+    const history = useHistory();
+
+    const [location, setLocation] = React.useState<string>('');
+
+   useEffect(() => {
+    setLocation(history.location.pathname);
+   },[history.location.pathname])
+
     return (
         <>
             <IonPage>
                 {isLogged ? (
                     <>
-                        <Header />
+                       {<Header className={location.includes('club/details') ? 'opacity-0 hidden transition-all' : 'opacity-100'} />}
                         <Switch>
                             <Route
                                 path="/home"
@@ -40,6 +51,12 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
                                 exact={true}
                             >
                                 <About />
+                            </Route>
+                            <Route
+                                path="/channels"
+                                exact={true}
+                            >
+                                <Channels />
                             </Route>
                             <Route
                                 path="/calendar"
@@ -95,6 +112,12 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
                             >
                                 <Profile />
                             </Route>
+                            <Route
+                                path="/purchases"
+                                exact={true}
+                            >
+                                <Purchases />
+                            </Route>
 
                             <Route
                                 path="/convenience"
@@ -114,6 +137,13 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
                                 exact={true}
                             >
                                 <Club />
+                            </Route>
+
+                            <Route
+                                path="/club/details"
+                                exact={true}
+                            >
+                                <ClubDetails />
                             </Route>
 
                             <Route

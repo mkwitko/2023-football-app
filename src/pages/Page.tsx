@@ -46,7 +46,7 @@ const Page: React.FC = () => {
                 </div>
 
                 <div className='flex overflow-x-auto px-4 sm:px-8 gap-4'>
-                    {feeds.hook.data.map((e: any, i: number) => (
+                    {feeds.hook.data.sort((a: any, b: any) => b.timestamp - a.timestamp).map((e: any, i: number) => (
                         <Feed key={i} feed={e} />
                     ))}
 

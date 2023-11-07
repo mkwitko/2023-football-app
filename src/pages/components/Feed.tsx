@@ -10,21 +10,20 @@ export default function Feed({ feed }: {
         <div>
             <div onClick={() => {
                 navigateTo('feed');
-            }} className='rounded-[0.625rem] bg-bgFeed text-white flex flex-col p-4 
-        h-[7rem] w-[55vw] overflow-hidden gap-2'>
-                <div className='flex items-center gap-2'>
-                    <img className='rounded-full h-8 w-8' src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg" alt="" />
+            }} className='border border-primary-800 rounded-[0.625rem] bg-transparent flex flex-col p-4 
+        h-[9rem] w-[75vw] overflow-hidden gap-2'>
+               <div className='flex items-center gap-2'>
+                    <img className='rounded-full h-8 w-8' src={feed.author && feed.author.avatar ? feed.author.avatar : 'https://shorturl.at/qGJRY'} alt="" />
                     <div className='flex flex-col'>
-                        <span className='text-white text-[0.75rem] font-bold'>Nome do autor</span>
-                        <span className='text-white text-[0.6rem]'>
+                        <span className='text-primary-900 text-[0.75rem] font-bold'>{feed.author && feed.author.name ? feed.author.name : 'Autor Desconhecido'}</span>
+                        <span className='text-primary-900 text-[0.6rem]'>
                             {feed.createdAt}
                         </span>
                     </div>
                 </div>
-                {/* <p className='font-bold mb-2 capitalize'>{title}</p> */}
-                <div className='text-[0.75rem] text-white'
+                <div className='text-[0.75rem] '
                     dangerouslySetInnerHTML={{
-                        __html: StringCutter(feed.description, 50, '...'),
+                        __html: StringCutter(feed.description, 200, '...'),
                     }}
                 ></div>
             </div>

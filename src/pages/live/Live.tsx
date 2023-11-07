@@ -36,14 +36,14 @@ export default function Live() {
         });
         setComment('');
         if (isPaid) {
-            fetch(`${process.env.REACT_APP_BACKEND_DEV}/pay`, {
+            fetch(`${process.env.REACT_APP_BACKEND_DEV}/payments/pay`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     user_id: user.hook.data.id,
-                    amount: value
+                    amount: -value
                 })
             })
         }

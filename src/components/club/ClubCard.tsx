@@ -1,57 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StringCutter } from '../../utils/StringUtils';
-import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
+import { Context } from 'src/context/Context';
+import Navigation from 'src/services/Navigation';
 
-export default function ClubCard({ data }: { data: any }) {
-  return (
-    <div className="flex items-center justify-center">
-      <div className="flex flex-col w-full bg-white rounded-b-[0.625rem] shadow-convenienceShadow sm:w-3/4 md:w-1/2 lg:w-3/5">
-        <div
-          className="w-full h-40 bg-top bg-cover rounded-t-[0.625rem]"
-          style={{
-            backgroundImage: `url(${data.imagePath})`,
-          }}
-        ></div>
-        <div className="flex flex-col w-full md:flex-row">
-          <div className="flex flex-row justify-start p-4 font-bold leading-none bg-primary-700 md:flex-col md:items-center md:justify-center md:w-1/4 mt-[-1rem] rounded-t-[0.625rem]">
-            <p className="text-white text-[1.25rem]">{data.title}</p>
-          </div>
-          <div className="flex flex-col gap-4 p-4 font-norma md:w-3/4">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: StringCutter(data.description, 265),
-              }}
-            ></div>
-            <div className="flex flex-col">
-              <div className="flex justify-between items-end">
-                <div className="flex flex-col">
-                  <p className="text-[0.75rem] font-bold text-primary-700">
-                    {/* TODO adicionar o dia */}
-                    {data.date} - Segunda Feira - {data.hour}
-                  </p>
-                  <p className="text-[0.75rem] font-bold text-primary-900 w-4/5 mt-4">
-                    {/* TODO adicionar endereço que vem do back ( ainda nao tem ) */}
-                    {data.local} - {data.neighborhood} - {data.number} - {data.address} - {data.city} 
-                  </p>
-                </div>
-                {data.link && (
-                  <button
-                    onClick={() => {
-                      if (Capacitor.getPlatform() === 'web')
-                        window.open(data.link);
-                      else Browser.open({ url: data.link });
-                    }}
-                    className="bg-primary-700 h-12 p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem]"
-                  >
-                    <p className="text-white">Acessar</p>
-                  </button>
-                )}
-              </div>
+export default function ClubCard({ data, disabled }: { data: any, disabled: boolean }) {
+    const { eventos } = useContext(Context);
+    const { navigateTo } = Navigation();
+
+    return (
+        <div className='flex gap-4 w-full'>
+            <div className='h-36 w-36 aspect-square'>
+                <img src={data.imagePath} alt="" className='rounded-[0.625rem] h-36 w-36 aspect-square' />
             </div>
-          </div>
+            <div className='flex flex-col gap-4'>
+               <div className='flex flex-col gap-2'>
+               <p className='text-primary-700 font-bold'>{data.title}</p>
+                <div
+                className='text-[0.85rem] font-light'
+                  dangerouslySetInnerHTML={{
+                    __html: StringCutter(data.description, 60),
+                  }}
+                ></div>
+               </div>
+               <div className='flex justify-end items-end flex-1'>
+                <button disabled={false} onClick={() => {
+                    eventos.hook.setCurrentEvent(data);
+                    navigateTo('/club/details')
+                    eventos.setCache(data, true, 'currentEvent');
+                }} type='button' className='disabled:opacity-50 text-white text-[0.75rem] bg-primary-700 py-2 px-6 rounded-[0.625rem]'>
+                    {!disabled ? 'Participar' : 'Você já está participando!'}
+                </button>
+               </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

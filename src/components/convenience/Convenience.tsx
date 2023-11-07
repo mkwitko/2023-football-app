@@ -4,14 +4,17 @@ import ModalProsper from '../Shadcn/Modal';
 import QRCode from 'qrcode.react';
 import { Context } from 'src/context/Context';
 import Navigation from 'src/services/Navigation';
+import QrCode from '../QRCODE/QrCode';
 
 export default function ConvenienceCard({ data }: { data: any }) {
-    const { propaganda } = useContext(Context);    
+    console.log(data);
+    const { propaganda } = useContext(Context);
     const { navigateTo } = Navigation();
 
     return (
         <>
             <div onClick={() => {
+                if (data.qrCode) return;
                 propaganda.hook.setCurrent(data);
                 navigateTo('/convenience/details')
             }}
@@ -43,13 +46,26 @@ export default function ConvenienceCard({ data }: { data: any }) {
                         )}
                         {data.qrCode && (
                             <ModalProsper.Modal>
-                                <ModalProsper.ModalTrigger>
-                                    <button className="bg-primary-700  p-4 rounded-[0.625rem] w-full font-bold uppercase text-[0.75rem] mt-auto">
-                                        <p className="text-white">QR Code</p>
-                                    </button>
+                                <ModalProsper.ModalTrigger>   <button className="bg-primary-700  p-4 rounded-[0.625rem] w-full font-bold uppercase text-[0.75rem] mt-auto">
+                                    <p className="text-white">QR Code</p>
+                                </button>
                                 </ModalProsper.ModalTrigger>
-                                <ModalProsper.ModalContent className='w-1/2 rounded-[0.625rem] gap-0'>
-                                    <QRCode value={data.qrCode} size={156} />
+                                <ModalProsper.ModalContent className='w-4/5 rounded-[0.625rem] gap-0 p-0'>
+                                    <ModalProsper.ModalHeader className='bg-primary rounded-t-[0.625rem]'>
+                                        <p className='text-[1.75rem] text-white font-bold capitalize p-4'>Desconto em Loja</p>
+                                    </ModalProsper.ModalHeader>
+                                    <div className='flex flex-col gap-4 p-4 items-center justify-center'>
+                                        <img className='w-3/5 h-auto' src={data.logoPath} alt="" />
+                                        <div
+                                            className="text-primary-900 text-center text-[0.75rem] font-light"
+                                            dangerouslySetInnerHTML={{
+                                                __html: StringCutter(data.description, 125),
+                                            }}
+                                        ></div>
+                                        <div className='border-2 p-3 rounded-[0.625rem]'>
+                                            <QRCode value={data.qrCode} size={180} />
+                                        </div>
+                                    </div>
                                 </ModalProsper.ModalContent>
                             </ModalProsper.Modal>
                         )}

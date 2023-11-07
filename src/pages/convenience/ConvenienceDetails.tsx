@@ -3,12 +3,16 @@ import React, { useContext, useEffect } from 'react'
 import { Context } from './../../context/Context';
 import Navigation from './../../services/Navigation';
 import { StringCutter } from '../../utils/StringUtils';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 export default function ConvenienceDetails() {
     const { propaganda } = useContext(Context);
     const { navigateTo } = Navigation();
     useEffect(() => {
         if (!propaganda.hook.current) goBack();
+
+        console.log(propaganda.hook.current);
     }, [])
 
     const goBack = () => {
@@ -18,39 +22,28 @@ export default function ConvenienceDetails() {
         <IonContent fullscreen>
             {propaganda.hook.current && (
                 <div className='flex flex-col p-8 gap-4'>
-                    <img className='w-16 h-auto' src={propaganda.hook.current.logoPath} alt="" />
-                    <div className='text-primary-900 border-b border-primary-900 pb-4'
-                        dangerouslySetInnerHTML={{
-                            __html: StringCutter(propaganda.hook.current.description),
-                        }}
-                    />
-                    <div className='flex gap-8'>
-                        <div className='w-[40%]'>
-                            <img className='aspect-square w-full h-full rounded-[0.625rem]' src={propaganda.hook.current.imagePath} alt="" />
-                        </div>
-                        <div className='w-[60%]'>
-                            <p>{propaganda.hook.current.title}</p>
-                            <p className='font-bold mt-4'>Regras:</p>
-                            <ol>
-                                <li className='ml-2'>Todo o brasil</li>
-                                <li className='ml-2'>Maiores de 18 anos</li>
-                                <li className='ml-2'>Ser vip no app</li>
-                            </ol>
-                        </div>
+                    <img className='w-32 h-auto' src={propaganda.hook.current.logoPath} alt="" />
+                    <p className='text-primary font-bold border-b pb-4 border-primary'>{propaganda.hook.current.title}</p>
+                    <div className='flex gap-8 h-[15rem]'>
+                        <img className='aspect-square w-full h-full rounded[0.325rem]' src={propaganda.hook.current.imagePath} alt="" />
                     </div>
-
-                    <p className='text-center mt-4'>
-                        O premio será enviado em até 15 dias úteis à partir da data do anuncio do vencedor. Nunca pediremos suas senhas pessoais ou entraremos em contato por meios não oficiais.
-                    </p>
-
-                    <div className='flex items-center justify-between w-full mt-4'>
-                        <div className='bg-primary text-white py-2 px-6 rounded-[0.625rem]'>
+                    <div className='text-primary-900'
+                        dangerouslySetInnerHTML={{
+                            __html: StringCutter(propaganda.hook.current.description, 9999),
+                        }}
+                    ></div>
+                    <div className='flex items-center justify-between w-full'>
+                        <div className='text-[0.75rem] bg-white border border-primary-700 text-primary-700 py-2 px-6 rounded-[0.625rem]'>
                             <button onClick={goBack} type='button' >
                                 Voltar
                             </button>
                         </div>
-                        <div className='border border-primary-900 py-2 px-6 rounded-[0.625rem]'>
-                            <button type='button'>
+                        <div className='bg-primary-700 text-[0.75rem] text-white py-2 px-6 rounded-[0.625rem]'>
+                            <button onClick={() => {
+
+                                if (Capacitor.getPlatform() === 'web') window.open(propaganda.hook.current.link);
+                                else Browser.open({ url: propaganda.hook.current.link });
+                            }} type='button'>
                                 Participar
                             </button>
                         </div>

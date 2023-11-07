@@ -62,8 +62,8 @@ const appPages: AppPage[] = [
         icon: <BsYoutube />,
     },
     {
-        title: 'Canal Vozes do Gigante',
-        url: '/',
+        title: 'Canais do Youtube',
+        url: '/channels',
         icon: <BsYoutube />,
     },
     {
@@ -73,7 +73,7 @@ const appPages: AppPage[] = [
     },
     {
         title: 'Histórico de Compras',
-        url: '/',
+        url: '/purchases',
         icon: <MdWorkHistory />,
     },
 ];

@@ -7,7 +7,6 @@ const isMobile = isPlatform('mobile');
 export const writeToClipboard = async ({value}:{
     value: string
 }) => {
-    console.log('value - ', value);
  if(isMobile) {
     await Clipboard.write({
         string: value
