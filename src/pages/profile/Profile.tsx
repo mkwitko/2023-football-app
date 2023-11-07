@@ -14,7 +14,7 @@ export default function Profile() {
 
     const login = useGoogleLogin({
         onSuccess: tokenResponse => {
-            fetch('http://localhost:3000/google-oauth', {
+            fetch('https://football-back.fly.dev/google-oauth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

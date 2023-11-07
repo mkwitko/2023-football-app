@@ -63,8 +63,8 @@ export default function MercadoPago({ componentProps }) {
 
 
         return new Promise((resolve, reject) => {
-            // const url = 'https://football-back.fly.dev';
-            const url = 'http://localhost:3000';
+            const url = 'https://football-back.fly.dev';
+            // const url = 'http://localhost:3000';
             fetch(`${url}/payments`, {
                 method: 'POST',
                 headers: {
