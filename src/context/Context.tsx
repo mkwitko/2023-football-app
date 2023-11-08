@@ -65,6 +65,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         delete classes['user'];
         delete classes['userPurchases'];
+        delete classes['orders'];
         delete classes['wallets'];
         Object.keys(classes).forEach((classe: any) => {
             classes[classe].setClass(true).then((res: any) => {
@@ -81,6 +82,9 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                         user.hook.setData(res);
                     }
                 });
+                orders.setClassById(true, res.uid).then((res) => {
+                    if (res) orders.hook.setData(res);
+                })
                 userPurchases.setClassById(true, res.uid).then((res) => {
                     if (res) userPurchases.hook.setData(res.historic);
                 })

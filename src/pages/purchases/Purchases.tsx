@@ -17,7 +17,7 @@ export default function Calendar() {
                     {userPurchases.hook.data && userPurchases.hook.data.map((item: any) => (
                         <PurchaseCard data={item} />
                     ))}
-                    {orders.hook.data && orders.hook.data[0].orders.map((item: any) => (
+                    {orders.hook.data && orders.hook.data[0]?.orders.map((item: any) => (
                         <OrderCard data={item} />
                     ))}
                 </div>
@@ -58,7 +58,6 @@ const OrderCard = ({
 }: {
     data: any
 }) => {
-    console.log(data);
 
     const action = () => {
         // TODO mostrar QR CODE

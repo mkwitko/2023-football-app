@@ -70,6 +70,7 @@ export default function ProfileForm({ setEdit }: any) {
             }
         }
 
+        console.log('sent - ', data);
        
         await user.update(data).then(() => {
             user.setClassById(true, user?.hook?.data?.id).then((res) => {
