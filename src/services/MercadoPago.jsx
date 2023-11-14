@@ -56,6 +56,7 @@ export default function MercadoPago({ componentProps }) {
             payment_method_id: formData.payment_method_id || '',
             transaction_amount: +componentProps.value,
             user_id: componentProps.id,
+            user: componentProps.user,
         }
         if (selectedPaymentMethod === 'bank_transfer')
             delete bodyJson.issuer_id;

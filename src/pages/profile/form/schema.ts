@@ -17,19 +17,17 @@ export const Schema = z.object({
       required_error: 'E-mail é obrigatório',
     })
     .email('E-mail inválido'),
-  youtubeEmail: z.string({
-    required_error: 'E-mail é obrigatório',
-  }),
+  youtubeEmail: z.string().optional(),
   cpf: z.string({
     required_error: 'CPF é obrigatório',
   }),
   cellphone: z.string({
     required_error: 'Celular é obrigatório',
   }),
-  avatar: z.any(),
-  avatarChanged: z.boolean(),
-  access_token: z.string(),
-  refresh_token: z.string(),
+  avatar: z.any().optional(),
+  avatarChanged: z.boolean().optional(),
+  access_token: z.string().optional(),
+  refresh_token: z.string().optional(),
 }).superRefine((data, ctx) => {
     if (data.avatar && data.avatar !== '') {
       if (data.avatar && typeof data.avatar !== 'string') {

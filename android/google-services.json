@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "74278825081",
+    "firebase_url": "https://vozesdogigante-82da5-default-rtdb.firebaseio.com",
+    "project_id": "vozesdogigante-82da5",
+    "storage_bucket": "vozesdogigante-82da5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74278825081:android:a9e3ac26dd778da32f38a8",
+        "android_client_info": {
+          "package_name": "com.vdg.prosperapps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74278825081-l47g18kb7mkc8rj819nbrsaih3mllne6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vdg.prosperapps",
+            "certificate_hash": "812b23cf8ab0a074cbf9648eaa6b6581d37247e7"
+          }
+        },
+        {
+          "client_id": "74278825081-5hauafe62j7konu89r3q5rsrne6l61lb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUcwVfwKZtX46VNbB4xwAPfJzbuFwJiIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74278825081-0vk8jpjve3talba3gdtgbuaot5o5f39p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "74278825081-a2ogi16sqibq7tchq2r7f6orr1309aiq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vdg.prosperapps"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

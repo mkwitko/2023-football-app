@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     IonApp,
     IonRouterOutlet,
     IonSplitPane,
+    isPlatform,
     setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -28,6 +29,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Capacitor } from '@capacitor/core';
 
 
 // register Swiper custom elements
@@ -43,8 +45,14 @@ const App: React.FC = () => {
         setIsLogged(user !== null);
     });
 
+    const getClientId = () => {
+        if (Capacitor.getPlatform() === 'ios') return '74278825081-a2ogi16sqibq7tchq2r7f6orr1309aiq.apps.googleusercontent.com';
+        if (Capacitor.getPlatform() === 'android') return '74278825081-l47g18kb7mkc8rj819nbrsaih3mllne6.apps.googleusercontent.com';
+        return '74278825081-0vk8jpjve3talba3gdtgbuaot5o5f39p.apps.googleusercontent.com'
+    }
+
     return (
-        <GoogleOAuthProvider clientId={'74278825081-0vk8jpjve3talba3gdtgbuaot5o5f39p.apps.googleusercontent.com'}>
+        <GoogleOAuthProvider clientId={getClientId()}>
             <IonApp>
                 <IonReactRouter>
                     <ContextProvider>

@@ -1,30 +1,38 @@
 import { Context } from 'src/context/Context';
 import { IonContent } from '@ionic/react';
 import React, { useContext } from 'react';
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
 
 export default function Channels() {
 
-    const { orders, userPurchases } = useContext(Context);
+    const { channels } = useContext(Context);
     return (
         <IonContent fullscreen>
             <div className='flex flex-col px-4 sm:px-8 pt-8 gap-8'>
                 <div className='flex flex-col gap-4'>
                     <p className='uppercase text-primary-700 font-bold'>Playlists</p>
                     <div className='flex justif gap-4 flex-wrap'>
-                        {[0, 1, 2, 3, 4, 5].map((e) => (
-                            <div className='rounded-[0.625rem] w-[20%] aspect-square h-auto' style={{
-                                backgroundImage: 'url(https://i.ytimg.com/vi/9XaS93WMRQQ/maxresdefault.jpg)',
-                            }} />
+                        {channels.hook.data?.filter((e: any) => e.type === 'playlist').map((e: any) => (
+                            <img onClick={() => {
+                                if (e.link) {
+                                    if (Capacitor.getPlatform() === 'web') window.open(e.link);
+                                    else Browser.open({ url: e.link });
+                                }
+                            }} className='rounded-[0.625rem] w-[20%] aspect-square h-auto' src={e.imagePath} alt="" />
                         ))}
                     </div>
                 </div>
                 <div className='flex flex-col gap-4'>
                     <p className='uppercase text-primary-700 font-bold'>Canais do Youtube</p>
                     <div className='flex justif gap-4 flex-wrap'>
-                        {[0, 1, 2, 3, 4, 5].map((e) => (
-                            <div className='rounded-[0.625rem] w-[20%] aspect-square h-auto' style={{
-                                backgroundImage: 'url(https://i.ytimg.com/vi/9XaS93WMRQQ/maxresdefault.jpg)',
-                            }} />
+                        {channels.hook.data?.filter((e: any) => e.type === "partners").map((e: any) => (
+                            <img onClick={() => {
+                                if (e.link) {
+                                    if (Capacitor.getPlatform() === 'web') window.open(e.link);
+                                    else Browser.open({ url: e.link });
+                                }
+                            }} className='rounded-[0.625rem] w-[20%] aspect-square h-auto' src={e.imagePath} alt="" />
                         ))}
                     </div>
                 </div>

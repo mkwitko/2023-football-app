@@ -45,14 +45,11 @@ const Page: React.FC = () => {
                     <HomeMatchCardSwiper gamesToShow={gamesToShow} />
                 </div>
 
-                <div className='flex overflow-x-auto px-4 sm:px-8 gap-4'>
-                    {feeds.hook.data.sort((a: any, b: any) => b.timestamp - a.timestamp).map((e: any, i: number) => (
-                        <Feed key={i} feed={e} />
-                    ))}
-
+                <div className='flex gap-6 px-4 sm:px-8'>
+                    <Feed feeds={feeds.hook.data} />
                 </div>
 
-                <div className="flex flex-col gap-6 px-4 sm:px-8 mb-8">
+                <div className="flex gap-6 px-4 sm:px-8 mb-8">
                     <NewsCard noticias={noticias} />
                 </div>
             </div>

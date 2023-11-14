@@ -43,7 +43,15 @@ export default function Live() {
                 },
                 body: JSON.stringify({
                     user_id: user.hook.data.id,
-                    amount: -value
+                    user: user.hook.data,
+                    amount: -value,
+                    purchase: {
+                        date: new Date(),
+                        type: 'live',
+                        comment, 
+                        isPaid,
+                        value,
+                    }
                 })
             })
         }

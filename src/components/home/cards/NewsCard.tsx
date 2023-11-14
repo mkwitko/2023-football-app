@@ -4,7 +4,6 @@ import { useHistory } from 'react-router';
 import { setCache } from '../../../services/Cache';
 
 export default function NewsCard({ noticias }: { noticias: any }) {
-    console.log(noticias.hook.data);
     const history = useHistory();
     const limit = 2;
     return (

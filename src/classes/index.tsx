@@ -1,4 +1,5 @@
 import BannerClass from './Banners/BannerClass';
+import ChannelsClass from './Channels/ChannelsClass';
 import EventosClass from './Eventos/EventosClass';
 import FeedsClass from './Feeds/FeedsClass';
 import NoticiasClass from './Noticias/NoticiaClass';
@@ -13,6 +14,7 @@ import YoutubeClass from './Youtube/YoutubeClass';
 
 export default function Classes() {
   const banner = new BannerClass();
+  const channels = new ChannelsClass();
   const noticias = new NoticiasClass();
   const eventos = new EventosClass();
   const notificacoes = new NotificacoesClass();
@@ -27,6 +29,7 @@ export default function Classes() {
 
   return {
     banner,
+    channels,
     noticias,
     notificacoes,
     eventos,

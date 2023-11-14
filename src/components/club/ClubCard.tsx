@@ -12,13 +12,13 @@ export default function ClubCard({ data, disabled }: { data: any, disabled: bool
             <div className='h-36 w-36 aspect-square'>
                 <img src={data.imagePath} alt="" className='rounded-[0.625rem] h-36 w-36 aspect-square' />
             </div>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-4 w-full'>
                <div className='flex flex-col gap-2'>
                <p className='text-primary-700 font-bold'>{data.title}</p>
                 <div
                 className='text-[0.85rem] font-light'
                   dangerouslySetInnerHTML={{
-                    __html: StringCutter(data.description, 60),
+                    __html: StringCutter(data.subtitle, 60),
                   }}
                 ></div>
                </div>

@@ -6,8 +6,11 @@ import { Avatar } from './Avatar';
 import { useGoogleLogin } from '@react-oauth/google';
 import { FcGoogle } from 'react-icons/fc';
 import Toast from 'src/services/Toast';
+import Navigation from 'src/services/Navigation';
 
 export default function Profile() {
+    const { navigateTo } = Navigation();
+
     const [edit, setEdit] = React.useState(false);
     const { register, handleSubmit, errors, isSubmitting, submit, setValue, watch } =
         ProfileForm({ setEdit });
@@ -36,6 +39,9 @@ export default function Profile() {
                     })
                 })
             }) 
+        },
+        onError: error => {
+            console.log('error - ', error);
         },
         scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
         flow: 'auth-code',
@@ -167,6 +173,7 @@ export default function Profile() {
                                 <input
                                     disabled={!edit || isSubmitting}
                                     id="cpf"
+                                    maxLength={14}
                                     {...register('cpf')}
                                     type="text"
                                     autoComplete="cpf"
@@ -191,6 +198,7 @@ export default function Profile() {
                                 <input
                                     disabled={!edit || isSubmitting}
                                     id="cellphone"
+                                    maxLength={15}
                                     {...register('cellphone')}
                                     type="telephone"
                                     autoComplete="cellphone"
@@ -205,7 +213,7 @@ export default function Profile() {
                         </div>
 
                         <div className="flex flex-col gap-2">
-                            <button
+                            <button 
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
@@ -218,6 +226,7 @@ export default function Profile() {
                                 disabled={isSubmitting}
                                 onClick={() => {
                                     setEdit(false);
+                                    navigateTo('/home');
                                 }}
                                 className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >

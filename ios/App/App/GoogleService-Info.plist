@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>74278825081-a2ogi16sqibq7tchq2r7f6orr1309aiq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.74278825081-a2ogi16sqibq7tchq2r7f6orr1309aiq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>74278825081-l47g18kb7mkc8rj819nbrsaih3mllne6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC9OFO4zG3bWB0QM3brEiQP3VgzP9aUpss</string>
+	<key>GCM_SENDER_ID</key>
+	<string>74278825081</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vdg.prosperapps</string>
+	<key>PROJECT_ID</key>
+	<string>vozesdogigante-82da5</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vozesdogigante-82da5.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:74278825081:ios:f53038a157f69cf72f38a8</string>
+	<key>DATABASE_URL</key>
+	<string>https://vozesdogigante-82da5-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

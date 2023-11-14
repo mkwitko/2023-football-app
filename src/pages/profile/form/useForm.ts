@@ -3,6 +3,7 @@ import { Form, Schema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Context } from '../../../context/Context';
+import Toast from 'src/services/Toast';
 
 export default function ProfileForm({ setEdit }: any) {
     const { user } = useContext(Context)
@@ -48,12 +49,18 @@ export default function ProfileForm({ setEdit }: any) {
 
         let data: any = {
             id: user?.hook?.data?.id || '',
-            name: username,
+            username,
             youtubeEmail,
             cpf,
             cellphone,
-            access_token,
-            refresh_token
+        }
+
+        if(access_token && refresh_token) {
+            data = {
+                ...data,
+                access_token,
+                refresh_token
+            }
         }
         if (avatarChanged) {
             if(user.hook.data.fileName) {
@@ -69,14 +76,13 @@ export default function ProfileForm({ setEdit }: any) {
                 fileName:  user.hook.data.id + '/' + avatar.name
             }
         }
-
-        console.log('sent - ', data);
        
         await user.update(data).then(() => {
             user.setClassById(true, user?.hook?.data?.id).then((res) => {
                 user.hook.setData(res);
                 setEdit(false);
                 setValue('avatarChanged', false);
+                Toast().success('Perfil atualizado com sucesso!');
             });
         })
     };

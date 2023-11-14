@@ -66,6 +66,7 @@ export default function ClubDetails() {
                             },
                             body: JSON.stringify({
                                 user_id: user.hook.data.id,
+                                user: user.hook.data,
                                 amount: -currentEvent.price,
                                 purchase: {
                                     date: new Date(),
@@ -77,13 +78,12 @@ export default function ClubDetails() {
                                     link: currentEvent.link,
                                     price: currentEvent.price,
                                     privacy: currentEvent.privacy,
+                                    type: 'event'
                                 }
                             })
-                        }).then(res => res.json()).then(data => {
-                            // TODO Gerar qrcode
+                        }).then(res => res.json()).then(() => {
                             navigateTo('/club');
                             Toast().success('Ingresso adquirido com sucesso!');
-                            console.log(data);
                         }).finally(() => dismiss());
                     }
                 }],
@@ -106,7 +106,7 @@ export default function ClubDetails() {
                     <div
                         className='text-[0.85rem] text-white pt-4 w-full'
                         dangerouslySetInnerHTML={{
-                            __html: StringCutter(currentEvent.title, 60),
+                            __html: StringCutter(currentEvent.subtitle, 60),
                         }}
                     ></div>
                 </div>
@@ -152,7 +152,7 @@ export default function ClubDetails() {
                     {(currentEvent.price || currentEvent.link) && (
                         findHistoric() ? (
                             <ModalProsper.Modal>
-                                <ModalProsper.ModalTrigger>   <button className="bg-primary-700  p-4 rounded-[0.625rem] w-full font-bold uppercase text-[0.75rem] mt-auto">
+                                <ModalProsper.ModalTrigger>   <button className='disabled:opacity-50 py-2 px-4 bg-primary-700 text-white font-bold text-[0.75rem] rounded-[0.625rem]'>
                                     <p className="text-white">Abrir Voucher</p>
                                 </button>
                                 </ModalProsper.ModalTrigger>

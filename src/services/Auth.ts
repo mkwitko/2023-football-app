@@ -9,15 +9,18 @@ import firebase_app from '../infra/Firebase';
 import Toast from './Toast';
 import { setCache } from './Cache';
 import { verifyErrors } from './FirebaseErrors';
+import Navigation from './Navigation';
 
 const auth = getAuth(firebase_app);
+
+
 
 async function signIn(email: string, password: string) {
   let result = null,
     error = null;
   try {
     result = await signInWithEmailAndPassword(auth, email, password);
-    Toast().success('Bem Vindo!');
+    Toast().success('Bem Vindo!'); 
   } catch (e: any) {
     Toast().error(verifyErrors(e.code));
     error = e;

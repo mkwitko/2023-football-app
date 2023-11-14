@@ -7,7 +7,6 @@ import Navigation from 'src/services/Navigation';
 import QrCode from '../QRCODE/QrCode';
 
 export default function ConvenienceCard({ data }: { data: any }) {
-    console.log(data);
     const { propaganda } = useContext(Context);
     const { navigateTo } = Navigation();
 

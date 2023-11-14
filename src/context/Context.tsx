@@ -15,11 +15,13 @@ import React, { useEffect } from 'react';
 import WalletClass from 'src/classes/Wallet/WalletClass';
 import OrdersClass from 'src/classes/Orders/OrdersClass';
 import { decrypt } from 'src/services/Encrypt';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass';
+import ChannelsClass from '@/classes/Channels/ChannelsClass';
 
 interface ContextProps {
     banner: BannerClass;
+    channels: ChannelsClass;
     noticias: NoticiasClass;
     notificacoes: NotificacoesClass;
     propaganda: PropagandaClass;
@@ -44,6 +46,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     const { auth } = Authentication();
     const {
         banner,
+        channels,
         noticias,
         notificacoes,
         eventos,
@@ -150,6 +153,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         <Context.Provider
             value={{
                 banner,
+                channels,
                 noticias,
                 notificacoes,
                 propaganda,

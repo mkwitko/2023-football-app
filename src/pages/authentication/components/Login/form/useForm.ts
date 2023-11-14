@@ -7,7 +7,6 @@ import Navigation from '../../../../../services/Navigation';
 
 export default function LoginForm() {
   const { signIn } = Auth();
-  const { navigateTo } = Navigation();
   const {
     register,
     handleSubmit,
@@ -16,9 +15,15 @@ export default function LoginForm() {
     resolver: zodResolver(Schema),
   });
 
+
+  const { navigateTo } = Navigation();
+
   const submit = async ({ email, password }: Form) => {
-    await signIn(email, password);
-    navigateTo('/home');
+      const res = await signIn(email, password);
+
+      if(res.result) {
+        navigateTo('/home');
+      } 
   };
 
   return {

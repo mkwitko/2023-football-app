@@ -17,6 +17,7 @@ export default function Wallet() {
     const [present, dismiss] = useIonModal(MercadoPago, {
         componentProps: {
             id: user.hook.data ? user.hook.data.id : '',
+            user: user.hook.data,
             close: () => handleCloseModal(),
             value: parseInt(value.replace('R$', '').replace(/\./g, ""), 10) / 100
         },
