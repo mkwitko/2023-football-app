@@ -1,5 +1,5 @@
 import { IonContent } from '@ionic/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProfileForm from './form/useForm';
 import { AiFillEdit } from 'react-icons/ai';
 import { Avatar } from './Avatar';
@@ -17,7 +17,7 @@ export default function Profile() {
 
     const login = useGoogleLogin({
         onSuccess: tokenResponse => {
-            fetch('https://football-back.fly.dev/google-oauth', {
+            fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,18 +27,37 @@ export default function Profile() {
                 })
             }).then(response => {
                 response.json().then(data => {
-                    setValue('access_token', data.access_token);
-                    setValue('refresh_token', data.refresh_token);
                     fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
                         response.json().then(data => {
                             if (data.email) {
-                                setValue('youtubeEmail', data.email);
-                                Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                                fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        collection: 'users',
+                                        fieldToSearch: 'youtubeEmail',
+                                        valueToSearch: data.email
+                                    })
+                                }).then(response => {
+                                    response.json().then(res => {
+                                        if (res.status) {
+                                            Toast().error('Conta do Youtube já sincronizada com outro usuário!');
+                                            return;
+                                        }
+                                        setValue('youtubeEmail', data.email);
+                                        setValue('access_token', data.access_token);
+                                        setValue('refresh_token', data.refresh_token);
+                                        Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                                    })
+                                })
+
                             }
                         })
                     })
                 })
-            }) 
+            })
         },
         onError: error => {
             console.log('error - ', error);
@@ -144,6 +163,7 @@ export default function Profile() {
                                 </button>
                             ) : (
                                 <div className="mt-2">
+                                    <div className='flex relative gap-2'>
                                     <input
                                         disabled={true}
                                         id="youtubeEmail"
@@ -152,6 +172,16 @@ export default function Profile() {
                                         autoComplete="youtubeEmail"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 bg-zinc-200 pl-2"
                                     />
+                                    <button onClick={() => {
+                                        if(!edit) return;
+                                        setValue('youtubeEmail', '');
+                                        setValue('access_token', '');
+                                        setValue('refresh_token', '');
+                                        Toast().info('Conta do Youtube desconectada com sucesso! Salve as informações para concluir o processo.');
+                                    }} className='font-bold  text-[0.75rem] absolute right-2 h-full' type='button'>
+                                        Desconectar 
+                                    </button>
+                                    </div>
                                     {errors.youtubeEmail && (
                                         <p className="text-red-500 text-[0.75rem] w-full mt-1">
                                             {errors.youtubeEmail?.message}
@@ -213,7 +243,7 @@ export default function Profile() {
                         </div>
 
                         <div className="flex flex-col gap-2">
-                            <button 
+                            <button
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"

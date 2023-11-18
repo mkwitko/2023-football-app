@@ -64,9 +64,7 @@ export default function MercadoPago({ componentProps }) {
 
 
         return new Promise((resolve, reject) => {
-            const url = 'https://football-back.fly.dev';
-            // const url = 'http://localhost:3000';
-            fetch(`${url}/payments`, {
+            fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_REACT_APP_BACKEND + '/payments' : process.env.REACT_APP_REACT_APP_BACKEND_DEV + '/payments'}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

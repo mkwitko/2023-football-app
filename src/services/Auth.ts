@@ -62,7 +62,8 @@ async function signUp(
   }
   try {
     result = await createUserWithEmailAndPassword(auth, email, password);
-  } catch (e) {
+  } catch (e: any) {
+    Toast().error(verifyErrors(e.code));
     error = e;
   }
 

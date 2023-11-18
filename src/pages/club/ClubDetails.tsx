@@ -59,7 +59,7 @@ export default function ClubDetails() {
                         present({
                             message: 'Aguarde...',
                         });
-                        fetch(`${process.env.REACT_APP_BACKEND_DEV}/payments/pay`, {
+                        fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_REACT_APP_BACKEND + '/payments/pay' : process.env.REACT_APP_REACT_APP_BACKEND_DEV + '/payments/pay'}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
