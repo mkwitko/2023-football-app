@@ -60,11 +60,11 @@ export default function Head2Head({
   return head2head.length !== 0 ? (
     <>
       <div className="flex flex-col items-center justify-center">
-        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem]">
+        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[1.75rem]">
           {head2head.length !== 0 && head2head.firstTeam_VS_secondTeam.length}{' '}
           Partidas Jogadas
         </p>
-        <p className="text-[0.75rem]">Contando todas as competições</p>
+        <p className="text-[0.75rem] md:text-[1.5rem]">Contando todas as competições</p>
       </div>
       <div className="flex gap-4 my-2">
         <StatsSquare
@@ -80,7 +80,7 @@ export default function Head2Head({
           name="Derrotas"
         />
       </div>
-      <div className="flex flex-col divide-y">
+      <div className="flex flex-col">
         <StatsLine
           stats={goalsFor}
           name="Gols Pró"
@@ -95,9 +95,9 @@ export default function Head2Head({
         />
       </div>
 
-      <div className="flex flex-col items-center justify-center mt-2">
-        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem]">Forma Atual</p>
-        <p className="text-[0.75rem]">Contando todas as competições</p>
+      <div className="flex flex-col items-center justify-center mt-2 md:mt-8">
+        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[2rem]">Forma Atual</p>
+        <p className="text-[0.75rem] md:text-[1.5rem]">Contando todas as competições</p>
       </div>
 
       {head2head.length !== 0 && (
@@ -107,22 +107,22 @@ export default function Head2Head({
               {isHome ? (
                 <>
                   <img
-                    className="w-8 h-8"
+                    className="w-8 h-8 md:w-16 md:h-16"
                     src={match.team_home_badge}
                     alt=""
                   />
-                  <p className="font-bold text-primary-900">
+                  <p className="font-bold text-primary-900 text-[1rem] md:text-[2rem]">
                     {match.match_hometeam_name}
                   </p>
                 </>
               ) : (
                 <>
                   <img
-                    className="w-8 h-8"
+                    className="w-8 h-8 md:w-16 md:h-16"
                     src={match.team_away_badge}
                     alt=""
                   />
-                  <p className="font-bold text-primary-900">
+                  <p className="font-bold text-primary-900 text-[1rem] md:text-[2rem]">
                     {match.match_awayteam_name}
                   </p>
                 </>
@@ -149,20 +149,20 @@ export default function Head2Head({
               {!isHome ? (
                 <>
                   <img
-                    className="w-8 h-8"
+                    className="w-8 h-8 md:w-16 md:h-16"
                     src={match.team_home_badge}
                     alt=""
                   />
-                  <p>{match.match_hometeam_name}</p>
+                  <p className='text-[1rem md:text-[2rem]'>{match.match_hometeam_name}</p>
                 </>
               ) : (
                 <>
                   <img
-                    className="w-8 h-8"
+                    className="w-8 h-8 md:w-16 md:h-16"
                     src={match.team_away_badge}
                     alt=""
                   />
-                  <p>{match.match_awayteam_name}</p>
+                  <p className='text-[1rem md:text-[2rem]'>{match.match_awayteam_name}</p>
                 </>
               )}
             </div>
@@ -208,17 +208,17 @@ export default function Head2Head({
 const StatsSquare = ({ stats, name }: { stats: any; name: string }) => {
   return (
     <div className="flex flex-col items-center justify-center bg-primary-800 w-full rounded-[0.625rem] p-2 gap-1 aspect-square">
-      <p className="text-[1.5rem] sm:text-[2rem] text-primary-200 font-bold">{stats}</p>
-      <p className="text-white font-semibold text-[0.85rem] sm:text-[1rem]">{name}</p>
+      <p className="text-[1.5rem] sm:text-[2rem] md:text-[4rem] text-primary-200 font-bold">{stats}</p>
+      <p className="text-white font-semibold text-[0.85rem] sm:text-[1rem] md:text-[2rem]">{name}</p>
     </div>
   );
 };
 
 const StatsLine = ({ stats, name }: { stats: any; name: string }) => {
   return (
-    <div className="flex items-center justify-between w-full py-2">
-      <p className="text-primary-800 font-bold uppercase text-[0.85rem] sm:text-[1rem]">{name}</p>
-      <p className="text-primary-800 font-bold uppercase text-[1rem] sm:text-[1.25rem]">
+    <div className="flex items-center justify-between w-full py-2 md:py-4 border-b">
+      <p className="text-primary-800 font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[1.5rem]">{name}</p>
+      <p className="text-primary-800 font-bold uppercase text-[1rem] sm:text-[1.25rem] md:text-[1.5rem]">
         {stats}
       </p>
     </div>

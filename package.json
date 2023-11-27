@@ -31,6 +31,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^1.4.0",
+    "capacitor-set-version": "^2.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "crypto-js": "^4.1.1",
@@ -91,7 +92,8 @@
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src",
-    "fixTailwind": "npx tailwindcss -i src/theme/variables.css -o dist/output.css"
+    "fixTailwind": "npx tailwindcss -i src/theme/variables.css -o dist/output.css",
+    "setVersion": "npx capacitor-set-version ./ -v 1.0.1 -b 002"
   },
   "browserslist": [
     "Chrome >=79",

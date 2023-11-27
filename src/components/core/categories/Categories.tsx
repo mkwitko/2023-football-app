@@ -48,10 +48,10 @@ export default function Categories() {
                 else Browser.open({ url: e.link });
             }
           }}
-          className={`flex flex-col items-center justify-center rounded-[0.625rem] gap-2 w-[5rem] h-[5rem] aspect-square shadow-md border border-white/50`}
+          className={`flex flex-col items-center justify-center rounded-[0.625rem] gap-2 w-[4.5rem] h-[4.5rem] aspect-square shadow-md border border-white/50 md:w-[8.5rem] md:h-[8.5rem]`}
         >
-          <div className="text-[1.25rem] text-primary-700">{e.icon}</div>
-          <p className="text-[0.75rem] text-center text-primary-700">
+          <div className="text-[1.25rem] md:text-[2rem] text-primary-700">{e.icon}</div>
+          <p className="text-[0.75rem] md:text-[1.5rem] text-center text-primary-700">
             {e.title}
           </p>
         </div>

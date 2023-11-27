@@ -41,7 +41,7 @@ export default function Surveys({ findSurveys }: {
 
             {survey.length > 1 && (
                 <div className='flex flex-col gap-4 mb-8'>
-                    <p className='font-bold '>Outras enquetes</p>
+                    <p className='font-bold text-[1rem] md:text-[1.5rem]'>Outras enquetes</p>
                     {survey
                         .filter((e: any) => e.id !== survey[currentSurvey].id).map((e: any, i: number) => {
                             return (
@@ -52,10 +52,10 @@ export default function Surveys({ findSurveys }: {
                                     if (voters) setHasVoted(voters);
                                     else setHasVoted(false);
                                 }} className='shadow-sendShadow bg-white flex flex-col border border-primary rounded-[0.625rem] w-full p-4' key={`other_surveys_${i}`}>
-                                    <span className='text-[0.75rem] text-primary font-bold'>
+                                    <span className='text-[0.75rem] md:text-[1.5rem] text-primary font-bold'>
                                         Veja agora:
                                     </span>
-                                    <span className='text-primary font-bold'>
+                                    <span className='text-primary font-bold text-[1rem] md:text-[2rem]'>
                                         {e.question}
                                     </span>
                                 </div>

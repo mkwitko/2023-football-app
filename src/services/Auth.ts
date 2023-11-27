@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInAnonymously,
+  deleteUser,
 } from 'firebase/auth';
 import firebase_app from '../infra/Firebase';
 import Toast from './Toast';
@@ -31,6 +32,21 @@ async function signIn(email: string, password: string) {
   }
 
   return { result, error };
+}
+
+async function exclude() {
+    let result,
+        error = null;
+    try {
+        if(auth.currentUser)
+        result = await deleteUser(auth.currentUser);
+    } catch (e) {
+        error = e;
+    }
+    
+    setCache('user');
+    
+    return { result, error };
 }
 
 async function signInAnon() {
@@ -109,5 +125,6 @@ export default function Authentication() {
     signUp,
     signOut,
     forgotPassword,
+    exclude
   };
 }

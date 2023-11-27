@@ -95,12 +95,12 @@ const Menu: React.FC = () => {
                     <div className="flex flex-col items-center gap-4">
                         {user.hook.data && (
                             <>
-                                <img className='h-24 w-24 rounded-full mt-12 border-2 border-white' src={user.hook.data.avatar} />
+                                <img className='h-24 w-24 md:h-48 md:w-48 rounded-full mt-12 border-2 border-white' src={user.hook.data.avatar} />
                                 <p className="text-white font-bold">{user.hook.data.name}</p>
                             </>
                         )}
                     </div>
-                    <div className="flex flex-col gap-4 overflow-y-auto mt-8">
+                    <div className="flex flex-col gap-4 overflow-y-auto mt-8 md:gap-8">
                         {appPages.map((appPage, index) => {
                             return (
                                 <IonMenuToggle
@@ -120,10 +120,10 @@ const Menu: React.FC = () => {
                                         detail={false}
                                     >
                                         <div className="flex gap-6 items-center font-semibold">
-                                            <div className="text-[1.25rem] text-white/90">
+                                            <div className="text-[1.25rem] md:text-[1.75rem] text-white/90">
                                                 {appPage.icon}
                                             </div>
-                                            <p className="text-white/90">{appPage.title}</p>
+                                            <p className="text-white/90 text-[1rem] md:text-[1.5rem]">{appPage.title}</p>
                                         </div>
                                     </IonItem>
                                 </IonMenuToggle>
@@ -143,7 +143,7 @@ const Menu: React.FC = () => {
                     }}
                 >
                     <div className="flex items-center justify-center">
-                        <p className="text-white font-bold uppercase">Sair</p>
+                        <p className="text-white font-bold uppercase text-[1rem] md:text-[1.5rem]">Sair</p>
                     </div>
                 </IonToolbar>
             </IonFooter>

@@ -81,6 +81,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         auth.onAuthStateChanged((res: any) => {
             if (res) {
                 user.setClassById(true, res.uid).then((res) => {
+                    console.log('res - ', res);
                     if (res) {
                         user.hook.setData(res);
                     }

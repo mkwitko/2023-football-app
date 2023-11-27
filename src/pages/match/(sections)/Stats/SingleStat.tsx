@@ -15,7 +15,7 @@ export default function SingleStat({
   const value2Percent = (value2 / (value1 + value2)) * 100;
 
   return (
-    <div className="flex flex-col flex-1 mx-4">
+    <div className="flex flex-col flex-1 mx-4 text-[1rem] md:text-[1.5rem]">
       <div className="flex items-center justify-between text-primary-800">
         <p>{name === 'Posse de Bola' ? value1 + '%' : value1}</p>
 

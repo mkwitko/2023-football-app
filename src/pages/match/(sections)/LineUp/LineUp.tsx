@@ -55,7 +55,7 @@ export default function LineUp({
             <p
               className={`${
                 e.title === currentView ? 'text-white' : 'text-primary-900'
-              }`}
+              } text-[1rem] md:text-[1.5rem] md:py-4`}
             >
               {e.title}
             </p>
@@ -63,7 +63,7 @@ export default function LineUp({
         ))}
       </IonSegment>
 
-      <div className="flex flex-col justify-evenly bg-green-900 gap-8 rounded-[0.625rem] w-full py-8 h-[41rem] bg-cover bg-no-repeat bg-field">
+      <div className="flex flex-col justify-evenly bg-green-900 gap-8 rounded-[0.625rem] w-full py-8 h-[41rem] md:h-[45rem] bg-cover bg-no-repeat bg-field">
         {currentView === ourTeam.name && eachTeam(ourTeam, true)}
         {currentView === otherTeam.name && eachTeam(otherTeam, false)}
       </div>

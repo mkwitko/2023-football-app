@@ -8,15 +8,15 @@ export default function ClubCard({ data, disabled }: { data: any, disabled: bool
     const { navigateTo } = Navigation();
 
     return (
-        <div className='flex gap-4 w-full'>
-            <div className='h-36 w-36 aspect-square'>
-                <img src={data.imagePath} alt="" className='rounded-[0.625rem] h-36 w-36 aspect-square' />
+        <div className='flex gap-4 w-full border-b border-borderColor/50 pb-4 md:pb-8'>
+            <div className='h-36 w-36 md:h-48 md:w-48 aspect-square'>
+                <img src={data.imagePath} alt="" className='rounded-[0.625rem] h-36 w-36  md:h-48 md:w-48 aspect-square' />
             </div>
             <div className='flex flex-col gap-4 w-full'>
                <div className='flex flex-col gap-2'>
-               <p className='text-primary-700 font-bold'>{data.title}</p>
+               <p className='text-primary-700 font-bold text-[1rem] md:text-[2rem]'>{data.title}</p>
                 <div
-                className='text-[0.85rem] font-light'
+                className='text-[0.85rem] md:text-[1.5rem] font-light'
                   dangerouslySetInnerHTML={{
                     __html: StringCutter(data.subtitle, 60),
                   }}
@@ -27,7 +27,7 @@ export default function ClubCard({ data, disabled }: { data: any, disabled: bool
                     eventos.hook.setCurrentEvent(data);
                     navigateTo('/club/details')
                     eventos.setCache(data, true, 'currentEvent');
-                }} type='button' className='disabled:opacity-50 text-white text-[0.75rem] bg-primary-700 py-2 px-6 rounded-[0.625rem]'>
+                }} type='button' className='disabled:opacity-50 text-white text-[0.75rem] md:text-[1.5rem] bg-primary-700 py-2 md:py-4 px-6 rounded-[0.625rem]'>
                     {!disabled ? 'Participar' : 'Você já está participando!'}
                 </button>
                </div>

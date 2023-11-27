@@ -96,14 +96,14 @@ export default function Match() {
                             className="rounded-none"
                             disabled={e.disabled || false}
                         >
-                            <p className="text-white">{e.title}</p>
+                            <p className="text-white text-[1rem] md:text-[1.5rem] md:py-4">{e.title}</p>
                         </IonSegmentButton>
                     ))}
             </IonSegment>
 
             <div className="m-4">
                 {willUseTabs && currentView === tabs[0].title && (
-                    <div className="flex flex-col gap-4 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
+                    <div className="flex flex-col gap-4 md:gap-8 p-4 bg-white shadow-convenienceShadow rounded-[0.625rem] w-full">
                         <Stats
                             stats={match.statistics}
                             isHome={isHome}

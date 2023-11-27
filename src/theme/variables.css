@@ -111,6 +111,8 @@ p {
   color: #4f0202;
 }
 
+
+
 .modal-default button span {
   color: #fff;
 }
@@ -118,6 +120,17 @@ p {
 div.text-white p, div.text-white h1, div.text-white h2 {
   color: inherit; /* or whatever color value you want to set, or 'initial' to reset to the browser's default */
 }
+
+div h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+@media only screen and (min-width: 768px) {
+    div h2 {
+        font-size: 2rem;
+    }
+  }
 
 .card.image-full:before {
   opacity: 0 !important;

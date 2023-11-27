@@ -15,7 +15,7 @@ export default function LeagueTable({ league }: any) {
 
   return (
     <div className="flex flex-col w-full gap-4 mb-8">
-      <div className="text-[0.75rem] grid grid-cols-12 gap-2 bg-primary-700  font-bold capitalize py-1 items-center justify-center mb-[-.5rem] px-6">
+      <div className="text-[0.75rem] md:text-[1.25rem] grid grid-cols-12 gap-2 bg-primary-700  font-bold capitalize py-1 items-center justify-center mb-[-.5rem] px-6">
         <p className="col-span-1 text-white"></p>
         <p className="col-span-6 text-white">Time</p>
         <p className="col-span-1 text-white">PG</p>
@@ -47,6 +47,7 @@ export default function LeagueTable({ league }: any) {
                   : ''
               }
               grid grid-cols-12 gap-2 px-6 items-center
+              text-[1rem] md:text-[1.5rem]
             `}
               key={i}
             >

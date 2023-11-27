@@ -56,8 +56,8 @@ export default function Survey({
     return (
         <div className="bg-primary rounded-[0.625rem] p-4 flex flex-col">
             <div className="flex flex-col text-white">
-                <p className="text-[0.75rem]">Vote agora:</p>
-                <p className="font-bold mb-4">{displaySurvey.question}</p>
+                <p className="text-[0.75rem] md:text-[1.5rem]">Vote agora:</p>
+                <p className="font-bold mb-4 text-[1rem] md:text-[2rem]">{displaySurvey.question}</p>
                 <div className="flex flex-col gap-4">
                     {displaySurvey.options.map((e: any, i: number) => {
                         return (
@@ -104,7 +104,7 @@ export default function Survey({
                                         e={e}
                                     />
                                 ) : (
-                                    <p className="text-primary-900 text-center font-bold h-8 leading-8">
+                                    <p className="text-primary-900 text-center font-bold h-8 leading-8 md:leading-[3rem] text-[1rem] md:text-[1.5rem]">
                                         {e.value}
                                     </p>
                                 )}

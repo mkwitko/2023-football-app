@@ -49,7 +49,7 @@ export default function Footer() {
     youtube.hook.live.snippet.liveBroadcastContent === 'live';
 
   return (
-    <IonFooter className="h-16 bg-primary-500">
+    <IonFooter className="h-16 md:h-[5.5rem] bg-primary-500">
       <div className="flex items-center justify-evenly h-full ">
         {footer.map((e: any, i: number) => (
           <div
@@ -71,7 +71,7 @@ export default function Footer() {
               ${
                 e.highlight
                   ? 'mt-[-3.5rem] bg-white shadow-box rounded-full p-2'
-                  : 'px-4 py-6   max-w-[4rem]'
+                  : 'px-4 py-6 max-w-[4rem] md:max-w-[7rem]'
               }
               ${
                 e.path === location.pathname
@@ -81,26 +81,26 @@ export default function Footer() {
               `}
           >
             <div
-              className={`text-[1.25rem]   relative   
+              className={`text-[1.25rem] md:text-[2rem] relative   
                 ${e.path === location.pathname ? 'text-primary' : 'text-white'}
                 ${
                   e.highlight
-                    ? 'bg-primary rounded-full p-3 text-white text-[2rem]'
+                    ? 'bg-primary rounded-full p-3 text-white text-[2rem] md:text-[4rem]'
                     : ''
                 }
                `}
             >
               {e.highlight && isLive && (
                 <div>
-                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-700 animate-ping"></div>
-                  <div className="absolute top-0 right-0 rounded-full p-2 bg-primary-700"></div>
+                  <div className="absolute top-0 right-0 rounded-full p-2 md:p-[0.75rem] bg-primary-700 animate-ping"></div>
+                  <div className="absolute top-0 right-0 rounded-full p-2 md:p-[0.75rem] bg-primary-700"></div>
                 </div>
               )}
               {e.icon}
             </div>
             {e.title && (
               <p
-                className={`text-[0.75rem] text-cente
+                className={`text-[0.75rem] md:text-[1.25rem] text-center
               ${
                 e.path === location.pathname
                   ? 'text-primary '

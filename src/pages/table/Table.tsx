@@ -46,7 +46,7 @@ export default function Table() {
               key={i}
               value={e.id}
             >
-              <IonLabel>{e.league}</IonLabel>
+              <IonLabel className="text-[1rem] md:text-[1.5rem] md:py-4">{e.league}</IonLabel>
             </IonSegmentButton>
           ))}
     </IonSegment>

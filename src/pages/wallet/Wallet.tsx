@@ -72,19 +72,19 @@ export default function Wallet() {
         <IonContent fullscreen>
             <div className='flex flex-col p-8 gap-8'>
                 <div className='flex flex-col'>
-                    <p className='text-primary font-bold'>Carteira</p>
-                    <p className='text-[0.75rem]'>Nossas diretrizes respondem todas as dúvidas, antes de fazer pagamentos pelo aplicativo por favor, <a href='https://www.google.com.br' className='text-[0.75rem] text-primary'>leia elas aqui.</a></p>
+                    <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>Carteira</p>
+                    <p className='text-[0.75rem] md:text-[1.5rem]'>Nossas diretrizes respondem todas as dúvidas, antes de fazer pagamentos pelo aplicativo por favor, <a href='https://www.google.com.br' className='text-[0.75rem] md:text-[1.5rem] text-primary'>leia elas aqui.</a></p>
                 </div>
                 <div className='flex items-center w-full justify-between'>
-                    <p className='text-primary font-bold'>Saldo em conta</p>
-                    <p className='text-primary font-bold'>R${wallets.hook.data.balance ? (+wallets.hook.data.balance).toFixed(2) : 0}</p>
+                    <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>Saldo em conta</p>
+                    <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>R${wallets.hook.data.balance ? (+wallets.hook.data.balance).toFixed(2) : 0}</p>
                 </div>
                 <div className='flex flex-col gap-8'>
                     <div>
-                        <p className='text-primary font-bold'>Adicionar Saldo</p>
+                        <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>Adicionar Saldo</p>
                         <div className='flex items-center w-full justify-between'>
-                            <p className='text-primary-900 text-[0.75rem] font-bold w-full'>Quantia a ser adicionada</p>
-                            <input step="0.5" className='p-2 pb-0 w-[45%] text-end bg-transparent font-bold text-primary-900' type="text" value={value} onChange={(e) => {
+                            <p className='text-primary-900 text-[0.75rem] md:text-[1.5rem] font-bold w-full'>Quantia a ser adicionada</p>
+                            <input step="0.5" className='p-2 pb-0 w-[45%] text-end bg-transparent font-bold text-primary-900 text-[1rem] md:text-[1.5rem]' type="text" value={value} onChange={(e) => {
                                 const mask = moneyMask(e.target.value);
                                 setValue(mask);
                             }} />
@@ -93,8 +93,8 @@ export default function Wallet() {
                     <div className='flex flex-col gap-8'>
                         <div onClick={() => {
                             openModal();
-                        }} className='flex items-center justify-center border bg-primary border-primary rounded-[0.625rem] px-6 py-3 cursor-pointer'>
-                            <button type='button' className='text-white font-bold h-full w-full'>
+                        }} className='flex items-center justify-center border bg-primary border-primary rounded-[0.625rem] px-6 py-3 md:py-[1.25rem]  md:mt-8 cursor-pointer'>
+                            <button type='button' className='text-white font-bold h-full w-full text-[1rem] md:text-[1.5rem]'>
                                 Ir para o pagamento
                             </button>
                         </div>

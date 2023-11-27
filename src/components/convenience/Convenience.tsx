@@ -22,22 +22,22 @@ export default function ConvenienceCard({ data }: { data: any }) {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                 }}
-                className="flex flex-col w-full rounded-[0.625rem] h-[13rem] shadow-convenienceShadow p-4"
+                className="flex flex-col w-full rounded-[0.625rem] h-[13rem] md:h-[15rem] shadow-convenienceShadow p-4"
             >
                 <div className="flex flex-col justify-between h-full">
                     <div className="flex flex-col gap-2">
-                        <label className="text-[1.75rem] text-white font-bold">
+                        <label className="text-[1.75rem] md:text-[2.5rem] text-white font-[800]">
                             {data.title}
                         </label>
                         <div
-                            className="text-white"
+                            className="text-white text-[1rem] md:text-[1.5rem]"
                             dangerouslySetInnerHTML={{
                                 __html: StringCutter(data.description, 125),
                             }}
                         ></div>
                     </div>
                     <div className="flex items-end justify-end mt-auto">
-                        <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem] mt-auto">
+                        <button className="bg-primary-700  p-4 rounded-[0.625rem] w-1/3 font-bold uppercase text-[0.75rem] md:text-[1.25rem] mt-auto">
                             <p className="text-white">Ver mais</p>
                         </button>
                     </div>

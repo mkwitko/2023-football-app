@@ -18,6 +18,10 @@ export default function ClubDetails() {
     const [presentAlert] = useIonAlert();
     const [present, dismiss] = useIonLoading();
 
+    const screenHeight: number = window.innerHeight;
+
+    const isMd = screenHeight > 768;
+
     const findHistoric = () => {
         if (userPurchases.hook.data && Object.keys(userPurchases.hook.data).length > 0) {
             const historic = userPurchases.hook.data.some((e: any) => {
@@ -59,7 +63,7 @@ export default function ClubDetails() {
                         present({
                             message: 'Aguarde...',
                         });
-                        fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_REACT_APP_BACKEND + '/payments/pay' : process.env.REACT_APP_REACT_APP_BACKEND_DEV + '/payments/pay'}`, {
+                        fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/payments/pay' : process.env.REACT_APP_BACKEND_DEV + '/payments/pay'}`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -113,33 +117,33 @@ export default function ClubDetails() {
             </div>
             <div className='flex flex-col px-8 sm:px-12 py-8 gap-6'>
                 <div className='flex flex-col'>
-                    <p className='text-primary-700 font-bold text-[0.85rem]'>Atrações:</p>
-                    <div className='text-[0.85rem] text-primary-700 font-bold'
+                    <p className='text-primary-700 font-bold text-[0.85rem] md:text-[1.5rem]'>Atrações:</p>
+                    <div className='text-[0.85rem] md:text-[1.5rem] text-primary-700'
                         dangerouslySetInnerHTML={{
                             __html: currentEvent.description,
                         }}
                     ></div>
                 </div>
                 <div className='flex flex-col'>
-                    <p className='text-primary-700 font-bold text-[0.85rem]'>Local:</p>
-                    <p className='text-[0.85rem] font-bold'>
+                    <p className='text-primary-700 font-bold text-[0.85rem] md:text-[1.5rem]'>Local:</p>
+                    <p className='text-[0.85rem] md:text-[1.5rem] font-bold'>
                         {currentEvent.local}
                     </p>
                 </div>
                 <div className='flex flex-col'>
-                    <p className='text-primary-700 font-bold text-[0.85rem]'>Endereço:</p>
-                    <p className='text-[0.85rem]  font-bold'>
+                    <p className='text-primary-700 font-bold text-[0.85rem] md:text-[1.5rem]'>Endereço:</p>
+                    <p className='text-[0.85rem] font-bold md:text-[1.5rem]'>
                         {currentEvent.address} número {currentEvent.number}, <br />{currentEvent.neighborhood} - {currentEvent.city} - {currentEvent.state}
                     </p>
                 </div>
 
-                <div className='bg-primary-700 rounded-[0.625rem] text-white p-4 mt-8'>
-                    <p className='text-[0.75rem] font-bold text-center'>Nunca pediremos suas senhas pessoais ou entraremos em contato por meios não oficiais.</p>
+                <div className='bg-primary-700 rounded-[0.625rem] text-white p-4 mt-8 md:p-6'>
+                    <p className='text-[0.75rem] md:text-[1.5rem] font-bold text-center'>Nunca pediremos suas senhas pessoais ou entraremos em contato por meios não oficiais.</p>
                 </div>
 
-                <div className='flex flex-col items-end justify-center'>
-                    <p className='text-primary-700 font-bold text-[0.75rem]'>Investimento:</p>
-                    <p className='text-[2.5rem] font-bold text-primary-700 leading-[2.5rem]'>
+                <div className='flex flex-col items-end justify-center md:mb-4'>
+                    <p className='text-primary-700 font-bold text-[0.75rem] md:text-[1.5rem]'>Investimento:</p>
+                    <p className='text-[2.5rem] md:text-[3.5rem] font-bold text-primary-700 leading-[2.5rem]'>
                         {currentEvent.price ? `R$${currentEvent.price}` : 'Gratuito'}
                     </p>
                 </div>
@@ -147,12 +151,12 @@ export default function ClubDetails() {
                     <div className='border border-primary-700 rounded-[0.625rem]'>
                         <button onClick={() => {
                             navigateTo('/club')
-                        }} className=' text-primary-700 py-2 px-4 font-bold text-[0.75rem]' type='button'>Voltar</button>
+                        }} className=' text-primary-700 py-2 px-4 md:py-4 font-bold text-[0.75rem] md:text-[1.5rem]' type='button'>Voltar</button>
                     </div>
                     {(currentEvent.price || currentEvent.link) && (
                         findHistoric() ? (
                             <ModalProsper.Modal>
-                                <ModalProsper.ModalTrigger>   <button className='disabled:opacity-50 py-2 px-4 bg-primary-700 text-white font-bold text-[0.75rem] rounded-[0.625rem]'>
+                                <ModalProsper.ModalTrigger>   <button className='disabled:opacity-50 py-2 md:py-4 px-4 bg-primary-700 text-white font-bold text-[0.75rem] md:text-[1.5rem] rounded-[0.625rem]'>
                                     <p className="text-white">Abrir Voucher</p>
                                 </button>
                                 </ModalProsper.ModalTrigger>
@@ -163,53 +167,56 @@ export default function ClubDetails() {
                                     <div className='flex flex-col gap-4 p-4 items-center justify-center'>
                                         {/* <img className='w-3/5 h-auto' src={currentEvent.imagePath} alt="" /> */}
                                         <div
-                                            className="text-primary-900 text-center text-[0.75rem] font-light"
+                                            className="text-primary-900 text-center text-[0.75rem] md:text-[1.5rem] font-light md:mt-4"
                                             dangerouslySetInnerHTML={{
                                                 __html: StringCutter(currentEvent.description, 125),
                                             }}
                                         ></div>
-                                        <div className='border-2 p-3 rounded-[0.625rem]'>
-                                            <QRCode value={currentEvent.id} size={180} />
+                                        <div className='border-2 p-3 rounded-[0.625rem] md:my-8'>
+                                            <QRCode value={currentEvent.id} size={isMd ? 260 : 180} />
                                         </div>
                                     </div>
                                 </ModalProsper.ModalContent>
                             </ModalProsper.Modal>
                         ) : (
-                            <button disabled={currentEvent.price && (balance < currentEvent.price)} className='disabled:opacity-50 py-2 px-4 bg-primary-700 text-white font-bold text-[0.75rem] rounded-[0.625rem]' onClick={action} type='button'>{currentEvent.price ? 'Comprar Entrada' : 'Participar'}</button>
+                            <button disabled={currentEvent.price && (balance < currentEvent.price)} className='disabled:opacity-50 py-2 px-4 md:py-4 bg-primary-700 text-white font-bold text-[0.75rem] md:text-[1.5rem] rounded-[0.625rem]' onClick={action} type='button'>{currentEvent.price ? 'Comprar Entrada' : 'Participar'}</button>
                         )
                     )}
                 </div>
             </div>
 
-            <ModalProsper.Modal open={open} setOpen={setOpen}>
-                <ModalProsper.ModalContent className='w-[80%] p-0 rounded-[0.625rem] gap-0'>
-                    <ModalProsper.ModalHeader className='bg-primary rounded-t-[0.625rem]'>
-                        <div className='flex flex-col px-2 py-4'>
-                            <span className='text-white text-[1.5rem] font-bold'>Atenção!</span>
-                            <span className='text-white text-[0.75rem]'>
-                                Você não tem saldo suficiente para adquirir o ingresso para este evento.
-                            </span>
+            {!findHistoric() && (
+                <ModalProsper.Modal open={open} setOpen={setOpen}>
+                    <ModalProsper.ModalContent className='w-[80%] p-0 rounded-[0.625rem] gap-0'>
+                        <ModalProsper.ModalHeader className='bg-primary rounded-t-[0.625rem]'>
+                            <div className='flex flex-col px-2 py-4 md:px-4 md:py-8'>
+                                <span className='text-white text-[1.5rem] md:text-[2.5rem] font-bold'>Atenção!</span>
+                                <span className='text-white text-[0.75rem] md:text-[1rem]'>
+                                    Você não tem saldo suficiente para adquirir o ingresso para este evento.
+                                </span>
+                            </div>
+                        </ModalProsper.ModalHeader>
+                        <div className='flex items-end justify-center w-full p-4 text-[1rem] md:text-[2rem]'>
+                            <p>O que você deseja fazer?</p>
                         </div>
-                    </ModalProsper.ModalHeader>
-                    <div className='flex items-end justify-center w-full p-4'>
-                        <p>O que você deseja fazer?</p>
-                    </div>
-                    <ModalProsper.ModalFooter>
-                        <div className='flex items-center justify-between'>
-                            <button onClick={() => {
-                                navigateTo('/club')
-                            }} className='flex-1 bg-primary text-white p-4 font-bold' type='button'>
-                                Voltar
-                            </button>
-                            <button onClick={() => {
-                                navigateTo('/wallet')
-                            }} className='flex-1 bg-primary text-white p-4 font-bold' type='button'>
-                                Wallet
-                            </button>
-                        </div>
-                    </ModalProsper.ModalFooter>
-                </ModalProsper.ModalContent>
-            </ModalProsper.Modal>
+                        <ModalProsper.ModalFooter>
+                            <div className='flex items-center justify-between w-full'>
+                                <button onClick={() => {
+                                    navigateTo('/club')
+                                }} className='flex-1 bg-primary text-white p-4 font-bold' type='button'>
+                                    Voltar
+                                </button>
+                                <button onClick={() => {
+                                    navigateTo('/wallet')
+                                }} className='flex-1 bg-primary text-white p-4 font-bold' type='button'>
+                                    Wallet
+                                </button>
+                            </div>
+                        </ModalProsper.ModalFooter>
+                    </ModalProsper.ModalContent>
+                </ModalProsper.Modal>
+            )}
+
         </IonContent>
     )
 }

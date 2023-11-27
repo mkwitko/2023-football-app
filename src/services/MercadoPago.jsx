@@ -22,6 +22,7 @@ export default function MercadoPago({ componentProps }) {
     const initialization = {
         amount: componentProps.value,
     };
+
     const customization = {
         paymentMethods: {
             bankTransfer: "all",
@@ -64,7 +65,7 @@ export default function MercadoPago({ componentProps }) {
 
 
         return new Promise((resolve, reject) => {
-            fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_REACT_APP_BACKEND + '/payments' : process.env.REACT_APP_REACT_APP_BACKEND_DEV + '/payments'}`, {
+            fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/payments' : process.env.REACT_APP_BACKEND_DEV + '/payments'}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,6 +77,8 @@ export default function MercadoPago({ componentProps }) {
                     res.json().then((data) => {
                         if (data.type === 'pix') {
                             setQrCode(data.qr_code);
+                        } else {
+                            componentProps.close();
                         }
                         resolve(true);
                     });
