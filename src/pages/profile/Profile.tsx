@@ -1,26 +1,23 @@
 import { IonContent, useIonAlert, useIonLoading } from '@ionic/react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import ProfileForm from './form/useForm';
 import { AiFillEdit } from 'react-icons/ai';
 import { Avatar } from './Avatar';
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { FcGoogle } from 'react-icons/fc';
 import Toast from 'src/services/Toast';
 import Navigation from 'src/services/Navigation';
 import { Context } from 'src/context/Context';
 import Auth from 'src/services/Auth';
+import { Capacitor } from '@capacitor/core';
+
 
 export default function Profile() {
-
-    const { user } = useContext(Context) ;
+    const { user } = useContext(Context);
     const { navigateTo } = Navigation();
     const { exclude } = Auth();
-
-
     const [presentAlert] = useIonAlert();
     const [present, dismiss] = useIonLoading();
-
-
     const deleteAccount = () => {
         presentAlert({
             header: 'Atenção',
@@ -39,9 +36,9 @@ export default function Profile() {
                     // TODO implementar delete das imagens
                     user.delete(user.hook.data.id).then(() => {
                         // user.deleteFile(user.hook.data.id + '/*').then(() => {
-                            exclude().then(() => {
-                                dismiss();
-                                navigateTo('/login');
+                        exclude().then(() => {
+                            dismiss();
+                            navigateTo('/login');
                             // });
                         })
                     })
@@ -50,61 +47,62 @@ export default function Profile() {
         })
     }
 
-
     const [edit, setEdit] = React.useState(false);
     const { register, handleSubmit, errors, isSubmitting, submit, setValue, watch } =
         ProfileForm({ setEdit });
 
-    const login = useGoogleLogin({
-        onSuccess: tokenResponse => {
-            fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    code: tokenResponse.code,
-                })
-            }).then(response => {
-                response.json().then(data => {
-                    fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
-                        response.json().then(data => {
-                            if (data.email) {
-                                fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        collection: 'users',
-                                        fieldToSearch: 'youtubeEmail',
-                                        valueToSearch: data.email
+    const login =
+        useGoogleLogin({
+            onSuccess: tokenResponse => {
+                fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: tokenResponse.code,
+                        platform: Capacitor.getPlatform()
+                    })
+                }).then(response => {
+                    response.json().then(data => {
+                        fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
+                            response.json().then(data => {
+                                if (data.email) {
+                                    fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            collection: 'users',
+                                            fieldToSearch: 'youtubeEmail',
+                                            valueToSearch: data.email
+                                        })
+                                    }).then(response => {
+                                        response.json().then(res => {
+                                            if (res.status) {
+                                                Toast().error('Conta do Youtube já sincronizada com outro usuário!');
+                                                return;
+                                            }
+                                            setValue('youtubeEmail', data.email);
+                                            setValue('access_token', data.access_token);
+                                            setValue('refresh_token', data.refresh_token);
+                                            Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                                        })
                                     })
-                                }).then(response => {
-                                    response.json().then(res => {
-                                        if (res.status) {
-                                            Toast().error('Conta do Youtube já sincronizada com outro usuário!');
-                                            return;
-                                        }
-                                        setValue('youtubeEmail', data.email);
-                                        setValue('access_token', data.access_token);
-                                        setValue('refresh_token', data.refresh_token);
-                                        Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
-                                    })
-                                })
 
-                            }
+                                }
+                            })
                         })
                     })
                 })
-            })
-        },
-        onError: error => {
-            console.log('error - ', error);
-        },
-        scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
-        flow: 'auth-code',
-    });
+            },
+            onError: error => {
+                console.log('error - ', error);
+            },
+            scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
+            flow: 'auth-code',
+        });
 
     return (
         <IonContent fullscreen>
@@ -186,6 +184,16 @@ export default function Profile() {
                             </div>
                         </div>
 
+                        <GoogleLogin
+                            onSuccess={credentialResponse => {
+                                console.log(credentialResponse);
+                            }}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                        />
+
+
                         <div>
                             <label
                                 htmlFor="youtubeEmail"
@@ -195,7 +203,7 @@ export default function Profile() {
                             </label>
                             {!watch('youtubeEmail') ? (
                                 <button className="mt-2 text-start w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-white pl-3 flex items-center gap-2" type='button' onClick={() => {
-                                    login()
+                                    login();
                                 }}>
                                     <FcGoogle />
                                     <p>
@@ -204,23 +212,23 @@ export default function Profile() {
                             ) : (
                                 <div className="mt-2">
                                     <div className='flex relative gap-2'>
-                                    <input
-                                        disabled={true}
-                                        id="youtubeEmail"
-                                        {...register('youtubeEmail')}
-                                        type="email"
-                                        autoComplete="youtubeEmail"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-zinc-200 pl-2"
-                                    />
-                                    <button onClick={() => {
-                                        if(!edit) return;
-                                        setValue('youtubeEmail', '');
-                                        setValue('access_token', '');
-                                        setValue('refresh_token', '');
-                                        Toast().info('Conta do Youtube desconectada com sucesso! Salve as informações para concluir o processo.');
-                                    }} className='font-bold text-[0.75rem] md:text-[1.5rem] absolute right-2 h-full' type='button'>
-                                        Desconectar 
-                                    </button>
+                                        <input
+                                            disabled={true}
+                                            id="youtubeEmail"
+                                            {...register('youtubeEmail')}
+                                            type="email"
+                                            autoComplete="youtubeEmail"
+                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-zinc-200 pl-2"
+                                        />
+                                        <button onClick={() => {
+                                            if (!edit) return;
+                                            setValue('youtubeEmail', '');
+                                            setValue('access_token', '');
+                                            setValue('refresh_token', '');
+                                            Toast().info('Conta do Youtube desconectada com sucesso! Salve as informações para concluir o processo.');
+                                        }} className='font-bold text-[0.75rem] md:text-[1.5rem] absolute right-2 h-full' type='button'>
+                                            Desconectar
+                                        </button>
                                     </div>
                                     {errors.youtubeEmail && (
                                         <p className="text-red-500 text-[0.75rem] w-full mt-1">
@@ -306,7 +314,7 @@ export default function Profile() {
                                 type="button"
                                 disabled={isSubmitting}
                                 onClick={() => {
-                                   deleteAccount();
+                                    deleteAccount();
                                 }}
                                 className="flex w-full justify-center rounded-md bg-primary-900 px-3 py-1.5 md:text-[1.5rem] md:py-[0.75rem] text-sm font-semibold leading-6 text-white shadow-sm "
                             >

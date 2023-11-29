@@ -14,6 +14,7 @@ export const WalletPayment = async ({
         },
         body: JSON.stringify({
             user_id: user.hook.data.id,
+            user: user.hook.data,
             amount
         })
     }).then(res => res.json()).then(data => {

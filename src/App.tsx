@@ -46,16 +46,16 @@ const App: React.FC = () => {
     });
 
     const getClientId = () => {
-        if (Capacitor.getPlatform() === 'ios') return '74278825081-a2ogi16sqibq7tchq2r7f6orr1309aiq.apps.googleusercontent.com';
-        if (Capacitor.getPlatform() === 'android') return '74278825081-l47g18kb7mkc8rj819nbrsaih3mllne6.apps.googleusercontent.com';
-        return '74278825081-0vk8jpjve3talba3gdtgbuaot5o5f39p.apps.googleusercontent.com'
+        if (Capacitor.getPlatform() === 'ios') return '976746971009-ftk06n7c247o3uvlop8vj746cs9cjpnv.apps.googleusercontent.com';
+        if (Capacitor.getPlatform() === 'android') return '976746971009-eupksk3p1psmbse9hqfuib89bjl0ho61.apps.googleusercontent.com';
+        return '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com'
     }
 
     return (
-        <GoogleOAuthProvider clientId={getClientId()}>
-            <IonApp>
-                <IonReactRouter>
-                    <ContextProvider>
+        <IonApp>
+            <IonReactRouter>
+                <ContextProvider>
+                    <GoogleOAuthProvider clientId={getClientId()}>
                         <IonSplitPane contentId="main">
                             <Menu />
                             <IonRouterOutlet id="main">
@@ -68,16 +68,16 @@ const App: React.FC = () => {
                                 <Routing isLogged={isLogged} />
                             </IonRouterOutlet>
                         </IonSplitPane>
-                    </ContextProvider>
-                </IonReactRouter>
+                    </GoogleOAuthProvider>
+                </ContextProvider>
+            </IonReactRouter>
 
-                <ToastContainer
-                    autoClose={1000 * 2 /* 2 seconds */}
-                    hideProgressBar
-                    position="top-right"
-                />
-            </IonApp>
-        </GoogleOAuthProvider>
+            <ToastContainer
+                autoClose={1000 * 2 /* 2 seconds */}
+                hideProgressBar
+                position="top-right"
+            />
+        </IonApp>
     );
 };
 
