@@ -5,12 +5,13 @@ import {
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Iframe from '../../components/youtube/Iframe';
 import { Context } from '../../context/Context';
-import { getFirestore, collection, query, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, query, onSnapshot, where } from 'firebase/firestore';
 import firebase_app from './../../infra/Firebase';
 import { BiSolidMegaphone } from 'react-icons/bi';
 import { AiTwotoneStar } from 'react-icons/ai';
 import ModalProsper from 'src/components/Shadcn/Modal/index';
 import Toast from 'src/services/Toast';
+import { subDays } from 'date-fns';
 
 export default function Live() {
     const { youtube, user, wallets } = useContext(Context);
@@ -33,6 +34,8 @@ export default function Live() {
             value: isPaid ? value : 0,
             isPaid,
             user: user.hook.data,
+            date: new Date(),
+            liveId: id
         });
         setComment('');
         if (isPaid) {
@@ -62,10 +65,12 @@ export default function Live() {
 
     const db = getFirestore(firebase_app);
     useEffect(() => {
-        const q = query(collection(db, "youtube"));
+        const q = query(collection(db, "youtube"), where('liveId', '==', id), where('date', '!=', null),  where('date', '>', subDays(new Date(), 1)));
         onSnapshot(q, (querySnapshot) => {
+            if(querySnapshot.empty) setComments([]);
             querySnapshot.docChanges().forEach((change) => {
                 const data = change.doc.data();
+                console.log('data - ', data)
                 if (change.type === "modified") {
                     setComments((prev: any) => {
                         const index = prev.findIndex((e: any) => e.id === data.id);

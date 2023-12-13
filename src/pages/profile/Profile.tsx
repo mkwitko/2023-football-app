@@ -1,15 +1,17 @@
 import { IonContent, useIonAlert, useIonLoading } from '@ionic/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ProfileForm from './form/useForm';
 import { AiFillEdit } from 'react-icons/ai';
 import { Avatar } from './Avatar';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { FcGoogle } from 'react-icons/fc';
 import Toast from 'src/services/Toast';
 import Navigation from 'src/services/Navigation';
 import { Context } from 'src/context/Context';
 import Auth from 'src/services/Auth';
 import { Capacitor } from '@capacitor/core';
+import { Browser } from '@capacitor/browser';
+import firebase_app from 'src/infra/Firebase';
+import { getFirestore, query, collection, where, onSnapshot } from 'firebase/firestore';
 
 
 export default function Profile() {
@@ -51,58 +53,79 @@ export default function Profile() {
     const { register, handleSubmit, errors, isSubmitting, submit, setValue, watch } =
         ProfileForm({ setEdit });
 
-    const login =
-        useGoogleLogin({
-            onSuccess: tokenResponse => {
-                fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        code: tokenResponse.code,
-                        platform: Capacitor.getPlatform()
-                    })
-                }).then(response => {
-                    response.json().then(data => {
-                        fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
-                            response.json().then(data => {
-                                if (data.email) {
-                                    fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
-                                            collection: 'users',
-                                            fieldToSearch: 'youtubeEmail',
-                                            valueToSearch: data.email
-                                        })
-                                    }).then(response => {
-                                        response.json().then(res => {
-                                            if (res.status) {
-                                                Toast().error('Conta do Youtube já sincronizada com outro usuário!');
-                                                return;
-                                            }
-                                            setValue('youtubeEmail', data.email);
-                                            setValue('access_token', data.access_token);
-                                            setValue('refresh_token', data.refresh_token);
-                                            Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
-                                        })
-                                    })
+    const login = () => {
+        const url = `https://vozes-do-gigante.vercel.app/google/${user.hook.data.id}`
+        if (Capacitor.getPlatform() === 'web') window.open(url);
+        else Browser.open({ url: url });
+    }
 
-                                }
-                            })
-                        })
-                    })
-                })
-            },
-            onError: error => {
-                console.log('error - ', error);
-            },
-            scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
-            flow: 'auth-code',
+    const db = getFirestore(firebase_app);
+    useEffect(() => {
+        const q = query(collection(db, "users"), where('id', '==', user.hook.data.id));
+        onSnapshot(q, (querySnapshot) => {
+            querySnapshot.docChanges().forEach((change) => {
+                const data = change.doc.data();
+                console.log('data - ', data)
+                if (change.type === "modified") {
+                    setValue('youtubeEmail', data.email);
+                    setValue('access_token', data.access_token);
+                    setValue('refresh_token', data.refresh_token);
+                    Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                }
+            })
         });
+    }, [])
+
+
+    // useGoogleLogin({
+    //     onSuccess: tokenResponse => {
+    //         fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 code: tokenResponse.code,
+    //                 platform: Capacitor.getPlatform()
+    //             })
+    //         }).then(response => {
+    //             response.json().then(data => {
+    //                 fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
+    //                     response.json().then(data => {
+    //                         if (data.email) {
+    //                             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
+    //                                 method: 'POST',
+    //                                 headers: {
+    //                                     'Content-Type': 'application/json',
+    //                                 },
+    //                                 body: JSON.stringify({
+    //                                     collection: 'users',
+    //                                     fieldToSearch: 'youtubeEmail',
+    //                                     valueToSearch: data.email
+    //                                 })
+    //                             }).then(response => {
+    //                                 response.json().then(res => {
+    //                                     if (res.status) {
+    //                                         Toast().error('Conta do Youtube já sincronizada com outro usuário!');
+    //                                         return;
+    //                                     }
+    //                                     setValue('youtubeEmail', data.email);
+    //                                     setValue('access_token', data.access_token);
+    //                                     setValue('refresh_token', data.refresh_token);
+    //                                     Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+    //                                 })
+    //                             })
+
+    //                         }
+    //                     })
+    //                 })
+    //             })
+    //         })
+    //     },
+       
+    //     scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
+    //     flow: 'auth-code',
+    // });
 
     return (
         <IonContent fullscreen>
@@ -183,16 +206,6 @@ export default function Profile() {
                                 )}
                             </div>
                         </div>
-
-                        <GoogleLogin
-                            onSuccess={credentialResponse => {
-                                console.log(credentialResponse);
-                            }}
-                            onError={() => {
-                                console.log('Login Failed');
-                            }}
-                        />
-
 
                         <div>
                             <label
