@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     IonApp,
     IonRouterOutlet,
     IonSplitPane,
-    isPlatform,
     setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -28,8 +27,8 @@ import { getCache } from './services/Cache';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Capacitor } from '@capacitor/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 
 // register Swiper custom elements
@@ -51,11 +50,16 @@ const App: React.FC = () => {
         return '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com'
     }
 
+    GoogleAuth.initialize({
+        clientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
+            scopes: ['profile', 'email'],
+            grantOfflineAccess: true,
+          });
+
     return (
         <IonApp>
             <IonReactRouter>
                 <ContextProvider>
-                    <GoogleOAuthProvider clientId={getClientId()}>
                         <IonSplitPane contentId="main">
                             <Menu />
                             <IonRouterOutlet id="main">
@@ -68,9 +72,11 @@ const App: React.FC = () => {
                                 <Routing isLogged={isLogged} />
                             </IonRouterOutlet>
                         </IonSplitPane>
-                    </GoogleOAuthProvider>
                 </ContextProvider>
             </IonReactRouter>
+
+            <meta name='google-signin-client-id' content='976746971009-09fhl5selrn61v7lpqmqf1rf5qbm0pns.apps.googleusercontent.com' />
+            <meta name="google-signin-scope" content="profile email" />
 
             <ToastContainer
                 autoClose={1000 * 2 /* 2 seconds */}

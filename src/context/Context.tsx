@@ -15,7 +15,6 @@ import React, { useEffect } from 'react';
 import WalletClass from 'src/classes/Wallet/WalletClass';
 import OrdersClass from 'src/classes/Orders/OrdersClass';
 import { decrypt } from 'src/services/Encrypt';
-import { GoogleLogin } from '@react-oauth/google';
 import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass';
 import ChannelsClass from '@/classes/Channels/ChannelsClass';
 
@@ -61,9 +60,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     }: ContextProps = classes;
 
     const { findGames, findTable, head2Head, hook }: any = FootballApi();
-
-    const [isLogout, setIsLogout] = React.useState(false);
-
 
     useEffect(() => {
         delete classes['user'];
@@ -172,17 +168,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                 wallets
             }}
         >
-            {isLogout && (
-                <GoogleLogin auto_select useOneTap
-                    onSuccess={credentialResponse => {
-                        console.log(credentialResponse);
-                    }}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
-                />
-            )}
-
             {children}
         </Context.Provider>
     );

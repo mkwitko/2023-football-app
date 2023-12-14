@@ -12,6 +12,8 @@ import { Capacitor } from '@capacitor/core';
 import { Browser } from '@capacitor/browser';
 import firebase_app from 'src/infra/Firebase';
 import { getFirestore, query, collection, where, onSnapshot } from 'firebase/firestore';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+
 
 
 export default function Profile() {
@@ -54,78 +56,54 @@ export default function Profile() {
         ProfileForm({ setEdit });
 
     const login = () => {
-        const url = `https://vozes-do-gigante.vercel.app/google/${user.hook.data.id}`
-        if (Capacitor.getPlatform() === 'web') window.open(url);
-        else Browser.open({ url: url });
+        GoogleAuth.signIn().then((res) => {
+            fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    code: res.serverAuthCode,
+                    platform: Capacitor.getPlatform()
+                })
+            }).then(response => {
+                response.json().then(data => {
+                    fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
+                        response.json().then(data2 => {
+                            if (data2.email) {
+                                fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        collection: 'users',
+                                        fieldToSearch: 'youtubeEmail',
+                                        valueToSearch: data2.email
+                                    })
+                                }).then(response => {
+                                    response.json().then(res => {
+                                        if (res.status) {
+                                            Toast().error('Conta do Youtube já sincronizada com outro usuário!');
+                                            return;
+                                        }
+                                        setValue('youtubeEmail', data2.email);
+                                        setValue('access_token', data.access_token);
+                                        setValue('refresh_token', data.refresh_token);
+                                        Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                                    })
+                                })
+
+                            }
+                        })
+                    })
+                })
+            })
+        }).catch((err) => {
+            console.log('err - ', err)
+        });
     }
 
-    const db = getFirestore(firebase_app);
-    useEffect(() => {
-        const q = query(collection(db, "users"), where('id', '==', user.hook.data.id));
-        onSnapshot(q, (querySnapshot) => {
-            querySnapshot.docChanges().forEach((change) => {
-                const data = change.doc.data();
-                console.log('data - ', data)
-                if (change.type === "modified") {
-                    setValue('youtubeEmail', data.email);
-                    setValue('access_token', data.access_token);
-                    setValue('refresh_token', data.refresh_token);
-                    Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
-                }
-            })
-        });
-    }, [])
-
-
-    // useGoogleLogin({
-    //     onSuccess: tokenResponse => {
-    //         fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 code: tokenResponse.code,
-    //                 platform: Capacitor.getPlatform()
-    //             })
-    //         }).then(response => {
-    //             response.json().then(data => {
-    //                 fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + data.access_token).then(response => {
-    //                     response.json().then(data => {
-    //                         if (data.email) {
-    //                             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
-    //                                 method: 'POST',
-    //                                 headers: {
-    //                                     'Content-Type': 'application/json',
-    //                                 },
-    //                                 body: JSON.stringify({
-    //                                     collection: 'users',
-    //                                     fieldToSearch: 'youtubeEmail',
-    //                                     valueToSearch: data.email
-    //                                 })
-    //                             }).then(response => {
-    //                                 response.json().then(res => {
-    //                                     if (res.status) {
-    //                                         Toast().error('Conta do Youtube já sincronizada com outro usuário!');
-    //                                         return;
-    //                                     }
-    //                                     setValue('youtubeEmail', data.email);
-    //                                     setValue('access_token', data.access_token);
-    //                                     setValue('refresh_token', data.refresh_token);
-    //                                     Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
-    //                                 })
-    //                             })
-
-    //                         }
-    //                     })
-    //                 })
-    //             })
-    //         })
-    //     },
-       
-    //     scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.channel-memberships.creator',
-    //     flow: 'auth-code',
-    // });
 
     return (
         <IonContent fullscreen>
