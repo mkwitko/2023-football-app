@@ -19,10 +19,10 @@ const config: CapacitorConfig = {
     },
     GoogleAuth: {
       scopes: ["profile", "email"],
-      clientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
-      serverClientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
-      androidClientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
-      iosClientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
+      clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+      serverClientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+      androidClientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+      iosClientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID_IOS,
       forceCodeForRefreshToken: true,
     }
   }

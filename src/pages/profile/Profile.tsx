@@ -9,9 +9,6 @@ import Navigation from 'src/services/Navigation';
 import { Context } from 'src/context/Context';
 import Auth from 'src/services/Auth';
 import { Capacitor } from '@capacitor/core';
-import { Browser } from '@capacitor/browser';
-import firebase_app from 'src/infra/Firebase';
-import { getFirestore, query, collection, where, onSnapshot } from 'firebase/firestore';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 
@@ -56,6 +53,7 @@ export default function Profile() {
         ProfileForm({ setEdit });
 
     const login = () => {
+        present();
         GoogleAuth.signIn().then((res) => {
             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
                 method: 'POST',
@@ -82,25 +80,42 @@ export default function Profile() {
                                         valueToSearch: data2.email
                                     })
                                 }).then(response => {
-                                    response.json().then(res => {
+                                    response.json().then(async (res) => {
                                         if (res.status) {
                                             Toast().error('Conta do Youtube já sincronizada com outro usuário!');
+                                            dismiss()
                                             return;
                                         }
                                         setValue('youtubeEmail', data2.email);
                                         setValue('access_token', data.access_token);
                                         setValue('refresh_token', data.refresh_token);
-                                        Toast().info('Conta do Youtube sincronizada com sucesso! Salve as informações para concluir o processo.');
+                                        await submit({
+                                            youtubeEmail: data2.email,
+                                            access_token: data.access_token,
+                                            refresh_token: data.refresh_token,
+                                            username: watch('username'),
+                                            email: watch('email'),
+                                            cpf: watch('cpf'),
+                                            cellphone: watch('cellphone'),
+                                            avatar: watch('avatar')
+                                        })
+                                        dismiss()
                                     })
+                                }).catch((err) => {
+                                    console.log('err - ', err);
+                                    dismiss()
                                 })
-
                             }
                         })
                     })
                 })
+            }).catch((err) => {
+                console.log('err - ', err);
+                dismiss()
             })
         }).catch((err) => {
             console.log('err - ', err)
+            dismiss()
         });
     }
 
@@ -211,12 +226,21 @@ export default function Profile() {
                                             autoComplete="youtubeEmail"
                                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-zinc-200 pl-2"
                                         />
-                                        <button onClick={() => {
+                                        <button onClick={async () => {
                                             if (!edit) return;
                                             setValue('youtubeEmail', '');
                                             setValue('access_token', '');
                                             setValue('refresh_token', '');
-                                            Toast().info('Conta do Youtube desconectada com sucesso! Salve as informações para concluir o processo.');
+                                            await submit({
+                                                youtubeEmail: '',
+                                                access_token: '',
+                                                refresh_token: '',
+                                                username: watch('username'),
+                                                email: watch('email'),
+                                                cpf: watch('cpf'),
+                                                cellphone: watch('cellphone'),
+                                                avatar: watch('avatar')
+                                            })
                                         }} className='font-bold text-[0.75rem] md:text-[1.5rem] absolute right-2 h-full' type='button'>
                                             Desconectar
                                         </button>

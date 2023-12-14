@@ -30,7 +30,6 @@
     "capacitor-set-version": "^2.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "cordova-plugin-googleplus": "^8.5.2",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
@@ -89,7 +88,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src",
     "fixTailwind": "npx tailwindcss -i src/theme/variables.css -o dist/output.css",
-    "setVersion": "npx capacitor-set-version ./ -v 1.0.1 -b 002",
+    "setVersion": "npx capacitor-set-version ./ -v 1.0.5 -b 005",
     "getDevelopSha1": "cd android && ./gradlew signingReport"
   },
   "browserslist": [

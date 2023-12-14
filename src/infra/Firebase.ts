@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
+import { Capacitor } from '@capacitor/core';
 import { initializeApp, getApps } from 'firebase/app';
+import { indexedDBLocalPersistence, initializeAuth } from 'firebase/auth';
 
 const FirebaseCredentials = {
   apiKey: process.env.REACT_APP_FIREBASE_PUBLIC_API_KEY,
@@ -15,5 +17,9 @@ const FirebaseCredentials = {
 const firebase_app =
   getApps().length === 0 ? initializeApp(FirebaseCredentials) : getApps()[0];
 
+
+  Capacitor.isNativePlatform() && initializeAuth(firebase_app, {
+    persistence: indexedDBLocalPersistence
+  })
 
 export default firebase_app;

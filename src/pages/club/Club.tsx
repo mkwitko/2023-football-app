@@ -17,7 +17,7 @@ export default function Club() {
 
   return (
     <IonContent fullscreen>
-    <div className="flex flex-col items-center justify-center md:mt-4 md:px-12 py-8 gap-4 md:gap-8">
+    <div className="flex flex-col items-center justify-center px-4 md:mt-4 md:px-12 py-8 gap-4 md:gap-8">
       {eventos.hook.data.map((e: any, i: number) => (
         <ClubCard
           data={e}

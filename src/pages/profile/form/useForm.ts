@@ -4,9 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Context } from '../../../context/Context';
 import Toast from 'src/services/Toast';
+import { useIonLoading } from '@ionic/react';
 
 export default function ProfileForm({ setEdit }: any) {
     const { user } = useContext(Context)
+    const [present, dismiss] = useIonLoading();
+
     const {
         register,
         handleSubmit,
@@ -46,6 +49,7 @@ export default function ProfileForm({ setEdit }: any) {
         refresh_token
     }: Form) => {
         let imagePath = '';
+        present()
 
         let data: any = {
             id: user?.hook?.data?.id || '',
@@ -83,7 +87,8 @@ export default function ProfileForm({ setEdit }: any) {
                 setEdit(false);
                 setValue('avatarChanged', false);
                 Toast().success('Perfil atualizado com sucesso!');
-            });
+                dismiss()
+            }).catch(() => dismiss());
         })
     };
 

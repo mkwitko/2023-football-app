@@ -20,6 +20,7 @@ async function signIn(email: string, password: string) {
     result = await signInWithEmailAndPassword(auth, email, password);
     Toast().success('Bem Vindo!'); 
   } catch (e: any) {
+    console.log('error - ', e);
     Toast().error(verifyErrors(e.code));
     error = e;
   }
@@ -107,6 +108,7 @@ async function forgotPassword(email: string) {
     error = null;
   try {
     result = await sendPasswordResetEmail(auth, email);
+    console.log('send forgot - ', result)
   } catch (e) {
     error = e;
   }

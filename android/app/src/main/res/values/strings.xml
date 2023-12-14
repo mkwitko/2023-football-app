@@ -4,8 +4,5 @@
     <string name="title_activity_main">Vozes do Gigante</string>
     <string name="package_name">com.vdg.prosperapps</string>
     <string name="custom_url_scheme">com.vdg.prosperapps</string>
-    <!-- <string name="server_client_id">976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com</string> -->
     <string name="server_client_id">976746971009-09fhl5selrn61v7lpqmqf1rf5qbm0pns.apps.googleusercontent.com</string>
 </resources>
-
-<!-- 976746971009-09fhl5selrn61v7lpqmqf1rf5qbm0pns.apps.googleusercontent.com -->

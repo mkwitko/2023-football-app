@@ -1,0 +1,21 @@
+** Android **
+
+Gera um SHA1 para a versão de desenvolvimento 
+cd android && ./gradlew signingReport
+Pegar SHA1 da loja em app integrity
+Colocar o client_id da web
+
+Adicionar no strings.xml 
+<string name="server_client_id">****Android client id*****.apps.googleusercontent.com</string>
+
+Adicionar google-services.json à pasta android/app
+
+
+** IOS **
+Adicionar no podfile e executar pod install
+pod 'Firebase'
+pod 'Firebase/Auth'
+
+Adicionar GoogleService-info.plist 
+
+

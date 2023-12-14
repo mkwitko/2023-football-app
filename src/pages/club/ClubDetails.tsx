@@ -137,10 +137,6 @@ export default function ClubDetails() {
                     </p>
                 </div>
 
-                <div className='bg-primary-700 rounded-[0.625rem] text-white p-4 mt-8 md:p-6'>
-                    <p className='text-[0.75rem] md:text-[1.5rem] font-bold text-center'>Nunca pediremos suas senhas pessoais ou entraremos em contato por meios não oficiais.</p>
-                </div>
-
                 <div className='flex flex-col items-end justify-center md:mb-4'>
                     <p className='text-primary-700 font-bold text-[0.75rem] md:text-[1.5rem]'>Investimento:</p>
                     <p className='text-[2.5rem] md:text-[3.5rem] font-bold text-primary-700 leading-[2.5rem]'>
@@ -182,6 +178,10 @@ export default function ClubDetails() {
                             <button disabled={currentEvent.price && (balance < currentEvent.price)} className='disabled:opacity-50 py-2 px-4 md:py-4 bg-primary-700 text-white font-bold text-[0.75rem] md:text-[1.5rem] rounded-[0.625rem]' onClick={action} type='button'>{currentEvent.price ? 'Comprar Entrada' : 'Participar'}</button>
                         )
                     )}
+                </div>
+
+                <div className='bg-primary-700 rounded-[0.625rem] text-white p-4 mt-8 md:p-6'>
+                    <p className='text-[0.75rem] md:text-[1.5rem] font-bold text-center'>Nunca pediremos suas senhas pessoais ou entraremos em contato por meios não oficiais.</p>
                 </div>
             </div>
 

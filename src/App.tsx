@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     IonApp,
     IonRouterOutlet,
@@ -40,38 +40,37 @@ const App: React.FC = () => {
     );
     const { auth } = Authentication();
 
+    useEffect(() => {
+        console.log('is logged - ', isLogged);
+    }, [isLogged])
+
     auth.onAuthStateChanged((user) => {
+        console.log('change user - ', user);
         setIsLogged(user !== null);
     });
 
-    const getClientId = () => {
-        if (Capacitor.getPlatform() === 'ios') return '976746971009-ftk06n7c247o3uvlop8vj746cs9cjpnv.apps.googleusercontent.com';
-        if (Capacitor.getPlatform() === 'android') return '976746971009-eupksk3p1psmbse9hqfuib89bjl0ho61.apps.googleusercontent.com';
-        return '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com'
-    }
-
     GoogleAuth.initialize({
         clientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
-            scopes: ['profile', 'email'],
-            grantOfflineAccess: true,
-          });
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+    });
 
     return (
         <IonApp>
             <IonReactRouter>
                 <ContextProvider>
-                        <IonSplitPane contentId="main">
-                            <Menu />
-                            <IonRouterOutlet id="main">
-                                <Route
-                                    path="/"
-                                    exact={true}
-                                >
-                                    <Redirect to={isLogged ? '/home' : '/login'} />
-                                </Route>
-                                <Routing isLogged={isLogged} />
-                            </IonRouterOutlet>
-                        </IonSplitPane>
+                    <IonSplitPane contentId="main">
+                        <Menu />
+                        <IonRouterOutlet id="main">
+                            <Route
+                                path="/"
+                                exact={true}
+                            >
+                                <Redirect to={isLogged ? '/home' : '/login'} />
+                            </Route>
+                            <Routing isLogged={isLogged} />
+                        </IonRouterOutlet>
+                    </IonSplitPane>
                 </ContextProvider>
             </IonReactRouter>
 
