@@ -21,12 +21,9 @@ const config: CapacitorConfig = {
       scopes: ["profile", "email"],
       clientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
       serverClientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
-      // androidClientId: '976746971009-09fhl5selrn61v7lpqmqf1rf5qbm0pns.apps.googleusercontent.com',
-      // iosClientId: '976746971009-ftk06n7c247o3uvlop8vj746cs9cjpnv.apps.googleusercontent.com',
       androidClientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
       iosClientId: '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
       forceCodeForRefreshToken: true,
-      // grantOfflineAccess: true,
     }
   }
 };
