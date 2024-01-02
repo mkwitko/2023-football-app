@@ -18,7 +18,7 @@ const config: CapacitorConfig = {
         splashImmersive: true
     },
     GoogleAuth: {
-      scopes: ["profile", "email"],
+      scopes: ["profile", "email", 'https://www.googleapis.com/auth/youtube.channel-memberships.creator'],
       clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
       serverClientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
       androidClientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,

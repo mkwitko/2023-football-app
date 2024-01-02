@@ -106,15 +106,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         if (user.hook.data && user.hook.data.access_token) {
-            fetch('https://www.googleapis.com/youtube/v3/members', {
-                headers: {
-                    Authorization: 'Bearer ' + user.hook.data.access_token
-                }
-            }).then(response => {
-                response.json().then(data => {
-                    console.log('members - ', data);
-                })
-            })
             fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + user.hook.data.access_token).then(response => {
                 response.json().then(data => {
                     if (data.error) {

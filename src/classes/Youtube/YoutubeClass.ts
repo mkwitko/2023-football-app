@@ -5,6 +5,7 @@ export default class YoutubeClass extends CoreClass {
 
     override collection = 'youtube';
     override hook = useYoutubeHook();
+    
 
     getLive = () => {
         const url = `${'https://yt.lemnoslife.com/noKey/'}search?part=snippet&channelId=${process.env.REACT_APP_YOUTUBE_CHANNEL}`;
