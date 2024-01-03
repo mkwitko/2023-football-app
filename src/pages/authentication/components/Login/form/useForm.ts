@@ -6,7 +6,7 @@ import Auth from '../../../../../services/Auth';
 import Navigation from '../../../../../services/Navigation';
 
 export default function LoginForm() {
-  const { signIn } = Auth();
+  const { signIn, signInAnon } = Auth();
   const {
     register,
     handleSubmit,
@@ -17,6 +17,14 @@ export default function LoginForm() {
 
 
   const { navigateTo } = Navigation();
+
+  const submitAnon = async () => {
+    const res: any = await signInAnon()
+
+    if(res.result) {
+      navigateTo('/home');
+    }
+  }
 
   const submit = async ({ email, password }: Form) => {
       const res: any = await signIn(email, password)
@@ -32,5 +40,6 @@ export default function LoginForm() {
     errors,
     isSubmitting,
     submit,
+    submitAnon
   };
 }

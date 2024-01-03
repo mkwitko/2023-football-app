@@ -10,9 +10,9 @@ export default function News() {
     const history = useHistory();
     const { noticias } = useContext(Context);
 
-    const screenHeight: number = window.innerHeight;
+    const screenWidth: number = window.innerWidth;
 
-    const isMd = screenHeight > 768;
+    const isMd = screenWidth > 768;
 
     return (
         <IonContent fullscreen>
@@ -48,12 +48,6 @@ export default function News() {
                                     <div className="font-bold mb-2 text-[0.75rem] md:text-[1.25rem]">
                                         <p>{StringCutter(e.title, 75, '...')}</p>
                                     </div>
-                                    {/* <button
-              type="button"
-              className="bg-primary text-white p-2 rounded-full mt-[-4rem] shadow-md"
-            >
-              <AiOutlineShareAlt className="text-[1.5rem]" />
-            </button> */}
                                 </div>
                                 <div
                                     className="text-[0.75rem] md:text-[1.25rem]"

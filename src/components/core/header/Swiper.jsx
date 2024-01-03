@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { IonButtons, IonMenuButton, IonToolbar } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Context } from '../../../context/Context';
@@ -20,17 +20,19 @@ export default function HeaderSwiper() {
                 }}
                 onSlideChange={(e) => {
                     const index = e.realIndex - 1;
+                   if(index && e) {
                     if(banners[index] !== undefined) {
                         e.autoplay.stop();
                         setTimeout(() => {
-                            e.autoplay.start();
+                            if(e.autoplay) e.autoplay.start();
                           }, banners[index].highlighted ? 10000 : 5000);
                     } else {
-                        e.autoplay.stop();
+                        if(e.autoplay) e.autoplay.stop();
                         setTimeout(() => {
-                            e.autoplay.start();
+                            if(e.autoplay) e.autoplay.start();
                           }, 5000);
                     }
+                   }
                 }}
             >
                 <SwiperSlide className="bg-firstHeader bg-cover bg-no-repeat"></SwiperSlide>

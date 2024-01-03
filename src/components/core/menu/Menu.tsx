@@ -23,6 +23,7 @@ interface AppPage {
     url: string;
     icon: any;
     title: string;
+    showAnon: boolean;
 }
 
 const appPages: AppPage[] = [
@@ -30,51 +31,61 @@ const appPages: AppPage[] = [
         title: 'Home',
         url: '/',
         icon: <BsFillHouseFill />,
+        showAnon: true,
     },
     {
         title: 'Perfil',
         url: '/profile',
         icon: <BsPersonCircle />,
+        showAnon: false,
     },
     {
         title: 'Clube VDG',
         url: '/club',
         icon: <AiFillIdcard />,
+        showAnon: false,
     },
     {
         title: 'Convênios',
         url: '/convenience',
         icon: <BsFillTicketPerforatedFill />,
+        showAnon: false,
     },
     {
         title: 'Tabela',
         url: '/table',
         icon: <AiFillTrophy />,
+        showAnon: true,
     },
     {
         title: 'Calendário',
         url: '/calendar',
         icon: <AiFillCarryOut />,
+        showAnon: true,
     },
     {
         title: 'Enquetes',
         url: '/surveys',
         icon: <BsYoutube />,
+        showAnon: true,
     },
     {
         title: 'Canais do Youtube',
         url: '/channels',
         icon: <BsYoutube />,
+        showAnon: true,
     },
     {
         title: 'Configurações',
         url: '/',
         icon: <AiFillSetting />,
+        showAnon: false,
     },
     {
         title: 'Histórico de Compras',
         url: '/purchases',
         icon: <MdWorkHistory />,
+        showAnon: false,
     },
 ];
 
@@ -102,6 +113,7 @@ const Menu: React.FC = () => {
                     </div>
                     <div className="flex flex-col gap-4 overflow-y-auto mt-8 md:gap-8">
                         {appPages.map((appPage, index) => {
+                            if(!user.hook.data && !appPage.showAnon) return;
                             return (
                                 <IonMenuToggle
                                     className="bg-transparent"

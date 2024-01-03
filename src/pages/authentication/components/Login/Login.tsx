@@ -3,7 +3,7 @@ import LoginForm from './form/useForm';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 export default function Login({ set }: { set: (value: number) => void }) {
-    const { register, handleSubmit, errors, isSubmitting, submit } = LoginForm();
+    const { register, handleSubmit, errors, isSubmitting, submit, submitAnon } = LoginForm();
 
     const [type, setType] = React.useState('password');
     return (
@@ -78,13 +78,23 @@ export default function Login({ set }: { set: (value: number) => void }) {
                     </div>
                 </div>
 
-                <div>
+                <div className='flex flex-col gap-4'>
                     <button
                         type="submit"
                         disabled={isSubmitting}
                         className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 md:text-[1.25rem] md:py-[0.75rem]"
                     >
                         Entrar
+                    </button>
+                    <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => {
+                            submitAnon();
+                        }}
+                        className="flex w-full justify-center rounded-md bg-primary-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-900 md:text-[1.25rem] md:py-[0.75rem]"
+                    >
+                        Entrar Anônimamente
                     </button>
                 </div>
             </form>

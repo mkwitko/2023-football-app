@@ -6,9 +6,13 @@ import MatchCard from './../../components/home/cards/MatchCard';
 
 // eslint-disable-next-line react/prop-types
 export default function HomeMatchCardSwiper({ gamesToShow }) {
+  const getInitialSlide = () => {
+    const index = gamesToShow.length - 3
+    return index > 0 ? index : 0
+  }
   return (
     <Swiper
-      initialSlide={2}
+      initialSlide={getInitialSlide()}
       pagination
     >
       {gamesToShow.map((e) => (

@@ -12,6 +12,7 @@ import { AiTwotoneStar } from 'react-icons/ai';
 import ModalProsper from 'src/components/Shadcn/Modal/index';
 import Toast from 'src/services/Toast';
 import { subDays } from 'date-fns';
+import { setCache } from 'src/services/Cache';
 
 export default function Live() {
     const { youtube, user, wallets } = useContext(Context);
@@ -65,27 +66,33 @@ export default function Live() {
 
     const db = getFirestore(firebase_app);
     useEffect(() => {
-        const q = query(collection(db, "youtube"), where('liveId', '==', id), where('date', '!=', null),  where('date', '>', subDays(new Date(), 1)));
-        onSnapshot(q, (querySnapshot) => {
-            if(querySnapshot.empty) setComments([]);
-            querySnapshot.docChanges().forEach((change) => {
-                const data = change.doc.data();
-                console.log('data - ', data)
-                if (change.type === "modified") {
-                    setComments((prev: any) => {
-                        const index = prev.findIndex((e: any) => e.id === data.id);
-                        if (index === -1) {
-                            return [...prev, data];
-                        }
-                        return prev;
-                    })
-                    setTimeout(() => {
-                        scrollToBottom();
-                    }, 1500);
+        if(id) {
+            const q = query(collection(db, "youtube"), where('liveId', '==', id), where('date', '!=', null),  where('date', '>', subDays(new Date(), 1)));
+            onSnapshot(q, (querySnapshot) => {
+                if(querySnapshot.empty) {
+                    setCache('youtube', []);
+                    setComments([]);
                 }
-            })
-        });
-    }, [])
+                querySnapshot.docChanges().forEach((change) => {
+                    const data = change.doc.data();
+                    if (change.type === "modified") {
+                        setComments((prev: any) => {
+                            const index = prev.findIndex((e: any) => e.id === data.id);
+                            if (index === -1) {
+                                return [...prev, data];
+                            }
+                            setCache('youtube', prev);
+                            return prev;
+                        })
+                        setTimeout(() => {
+                            scrollToBottom();
+                        }, 1500);
+                    }
+                })
+            });
+        }
+       
+    }, [id])
 
 
     return (
