@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import {
-    IonAvatar,
     IonContent,
     IonFooter,
     IonItem,
@@ -14,7 +13,7 @@ import './Menu.css';
 import Auth from '../../../services/Auth';
 import Navigation from '../../../services/Navigation';
 import { menuOnOff } from '../../../services/Menu';
-import { AiFillIdcard, AiFillSetting, AiFillTrophy, AiFillCarryOut } from "react-icons/ai";
+import { AiFillIdcard, AiFillTrophy, AiFillCarryOut } from "react-icons/ai";
 import { BsFillHouseFill, BsPersonCircle, BsFillTicketPerforatedFill, BsYoutube } from "react-icons/bs";
 import { MdWorkHistory } from "react-icons/md";
 import { Context } from 'src/context/Context';
