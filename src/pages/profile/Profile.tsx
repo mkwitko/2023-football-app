@@ -1,5 +1,5 @@
 import { IonContent, useIonAlert, useIonLoading } from '@ionic/react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import ProfileForm from './form/useForm';
 import { AiFillEdit } from 'react-icons/ai';
 import { Avatar } from './Avatar';
@@ -52,7 +52,7 @@ export default function Profile() {
     const { register, handleSubmit, errors, isSubmitting, submit, setValue, watch } =
         ProfileForm({ setEdit });
 
-    const login = () => {
+    const login = async () => {
         present();
         GoogleAuth.signIn().then((res) => {
             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {

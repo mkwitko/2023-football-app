@@ -13,8 +13,8 @@ export default function Channels() {
                 <div className='flex flex-col gap-4'>
                     <p className='uppercase text-primary-700 font-bold'>Playlists</p>
                     <div className='flex justif gap-4 flex-wrap'>
-                        {channels.hook.data?.filter((e: any) => e.type === 'playlist').map((e: any) => (
-                            <img onClick={() => {
+                        {channels.hook.data?.filter((e: any) => e.type === 'playlist').map((e: any, i: number) => (
+                            <img key={`each_image_${e.link}_${i}`} onClick={() => {
                                 if (e.link) {
                                     if (Capacitor.getPlatform() === 'web') window.open(e.link);
                                     else Browser.open({ url: e.link });
@@ -26,8 +26,8 @@ export default function Channels() {
                 <div className='flex flex-col gap-4'>
                     <p className='uppercase text-primary-700 font-bold'>Canais do Youtube</p>
                     <div className='flex justif gap-4 flex-wrap'>
-                        {channels.hook.data?.filter((e: any) => e.type === "partners").map((e: any) => (
-                            <img onClick={() => {
+                        {channels.hook.data?.filter((e: any) => e.type === "partners").map((e: any, i: number) => (
+                            <img key={`each_channel_${e.link}_${i}`} onClick={() => {
                                 if (e.link) {
                                     if (Capacitor.getPlatform() === 'web') window.open(e.link);
                                     else Browser.open({ url: e.link });

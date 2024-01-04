@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BsFillTicketPerforatedFill } from 'react-icons/bs';
 import { AiFillShop, AiFillTrophy, AiFillCarryOut } from 'react-icons/ai';
 import { BiSolidWallet } from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
+import { Context } from 'src/context/Context';
 
 export default function Categories() {
   const history = useHistory();
@@ -13,32 +14,42 @@ export default function Categories() {
       title: 'Loja',
       link: 'https://loja.vozesdogigante.com.br/',
       icon: <AiFillShop />,
+      showAnon: true
     },
     {
       title: 'Convênios',
       url: '/convenience',
       icon: <BsFillTicketPerforatedFill />,
+      showAnon: true
     },
     {
       title: 'Tabela',
       url: '/table',
       icon: <AiFillTrophy />,
+      showAnon: true
     },
     {
       title: 'Calendário',
       url: '/calendar',
       icon: <AiFillCarryOut />,
+      showAnon: true
     },
     {
         title: 'Carteira',
         url: '/wallet',
         icon: <BiSolidWallet />,
+        showAnon: false
       },
   ];
+
+  const { user } = useContext(Context);
+
   return (
     <div className="flex overflow-x-auto gap-4 py-2">
-      {categories.map((e, i) => (
-        <div
+      {categories.map((e, i) => {
+        if(!user.hook.data && !e.showAnon) return;
+        return (
+          <div
           key={i}
           onClick={(click) => {
             click.preventDefault();
@@ -55,7 +66,8 @@ export default function Categories() {
             {e.title}
           </p>
         </div>
-      ))}
+        )
+      })}
     </div>
   );
 }

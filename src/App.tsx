@@ -26,9 +26,8 @@ import { getCache } from './services/Cache';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { Capacitor } from '@capacitor/core';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { Capacitor } from '@capacitor/core';
 
 
 // register Swiper custom elements
@@ -40,12 +39,7 @@ const App: React.FC = () => {
     );
     const { auth } = Authentication();
 
-    useEffect(() => {
-        console.log('is logged - ', isLogged);
-    }, [isLogged])
-
     auth.onAuthStateChanged((user) => {
-        console.log('change user - ', user);
         setIsLogged(user !== null);
     });
 

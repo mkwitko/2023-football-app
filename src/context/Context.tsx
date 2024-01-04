@@ -75,18 +75,15 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         });
 
         auth.onAuthStateChanged((res: any) => {
-            console.log('auth changed - ', res);
             if (res) {
                 user.setClassById(true, res.uid).then((res) => {
-                    if (res) {
-                        user.hook.setData(res);
-                    }
+                    user.hook.setData(res);
                 });
                 orders.setClassById(true, res.uid).then((res) => {
-                    if (res) orders.hook.setData(res);
+                    orders.hook.setData(res);
                 })
                 userPurchases.setClassById(true, res.uid).then((res) => {
-                    if (res) userPurchases.hook.setData(res.historic);
+                    userPurchases.hook.setData(res && res.historic ? res.historic : null);
                 })
                 wallets.getHttp(res.uid).then((res: any) => {
                     if (res) {
@@ -95,6 +92,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                             id: res.id,
                             balance
                         });
+                    } else {
+                        wallets.hook.setData(null);
                     }
                 })
                 youtube.getLive();
@@ -105,7 +104,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        if (user.hook.data && user.hook.data.access_token) {
+        if (user.hook.data && user.hook.data.access_token && user.hook.data.youtubeEmail) {
             fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + user.hook.data.access_token).then(response => {
                 response.json().then(data => {
                     if (data.error) {
@@ -119,6 +118,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
                             })
                         }).then(response => {
                             response.json().then(data => {
+                                console.log('data - ', data);
                                 user.update({
                                     access_token: data.access_token
                                 })

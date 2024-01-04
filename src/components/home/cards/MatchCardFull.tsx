@@ -1,3 +1,4 @@
+import { setNomeCompeticao } from 'src/utils/FootballUtils';
 import React from 'react';
 
 export default function MatchCardFull({ match }: { match: any }) {
@@ -8,10 +9,7 @@ export default function MatchCardFull({ match }: { match: any }) {
     >
       <div className="flex w-full justify-between items-center bg-primary-700 px-4 py-1 font-bold ">
         <p className="text-white text-[1rem] md:text-[1.5rem]">
-          {match.league_name.includes('-')
-            ? match.league_name.substring(0, match.league_name.indexOf('-'))
-            : match.league_name}
-          {}
+        {setNomeCompeticao(match.league_name)}
         </p>
         <p className="text-[0.725rem] md:text-[1.25rem] text-white">
           {new Date(match.match_date).toLocaleDateString()}

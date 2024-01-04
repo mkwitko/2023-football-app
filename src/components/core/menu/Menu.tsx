@@ -76,12 +76,6 @@ const appPages: AppPage[] = [
         showAnon: true,
     },
     {
-        title: 'Configurações',
-        url: '/',
-        icon: <AiFillSetting />,
-        showAnon: false,
-    },
-    {
         title: 'Histórico de Compras',
         url: '/purchases',
         icon: <MdWorkHistory />,
@@ -151,6 +145,7 @@ const Menu: React.FC = () => {
                         signOut().then((res) => {
                             menuOnOff(false);
                             navigateTo('/login');
+                            localStorage.clear()
                         });
                     }}
                 >

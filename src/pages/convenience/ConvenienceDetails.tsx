@@ -55,9 +55,10 @@ export default function ConvenienceDetails() {
                                 )}
                                 {propaganda.hook.current.qrCode && (
                                     <ModalProsper.Modal>
-                                        <ModalProsper.ModalTrigger>   <button className='bg-primary-700 text-[0.75rem] text-white py-2 px-6 rounded-[0.625rem] font-bold'>
-                                            <p className="text-white text-[1rem] md:text-[1.5rem]">Ver QR Code</p>
-                                        </button>
+                                        <ModalProsper.ModalTrigger>
+                                            <button>
+                                            Ver QR Code
+                                            </button>
                                         </ModalProsper.ModalTrigger>
                                         <ModalProsper.ModalContent className='w-4/5 rounded-[0.625rem] gap-0 p-0'>
                                             <ModalProsper.ModalHeader className='bg-primary rounded-t-[0.625rem]'>

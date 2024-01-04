@@ -19,7 +19,6 @@ export default function MatchCard({ match }: { match: any }) {
       <div className="flex w-full justify-between items-center bg-primary-700 rounded-t-[0.625rem] px-4 py-1 font-bold ">
         <p className="text-white md:text-[1.5rem]">
           {setNomeCompeticao(match.league_name)}
-          {}
         </p>
         <p className="text-[0.725rem] md:text-[1rem] text-white">
           {new Date(match.match_date).toLocaleDateString()}
