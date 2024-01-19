@@ -47,3 +47,4 @@ firestore.indexes.json
 firebase.json
 
 src/assets
+capacitor.config.ts
