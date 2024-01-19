@@ -48,7 +48,6 @@ const Page: React.FC = () => {
 
   return (
     <IonContent fullscreen>
-      <p>olá mundo</p>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col px-4 sm:px-8 pt-8 gap-6">
           <Categories />
