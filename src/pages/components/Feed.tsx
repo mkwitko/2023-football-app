@@ -48,7 +48,7 @@ export default function Feed({ feeds }: { feeds: any }) {
               </div>
             ))
         : Array.of(2).map((e, i) => {
-            ;<p>carregando</p>
+            <p>carregando</p>
           })}
     </div>
   )

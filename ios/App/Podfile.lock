@@ -9,7 +9,7 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (5.0.6):
     - Capacitor
-  - CapacitorBrowser (5.0.6):
+  - CapacitorBrowser (5.1.0):
     - Capacitor
   - CapacitorClipboard (5.0.6):
     - Capacitor
@@ -84,7 +84,7 @@ SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   Capacitor: 070b18988e0f566728ae9a5eb3a7a974595f1626
   CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
-  CapacitorBrowser: 6192948e0ce804fd72aaf77f4114a3ad2e08c760
+  CapacitorBrowser: 7a0fb6a1011abfaaf2dfedfd8248f942a8eda3d6
   CapacitorClipboard: 77edf49827ea21da2a9c05c690a4a6a4d07199c4
   CapacitorCordova: 3773395d5331add072300ff6041ca2cf7b93cb0b
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
