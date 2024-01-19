@@ -25,6 +25,7 @@ import { getCache } from './services/Cache'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth'
+import { GoogleAuthInitializer, GoogleAuthMetaTags } from './assets/GoogleAuthInitializer'
 
 setupIonicReact()
 
@@ -41,12 +42,7 @@ const App: React.FC = () => {
     setIsLogged(user !== null)
   })
 
-  GoogleAuth.initialize({
-    clientId:
-      '976746971009-db916m71jq3u7ogtbbbuab85uv94k47j.apps.googleusercontent.com',
-    scopes: ['profile', 'email'],
-    grantOfflineAccess: true,
-  })
+  GoogleAuthInitializer()
 
   return (
     <IonApp>
@@ -64,11 +60,7 @@ const App: React.FC = () => {
         </ContextProvider>
       </IonReactRouter>
 
-      <meta
-        name="google-signin-client-id"
-        content="976746971009-09fhl5selrn61v7lpqmqf1rf5qbm0pns.apps.googleusercontent.com"
-      />
-      <meta name="google-signin-scope" content="profile email" />
+     <GoogleAuthMetaTags />
 
       <ToastContainer
         limit={1}
