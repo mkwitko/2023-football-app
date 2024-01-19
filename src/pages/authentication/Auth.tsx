@@ -1,6 +1,6 @@
 import { IonPage, IonContent } from '@ionic/react'
 import React, { useState } from 'react'
-import Logo from './../../assets/logo/logo.png'
+import Logo from './../../../public/assets/logo.png'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import Forgot from './components/Forgot/Forgot'
