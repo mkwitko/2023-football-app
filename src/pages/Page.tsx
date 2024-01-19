@@ -16,11 +16,20 @@ const Page: React.FC = () => {
         const nextGame = hook.games.findIndex((e: any) => {
             return e.match_status === '' || e.match_live === '1';
         });
+        console.log('next game from find matches - ', nextGame)
         const pastGamesToShow = hook.games.slice(nextGame - 2, nextGame);
         const postGamesToShow = hook.games.slice(nextGame, nextGame + 3);
         return [...pastGamesToShow, ...postGamesToShow];
     };
-    const gamesToShow = findMatches();
+
+    const [gamesToShow, setGamesToShow] = React.useState<any[]>([]);
+
+    useEffect(() => {
+        if(hook.games) {
+            const matches = findMatches();
+            setGamesToShow(matches);
+        }
+    }, [hook.games])
 
 
     const { navigateTo } = Navigation();

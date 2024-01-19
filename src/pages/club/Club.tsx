@@ -2,6 +2,7 @@ import { IonContent } from '@ionic/react';
 import React, { useContext } from 'react';
 import ClubCard from '../../components/club/ClubCard';
 import { Context } from '../../context/Context';
+import NoData from '../components/NoData';
 
 export default function Club() {
   const { eventos, userPurchases } = useContext(Context);
@@ -17,7 +18,8 @@ export default function Club() {
 
   return (
     <IonContent fullscreen>
-    <div className="flex flex-col items-center justify-center px-4 md:mt-4 md:px-12 py-8 gap-4 md:gap-8">
+    {eventos.hook.data.length > 0 ? (
+      <div className="flex flex-col items-center justify-center px-4 md:mt-4 md:px-12 py-8 gap-4 md:gap-8">
       {eventos.hook.data.map((e: any, i: number) => (
         <ClubCard
           data={e}
@@ -26,6 +28,9 @@ export default function Club() {
         />
       ))}
     </div>
+    ) : (
+      <NoData text='eventos' />
+    )}
   </IonContent>
   );
 }

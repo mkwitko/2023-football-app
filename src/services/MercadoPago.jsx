@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { Payment, initMercadoPago } from '@mercadopago/sdk-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AiOutlineCopy } from 'react-icons/ai';
 
 import {
@@ -12,9 +12,11 @@ import {
 import QRCode from 'qrcode.react';
 import { checkClipboard, writeToClipboard } from './Clipboard';
 import Toast from './Toast';
+import Authentication from './Auth';
 
 export default function MercadoPago({ componentProps }) {
-    const key = 'TEST-e665ba26-48bc-4bc0-aef3-2be1d76fb7c6'
+    const { auth } = Authentication()
+    const key = process.env.REACT_APP_MERCADO_PAGO_PUBLIC_KEY_OUR_CLIENT
     initMercadoPago(key);
 
     const [qrCode, setQrCode] = React.useState(null);
@@ -44,14 +46,18 @@ export default function MercadoPago({ componentProps }) {
             },
         },
     };
+
     const onSubmit = async ({ selectedPaymentMethod, formData }) => {
+
+        const token = await auth.currentUser?.getIdToken()
         let bodyJson = {
-            description: 'Pagamento de teste',
+            description: 'Adição de Fundos na Wallet',
             installments: formData.installments || 1,
             payer: {
                 email: formData.payer.email,
                 identification: formData.payer.identification
             },
+            // application_fee: selectedPaymentMethod === 'bank_transfer' ? String(process.env.REACT_APP_MERCADO_PAGO_PIX_FEE) : String(process.env.REACT_APP_MERCADO_PAGO_CREDIT_CARD_FEE),
             token: formData.token || '',
             issuer_id: formData.issuer_id || '',
             payment_method_id: formData.payment_method_id || '',
@@ -63,18 +69,21 @@ export default function MercadoPago({ componentProps }) {
             delete bodyJson.issuer_id;
 
 
-
         return new Promise((resolve, reject) => {
             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/payments' : process.env.REACT_APP_BACKEND_DEV + '/payments'}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(
                     bodyJson),
             })
                 .then((res) => {
+                    console.log('early res - ', res);
                     res.json().then((data) => {
+                        if(data.status === 'rejected' || data.status === 400) Toast().error('Transação Rejeitada - ' + data.error);
+                        console.log('response - ', data);
                         if (data.type === 'pix') {
                             setQrCode(data.qr_code);
                         } else {

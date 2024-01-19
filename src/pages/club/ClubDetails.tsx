@@ -8,6 +8,7 @@ import { Browser } from '@capacitor/browser';
 import Toast from 'src/services/Toast';
 import ModalProsper from 'src/components/Shadcn/Modal';
 import QRCode from 'qrcode.react';
+import Authentication from 'src/services/Auth';
 
 export default function ClubDetails() {
     const { eventos, wallets, user, userPurchases } = useContext(Context);
@@ -17,6 +18,8 @@ export default function ClubDetails() {
     const { navigateTo } = Navigation();
     const [presentAlert] = useIonAlert();
     const [present, dismiss] = useIonLoading();
+
+    const { auth } = Authentication()
 
     const screenHeight: number = window.innerHeight;
 
@@ -43,6 +46,8 @@ export default function ClubDetails() {
     }, [userPurchases.hook.data])
 
     const action = async () => {
+
+        const token = await auth.currentUser?.getIdToken()
         if (currentEvent.price) {
             if (balance < currentEvent.price) {
                 Toast().error('Saldo insuficiente');
@@ -66,7 +71,8 @@ export default function ClubDetails() {
                         fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/payments/pay' : process.env.REACT_APP_BACKEND_DEV + '/payments/pay'}`, {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
                             },
                             body: JSON.stringify({
                                 user_id: user.hook.data.id,

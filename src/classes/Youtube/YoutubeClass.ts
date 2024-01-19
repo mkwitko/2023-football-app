@@ -1,3 +1,4 @@
+import Authentication from 'src/services/Auth';
 import CoreClass from '../Core/CoreClass';
 import useYoutubeHook from './useYoutubeHook';
 
@@ -5,19 +6,21 @@ export default class YoutubeClass extends CoreClass {
 
     override collection = 'youtube';
     override hook = useYoutubeHook();
-    
+
+    auth = Authentication();
 
     getLive = () => {
-        const url = `${'https://yt.lemnoslife.com/noKey/'}search?part=snippet&channelId=${process.env.REACT_APP_YOUTUBE_CHANNEL}`;
+        const url = `${'https://yt.lemnoslife.com/noKey/'}search?part=snippet&order=date&channelId=${process.env.REACT_APP_YOUTUBE_CHANNEL}`;
 
         return fetch(url)
             .then((response) => response.json())
             .then(async (data) => {
+                console.log(data.items)
                 const findLive = data.items.find((e: any) => {
                     return e.snippet.liveBroadcastContent === 'live' && e.id.videoId;
                 });
                 this.hook.setLive(findLive);
-
+                console.log('find live - ', findLive)
                 if(findLive) {
                     fetch(`${'https://yt.lemnoslife.com/noKey/'}videos?part=liveStreamingDetails&id=${findLive.id.videoId}`).then((response) => response.json()).then((data) => {
                         this.hook.setLiveChatId(data.items[0].liveStreamingDetails.activeLiveChatId);
@@ -31,7 +34,8 @@ export default class YoutubeClass extends CoreClass {
             });
     };
 
-    sendComment = (text: string, access_token: string, id?: string) => {
+    sendComment = async (text: string, access_token: string, id?: string) => {
+        const token = await this.auth.auth.currentUser?.getIdToken()
         const url = `${'https://youtube.googleapis.com/youtube/v3/'}liveChat/messages?part=snippet`;
         fetch(url, {
             method: 'POST',
@@ -45,7 +49,7 @@ export default class YoutubeClass extends CoreClass {
                 },
             }),
             headers: {
-                Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         }).then((response) => response.json()).then((data) => console.log('send comment - ', data))

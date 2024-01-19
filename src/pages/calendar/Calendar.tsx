@@ -9,9 +9,11 @@ export default function Calendar() {
   const { navigateTo } = Navigation();
 
   const findNextGame = () => {
+    console.log('here');
     const nextGame = games.findIndex((e: any) => {
       return e.match_status === '';
     });
+    console.log(nextGame);
     setTimeout(() => {
       document?.getElementById(games[nextGame].match_id)?.scrollIntoView({
         behavior: 'auto',

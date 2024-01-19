@@ -7,7 +7,7 @@ import { Context } from '../../../context/Context';
 export default function HeaderSwiper() {
     const { banner } = useContext(Context);
 
-    const banners = banner.hook.data && banner.hook.data.filter((e) => e.active);
+    const banners = banner.hook.data && banner.hook.data.lengthj > 0 && banner.hook.data.filter((e) => e.active);
 
     return (
         <>

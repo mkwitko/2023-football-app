@@ -76,27 +76,33 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
         auth.onAuthStateChanged((res: any) => {
             if (res) {
-                user.setClassById(true, res.uid).then((res) => {
-                    user.hook.setData(res);
+                user.setClassById(true, res.uid).then(async(res) => {
+                    const tokenId = await auth.currentUser?.getIdToken()
+                    user.hook.setTokenId(tokenId || '');
+                   user.hook.setData(res)
                 });
-                orders.setClassById(true, res.uid).then((res) => {
-                    orders.hook.setData(res);
-                })
-                userPurchases.setClassById(true, res.uid).then((res) => {
-                    userPurchases.hook.setData(res && res.historic ? res.historic : null);
-                })
-                wallets.getHttp(res.uid).then((res: any) => {
-                    if (res) {
-                        const balance = +decrypt(res.balance);
-                        wallets.hook.setData({
-                            id: res.id,
-                            balance
-                        });
-                    } else {
-                        wallets.hook.setData(null);
-                    }
-                })
                 youtube.getLive();
+
+                if(!res.isAnonymous)
+                {
+                    orders.setClassById(true, res.uid).then((res) => {
+                        orders.hook.setData(res);
+                    })
+                    userPurchases.setClassById(true, res.uid).then((res) => {
+                        userPurchases.hook.setData(res && res.historic ? res.historic : null);
+                    })
+                    wallets.getHttp(res.uid).then((res: any) => {
+                        if (res) {
+                            const balance = +decrypt(res.balance ?? 0);
+                            wallets.hook.setData({
+                                id: res.id,
+                                balance
+                            });
+                        } else {
+                            wallets.hook.setData(null);
+                        }
+                    })
+                }
             }
         });
 

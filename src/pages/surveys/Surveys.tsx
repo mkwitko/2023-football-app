@@ -15,9 +15,7 @@ export default function SurveysPage() {
 
     return (
         <IonContent fullscreen>
-        <div className='m-4'>
-            <Surveys findSurveys={findSurvey} />
-        </div>
+        <Surveys findSurveys={findSurvey} />
     </IonContent>
     )
 }

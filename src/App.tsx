@@ -72,6 +72,7 @@ const App: React.FC = () => {
             <meta name="google-signin-scope" content="profile email" />
 
             <ToastContainer
+                limit={1}
                 autoClose={1000 * 2 /* 2 seconds */}
                 hideProgressBar
                 position="top-right"

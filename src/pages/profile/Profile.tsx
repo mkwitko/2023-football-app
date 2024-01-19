@@ -10,11 +10,13 @@ import { Context } from 'src/context/Context';
 import Auth from 'src/services/Auth';
 import { Capacitor } from '@capacitor/core';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import Authentication from 'src/services/Auth';
 
 
 
 export default function Profile() {
     const { user } = useContext(Context);
+    const { auth } = Authentication()
     const { navigateTo } = Navigation();
     const { exclude } = Auth();
     const [presentAlert] = useIonAlert();
@@ -54,11 +56,14 @@ export default function Profile() {
 
     const login = async () => {
         present();
+
+        const token = await auth.currentUser?.getIdToken()
         GoogleAuth.signIn().then((res) => {
             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/google-oauth' : process.env.REACT_APP_BACKEND_DEV + '/google-oauth'}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     code: res.serverAuthCode,
@@ -72,6 +77,7 @@ export default function Profile() {
                                 fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query' : process.env.REACT_APP_BACKEND_DEV + '/query'}`, {
                                     method: 'POST',
                                     headers: {
+                                        'Authorization': `Bearer ${token}`,
                                         'Content-Type': 'application/json',
                                     },
                                     body: JSON.stringify({

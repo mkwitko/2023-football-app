@@ -18,6 +18,7 @@ export default function Wallet() {
         componentProps: {
             id: user.hook.data ? user.hook.data.id : '',
             user: user.hook.data,
+            tokenId: user.hook.tokenId,
             close: () => handleCloseModal(),
             value: parseInt(value.replace('R$', '').replace(/\./g, ""), 10) / 100
         },
@@ -34,7 +35,7 @@ export default function Wallet() {
             onDidDismiss: () => {
                 wallets.getHttp(user.hook.data.id).then((res: any) => {
                     if (res) {
-                        const balance = +decrypt(res.balance);
+                        const balance = +decrypt(res.balance ?? 0);
                         wallets.hook.setData({
                             id: res.id,
                             balance
@@ -54,7 +55,7 @@ export default function Wallet() {
             onSnapshot(q, (querySnapshot) => {
                 querySnapshot.docChanges().forEach((change) => {
                     const data = change.doc.data();
-                    if (change.type === "modified") {
+                    if (change.type === "modified" || change.type === 'added') {
                         const balance = +decrypt(data.balance);
                         wallets.hook.setData({
                             id: user.hook.data.id,
@@ -77,7 +78,7 @@ export default function Wallet() {
                 </div>
                 <div className='flex items-center w-full justify-between'>
                     <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>Saldo em conta</p>
-                    <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>R${wallets.hook.data.balance ? (+wallets.hook.data.balance).toFixed(2) : 0}</p>
+                    <p className='text-primary font-bold text-[1rem] md:text-[1.5rem]'>R${wallets.hook.data?.balance ? (+wallets.hook.data.balance).toFixed(2) : 0}</p>
                 </div>
                 <div className='flex flex-col gap-8'>
                     <div>

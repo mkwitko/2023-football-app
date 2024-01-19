@@ -2,17 +2,15 @@ import {
     IonContent,
     IonTextarea,
 } from '@ionic/react';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Iframe from '../../components/youtube/Iframe';
 import { Context } from '../../context/Context';
-import { getFirestore, collection, query, onSnapshot, where } from 'firebase/firestore';
-import firebase_app from './../../infra/Firebase';
 import { BiSolidMegaphone } from 'react-icons/bi';
 import { AiTwotoneStar } from 'react-icons/ai';
 import ModalProsper from 'src/components/Shadcn/Modal/index';
 import Toast from 'src/services/Toast';
-import { subDays } from 'date-fns';
-import { setCache } from 'src/services/Cache';
+import Authentication from 'src/services/Auth';
+import Chat from './Chat';
 
 export default function Live() {
     const { youtube, user, wallets } = useContext(Context);
@@ -21,13 +19,12 @@ export default function Live() {
 
     const [comment, setComment] = useState('');
 
-    const [comments, setComments] = useState(youtube.hook.data);
+    const [comments, setComments] = useState<any>([]);
 
-    const scrollRef = useRef<any>(null);
+    const [open, setOpen] = useState(false);
+    const [isSending, setIsSending] = useState(false);
 
-    const scrollToBottom = () => {
-        scrollRef?.current?.scrollIntoView({ behavior: 'smooth' });
-    };
+    const {auth} = Authentication()
 
     const handleComment = async (isPaid = false) => {
         await youtube.insert({
@@ -37,13 +34,16 @@ export default function Live() {
             user: user.hook.data,
             date: new Date(),
             liveId: id
-        });
+        })
         setComment('');
         if (isPaid) {
+            const token = await auth.currentUser?.getIdToken()
+            setIsSending(true);
             fetch(`${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/payments/pay' : process.env.REACT_APP_BACKEND_DEV + '/payments/pay'}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     user_id: user.hook.data.id,
@@ -52,62 +52,32 @@ export default function Live() {
                     purchase: {
                         date: new Date(),
                         type: 'live',
-                        comment, 
+                        comment,
                         isPaid,
                         value,
                     }
                 })
+            }).then((res) => {
+                res.json().then(() => {
+                    setOpen(false);
+                    setIsSending(false);
+                })
+            }).catch(() => {
+                setOpen(false);
+                setIsSending(false);
             })
         }
-        
-        if(user.hook.data.access_token && youtube.hook.liveChatId)
+        if (user.hook.data.access_token && youtube.hook.liveChatId)
             youtube.sendComment(comment, user.hook.data.access_token, youtube.hook.liveChatId);
     };
 
-    const db = getFirestore(firebase_app);
-    useEffect(() => {
-        if(id) {
-            const q = query(collection(db, "youtube"), where('liveId', '==', id), where('date', '!=', null),  where('date', '>', subDays(new Date(), 1)));
-            onSnapshot(q, (querySnapshot) => {
-                if(querySnapshot.empty) {
-                    setCache('youtube', []);
-                    setComments([]);
-                }
-                querySnapshot.docChanges().forEach((change) => {
-                    const data = change.doc.data();
-                    if (change.type === "modified") {
-                        setComments((prev: any) => {
-                            const index = prev.findIndex((e: any) => e.id === data.id);
-                            if (index === -1) {
-                                return [...prev, data];
-                            }
-                            setCache('youtube', prev);
-                            return prev;
-                        })
-                        setTimeout(() => {
-                            scrollToBottom();
-                        }, 1500);
-                    }
-                })
-            });
-        }
-       
-    }, [id])
 
 
     return (
         <IonContent fullscreen>
             <div className="flex flex-col h-full items-center justify-between pb-2 relative">
                 <Iframe videoId={id} />
-                <div id='comments-div' className='flex flex-col overflow-y-auto w-full gap-2'>
-                    {comments.map((e: any, i: number) => {
-                        return (
-                            e.isPaid ? <SuperComment comment={e} key={i} /> :
-                                <Comment comment={e} key={i} />
-                        )
-                    })}
-                    <div ref={scrollRef}></div>
-                </div>
+                <Chat comments={comments} setComments={setComments} id={id}/>
                 <div className="w-[95%] flex items-end gap-2 border-t-2 pt-4">
                     <IonTextarea
                         className="w-full rounded-[0.625rem] border border-borderColor p-2"
@@ -121,10 +91,10 @@ export default function Live() {
                         }}
                     ></IonTextarea>
                     <div className='flex flex-col h-full justify-between gap-4'>
-                        <ModalProsper.Modal>
+                        <ModalProsper.Modal open={open} setOpen={setOpen}>
                             <ModalProsper.ModalTrigger>
                                 <button
-                                    disabled={!comment || !wallets.hook.data || wallets.hook.data.balance < 1}
+                                    disabled={!comment || !wallets.hook.data || wallets.hook.data.balance === 0}
                                     className="h-full flex gap-1 items-center bg-primary rounded-[0.625rem] py-2 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
                                     type="button"
                                 >
@@ -149,12 +119,12 @@ export default function Live() {
                                 </div>
                                 <ModalProsper.ModalFooter>
                                     <div className='flex items-center justify-between'>
-                                        <button onClick={() => {
+                                        <button disabled={isSending} onClick={() => {
                                             if (wallets.hook.data.balance < value) {
                                                 Toast().error('Saldo insuficiente');
                                             } else
                                                 handleComment(true);
-                                        }} className='flex-1 bg-primary text-white p-4 rounded-ee-[0.625rem] font-bold' type='button'>
+                                        }} className='disabled:opacity-50 flex-1 bg-primary text-white p-4 rounded-ee-[0.625rem] font-bold' type='button'>
                                             Confirmar
                                         </button>
                                     </div>
@@ -181,38 +151,3 @@ export default function Live() {
 }
 
 
-const Comment = ({ comment }: {
-    comment: any
-}) => {
-    return (
-        <div className='flex items-start justify-between gap-4 w-full p-4 pb-0'>
-            <div className='relative h-auto w-[15%]'>
-                <img className='w-full h-12 object-cover rounded-[0.625rem] aspect-square' src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg" alt="" />
-                <div className='absolute -top-2 -left-2 bg-primary rounded-full h-5 w-5 shadow-md border border-white'></div>
-            </div>
-            <div className='flex flex-col items-start w-full'>
-                <p className='font-bold'>{comment.user.username}</p>
-                <p className='w-full rounded-[0.625rem]'>{comment.comment}</p>
-            </div>
-        </div>
-    )
-}
-
-const SuperComment = ({ comment }: {
-    comment: any
-}) => {
-    return (
-        <div>
-            <div className='flex items-start justify-between gap-4 w-full p-4 pb-2 bg-bgClub bg-opacity-20 bg-center bg-125% bg-blend-soft-light'>
-                <div className='relative h-[4rem] w-[15%]'>
-                    <img className='w-full h-[3rem] object-cover border-2 shadow-2xl border-white rounded-[0.625rem]' src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg" alt="" />
-                    <div className='absolute -top-2 -left-2 bg-primary rounded-full h-5 w-5 shadow-md border border-white'></div>
-                </div>
-                <div className='flex flex-col items-start w-full'>
-                    <p className='font-[900] text-white text-[1.35rem]'>{comment.user.username}</p>
-                    <p className='w-full rounded-[0.625rem] text-white'>{comment.comment}</p>
-                </div>
-            </div>
-        </div>
-    )
-}
