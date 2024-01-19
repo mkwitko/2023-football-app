@@ -45,3 +45,5 @@ storage.rules
 components.json
 firestore.indexes.json
 firebase.json
+
+src/assets
