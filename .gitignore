@@ -49,3 +49,4 @@ firebase.json
 src/assets
 capacitor.config.ts
 resources
+tailwind.config.js
