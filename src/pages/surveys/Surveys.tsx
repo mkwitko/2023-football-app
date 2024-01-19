@@ -4,18 +4,18 @@ import React, { useContext } from 'react'
 import Surveys from '../match/(sections)/Survey/Surveys'
 
 export default function SurveysPage() {
-    const { surveys } = useContext(Context);
+  const { surveys } = useContext(Context)
 
-    const findSurvey = () => {
-        const returner = surveys.hook.data.filter((e: any) => {
-            return !e.associateFootball;
-        })
-        return returner;
-    }
+  const findSurvey = () => {
+    const returner = surveys.hook.data.filter((e: any) => {
+      return !e.associateFootball
+    })
+    return returner
+  }
 
-    return (
-        <IonContent fullscreen>
-        <Surveys findSurveys={findSurvey} />
+  return (
+    <IonContent fullscreen>
+      <Surveys findSurveys={findSurvey} />
     </IonContent>
-    )
+  )
 }

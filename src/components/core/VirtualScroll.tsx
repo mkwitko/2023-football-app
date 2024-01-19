@@ -1,5 +1,5 @@
-import React from 'react';
-import { useInView } from 'react-intersection-observer';
+import React from 'react'
+import { useInView } from 'react-intersection-observer'
 
 /**
  * A wrapper component for children of
@@ -10,22 +10,19 @@ function VirtualScrollChild({
   height,
   children,
 }: {
-  height: number;
-  children: React.ReactNode;
+  height: number
+  children: React.ReactNode
 }) {
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView()
   const style = {
     height: `${height}px`,
     overflow: 'hidden',
-  };
+  }
   return (
-    <div
-      style={style}
-      ref={ref}
-    >
+    <div style={style} ref={ref}>
       {inView ? children : null}
     </div>
-  );
+  )
 }
 
-export default VirtualScrollChild;
+export default VirtualScrollChild

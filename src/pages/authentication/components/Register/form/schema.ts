@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const Schema = z.object({
   email: z
@@ -12,6 +12,6 @@ export const Schema = z.object({
   confirmPassword: z.string({
     required_error: 'Confirme sua senha',
   }),
-});
+})
 
-export type Form = z.infer<typeof Schema>;
+export type Form = z.infer<typeof Schema>

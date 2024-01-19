@@ -1,15 +1,12 @@
-import { setNomeCompeticao } from 'src/utils/FootballUtils';
-import React from 'react';
+import { setNomeCompeticao } from 'src/utils/FootballUtils'
+import React from 'react'
 
 export default function MatchCardFull({ match }: { match: any }) {
   return (
-    <div
-      id={match.match_id}
-      className="flex flex-col "
-    >
+    <div id={match.match_id} className="flex flex-col ">
       <div className="flex w-full justify-between items-center bg-primary-700 px-4 py-1 font-bold ">
         <p className="text-white text-[1rem] md:text-[1.5rem]">
-        {setNomeCompeticao(match.league_name)}
+          {setNomeCompeticao(match.league_name)}
         </p>
         <p className="text-[0.725rem] md:text-[1.25rem] text-white">
           {new Date(match.match_date).toLocaleDateString()}
@@ -73,5 +70,5 @@ export default function MatchCardFull({ match }: { match: any }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

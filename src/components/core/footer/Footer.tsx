@@ -1,13 +1,17 @@
-import { IonFooter } from '@ionic/react';
+import { IonFooter } from '@ionic/react'
 
-import React from 'react';
-import { AiFillHome } from 'react-icons/ai';
-import { IoNewspaper } from 'react-icons/io5';
-import { AiFillIdcard, AiOutlineYoutube, AiFillShop } from 'react-icons/ai';
-import { useHistory, useLocation } from 'react-router';
-import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
-import { Context } from '../../../context/Context';
+import React from 'react'
+import {
+  AiFillHome,
+  AiFillIdcard,
+  AiOutlineYoutube,
+  AiFillShop,
+} from 'react-icons/ai'
+import { IoNewspaper } from 'react-icons/io5'
+import { useHistory, useLocation } from 'react-router'
+import { Browser } from '@capacitor/browser'
+import { Capacitor } from '@capacitor/core'
+import { Context } from '../../../context/Context'
 
 export default function Footer() {
   const footer = [
@@ -28,7 +32,7 @@ export default function Footer() {
     },
     {
       title: 'Loja',
-      link: 'https://loja.vozesdogigante.com.br/',
+      link: process.env.REACT_APP_STORE,
       icon: <AiFillShop />,
     },
     {
@@ -36,17 +40,17 @@ export default function Footer() {
       path: '/club',
       icon: <AiFillIdcard />,
     },
-  ];
+  ]
 
-  const location = useLocation();
-  const history = useHistory();
+  const location = useLocation()
+  const history = useHistory()
 
-  const { youtube } = React.useContext(Context);
+  const { youtube } = React.useContext(Context)
 
   const isLive =
     youtube.hook.live &&
     youtube.hook.live.snippet &&
-    youtube.hook.live.snippet.liveBroadcastContent === 'live';
+    youtube.hook.live.snippet.liveBroadcastContent === 'live'
 
   return (
     <IonFooter className="h-16 md:h-[5.5rem] bg-primary-500">
@@ -56,14 +60,14 @@ export default function Footer() {
             key={i}
             onClick={() => {
               if (e.highlight && isLive) {
-                history.push('/live');
+                history.push('/live')
               } else {
                 if (e.path) {
-                  history.push(e.path);
+                  history.push(e.path)
                 }
                 if (e.link) {
-                  if (Capacitor.getPlatform() === 'web') window.open(e.link);
-                  else Browser.open({ url: e.link });
+                  if (Capacitor.getPlatform() === 'web') window.open(e.link)
+                  else Browser.open({ url: e.link })
                 }
               }
             }}
@@ -114,5 +118,5 @@ export default function Footer() {
         ))}
       </div>
     </IonFooter>
-  );
+  )
 }

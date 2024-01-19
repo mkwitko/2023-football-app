@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 export default function SingleStat({
   name,
@@ -6,13 +6,13 @@ export default function SingleStat({
   value2,
   isHome,
 }: {
-  name: string;
-  value1: number;
-  value2: number;
-  isHome: boolean;
+  name: string
+  value1: number
+  value2: number
+  isHome: boolean
 }) {
-  const value1Percent = (value1 / (value1 + value2)) * 100;
-  const value2Percent = (value2 / (value1 + value2)) * 100;
+  const value1Percent = (value1 / (value1 + value2)) * 100
+  const value2Percent = (value2 / (value1 + value2)) * 100
 
   return (
     <div className="flex flex-col flex-1 mx-4 text-[1rem] md:text-[1.5rem]">
@@ -41,5 +41,5 @@ export default function SingleStat({
         ></div>
       </div>
     </div>
-  );
+  )
 }

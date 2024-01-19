@@ -1,14 +1,13 @@
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router'
 
 export default function Navigation() {
-  const history = useHistory();
+  const history = useHistory()
 
   function navigateTo(path: string) {
-    history.push(path);
-    
+    history.push(path)
   }
 
   return {
     navigateTo,
-  };
+  }
 }

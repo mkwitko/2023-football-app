@@ -1,76 +1,79 @@
-import { Context } from 'src/context/Context';
+import { Context } from 'src/context/Context'
 import React, { useContext, useEffect, useState } from 'react'
-import Survey from './Survey';
-import NoData from 'src/pages/components/NoData';
+import Survey from './Survey'
+import NoData from 'src/pages/components/NoData'
 
-export default function Surveys({ findSurveys }: {
-    findSurveys: any;
-}) {
+export default function Surveys({ findSurveys }: { findSurveys: any }) {
+  const { user } = useContext(Context)
 
-    const { user } = useContext(Context);
+  const [survey, setSurveys] = useState<any[]>([])
+  const [currentSurvey, setCurrentSurvey] = useState<any>(0)
+  const [hasVoted, setHasVoted] = useState<boolean>(false)
 
-    const [survey, setSurveys] = useState<any[]>([]);
-    const [currentSurvey, setCurrentSurvey] = useState<any>(0);
-    const [hasVoted, setHasVoted] = useState<boolean>(false);
+  const findVoter = (survey: any, userId: string) => {
+    if (!survey || !survey.voters) return
+    return survey.voters[userId]
+  }
 
-    const findVoter = (survey: any, userId: string) => {
-        if (!survey || !survey.voters) return;
-        return survey.voters[userId];
-    };
+  useEffect(() => {
+    if (survey.length === 0) setSurveys(findSurveys())
+  }, [])
 
-    useEffect(() => {
-        if (survey.length === 0) setSurveys(findSurveys());
-    }, [])
+  useEffect(() => {
+    if (user.hook.data && user.hook.data.id) {
+      const voters = findVoter(survey[currentSurvey], user.hook.data.id)
+      if (voters) setHasVoted(voters)
+    }
+  }, [user.hook.data, survey])
 
-    useEffect(() => {
-        if (user.hook.data && user.hook.data.id) {
-            const voters = findVoter(survey[currentSurvey], user.hook.data.id);
-            if (voters) setHasVoted(voters)
-        }
-    }, [user.hook.data, survey]);
+  return survey.length > 0 ? (
+    <div className="m-4 flex flex-col gap-4">
+      {survey && survey.length > 0 && survey[currentSurvey] && (
+        <Survey
+          survey={survey}
+          setSurveys={setSurveys}
+          findSurveys={findSurveys}
+          currentSurvey={currentSurvey}
+          hasVoted={hasVoted}
+          setHasVoted={setHasVoted}
+        />
+      )}
 
-
-    return (
-        survey.length > 0 ? (
-            <div className="m-4 flex flex-col gap-4">
-                {survey && survey.length > 0 && survey[currentSurvey] && (
-                    <Survey
-                        survey={survey}
-                        setSurveys={setSurveys}
-                        findSurveys={findSurveys}
-                        currentSurvey={currentSurvey}
-                        hasVoted={hasVoted}
-                        setHasVoted={setHasVoted}
-                    />
-                )}
-
-                {survey.length > 1 && (
-                    <div className='flex flex-col gap-4 mb-8'>
-                        <p className='font-bold text-[1rem] md:text-[1.5rem]'>Outras enquetes</p>
-                        {survey
-                            .filter((e: any) => e.id !== survey[currentSurvey].id).map((e: any, i: number) => {
-                                return (
-                                    <div onClick={() => {
-                                        const index = survey.findIndex((each: any) => each.id === e.id);
-                                        setCurrentSurvey(index);
-                                        const voters = findVoter(survey[index], user.hook.data.id);
-                                        if (voters) setHasVoted(voters);
-                                        else setHasVoted(false);
-                                    }} className='shadow-sendShadow bg-white flex flex-col border border-primary rounded-[0.625rem] w-full p-4' key={`other_surveys_${i}`}>
-                                        <span className='text-[0.75rem] md:text-[1.5rem] text-primary font-bold'>
-                                            Veja agora:
-                                        </span>
-                                        <span className='text-primary font-bold text-[1rem] md:text-[2rem]'>
-                                            {e.question}
-                                        </span>
-                                    </div>
-                                )
-                            })}
-                    </div>
-                )}
-            </div>
-        ) : (
-            <NoData text='enquetes' />
-        )
-    )
+      {survey.length > 1 && (
+        <div className="flex flex-col gap-4 mb-8">
+          <p className="font-bold text-[1rem] md:text-[1.5rem]">
+            Outras enquetes
+          </p>
+          {survey
+            .filter((e: any) => e.id !== survey[currentSurvey].id)
+            .map((e: any, i: number) => {
+              return (
+                <div
+                  onClick={() => {
+                    const index = survey.findIndex(
+                      (each: any) => each.id === e.id,
+                    )
+                    setCurrentSurvey(index)
+                    const voters = findVoter(survey[index], user.hook.data.id)
+                    if (voters) setHasVoted(voters)
+                    else setHasVoted(false)
+                  }}
+                  className="shadow-sendShadow bg-white flex flex-col border border-primary rounded-[0.625rem] w-full p-4"
+                  key={`other_surveys_${i}`}
+                >
+                  <span className="text-[0.75rem] md:text-[1.5rem] text-primary font-bold">
+                    Veja agora:
+                  </span>
+                  <span className="text-primary font-bold text-[1rem] md:text-[2rem]">
+                    {e.question}
+                  </span>
+                </div>
+              )
+            })}
+        </div>
+      )}
+    </div>
+  ) : (
+    <NoData text="enquetes" />
+  )
 }

@@ -1,61 +1,61 @@
-import React from 'react';
-import RoundedMatchResult from './RoundedMatchResult';
+import React from 'react'
+import RoundedMatchResult from './RoundedMatchResult'
 
 export default function Head2Head({
   head2head,
   isHome,
   match,
 }: {
-  head2head: any;
-  isHome: boolean;
-  match: any;
+  head2head: any
+  isHome: boolean
+  match: any
 }) {
   const findOurResult = (match: any) => {
     const isHome =
-      match.match_hometeam_id === process.env.REACT_APP_FOOTBALL_API_CLUB;
+      match.match_hometeam_id === process.env.REACT_APP_FOOTBALL_API_CLUB
     if (isHome) {
-      goalsFor += +match.match_hometeam_score;
-      goalsAgainst += +match.match_awayteam_score;
-      if (+match.match_awayteam_score === 0) cleanSheets++;
+      goalsFor += +match.match_hometeam_score
+      goalsAgainst += +match.match_awayteam_score
+      if (+match.match_awayteam_score === 0) cleanSheets++
       if (+match.match_hometeam_score > +match.match_awayteam_score) {
-        return 1;
+        return 1
       }
       if (+match.match_hometeam_score < +match.match_awayteam_score) {
-        return 2;
+        return 2
       }
-      return 0;
+      return 0
     } else {
-      goalsFor += +match.match_awayteam_score;
-      goalsAgainst += +match.match_hometeam_score;
-      if (+match.match_hometeam_score === 0) cleanSheets++;
+      goalsFor += +match.match_awayteam_score
+      goalsAgainst += +match.match_hometeam_score
+      if (+match.match_hometeam_score === 0) cleanSheets++
       if (+match.match_hometeam_score > +match.match_awayteam_score) {
-        return 2;
+        return 2
       }
       if (+match.match_hometeam_score < +match.match_awayteam_score) {
-        return 1;
+        return 1
       }
-      return 0;
+      return 0
     }
-  };
+  }
 
-  let wins = 0;
-  let draws = 0;
-  let loses = 0;
-  let goalsFor = 0;
-  let goalsAgainst = 0;
-  let cleanSheets = 0;
+  let wins = 0
+  let draws = 0
+  let loses = 0
+  let goalsFor = 0
+  let goalsAgainst = 0
+  let cleanSheets = 0
 
   const makeHead2HeadStats = () => {
-    if (head2head.length === 0) return;
+    if (head2head.length === 0) return
     head2head.firstTeam_VS_secondTeam.forEach((element: any) => {
-      const result = findOurResult(element);
-      if (result === 1) wins++;
-      if (result === 2) loses++;
-      if (result === 0) draws++;
-    });
-  };
+      const result = findOurResult(element)
+      if (result === 1) wins++
+      if (result === 2) loses++
+      if (result === 0) draws++
+    })
+  }
 
-  makeHead2HeadStats();
+  makeHead2HeadStats()
 
   return head2head.length !== 0 ? (
     <>
@@ -64,40 +64,28 @@ export default function Head2Head({
           {head2head.length !== 0 && head2head.firstTeam_VS_secondTeam.length}{' '}
           Partidas Jogadas
         </p>
-        <p className="text-[0.75rem] md:text-[1.5rem]">Contando todas as competições</p>
+        <p className="text-[0.75rem] md:text-[1.5rem]">
+          Contando todas as competições
+        </p>
       </div>
       <div className="flex gap-4 my-2">
-        <StatsSquare
-          stats={wins}
-          name="Vitórias"
-        />
-        <StatsSquare
-          stats={draws}
-          name="Empates"
-        />
-        <StatsSquare
-          stats={loses}
-          name="Derrotas"
-        />
+        <StatsSquare stats={wins} name="Vitórias" />
+        <StatsSquare stats={draws} name="Empates" />
+        <StatsSquare stats={loses} name="Derrotas" />
       </div>
       <div className="flex flex-col">
-        <StatsLine
-          stats={goalsFor}
-          name="Gols Pró"
-        />
-        <StatsLine
-          stats={goalsAgainst}
-          name="Gols Sofridos"
-        />
-        <StatsLine
-          stats={cleanSheets}
-          name="Jogos sem sofrer gols"
-        />
+        <StatsLine stats={goalsFor} name="Gols Pró" />
+        <StatsLine stats={goalsAgainst} name="Gols Sofridos" />
+        <StatsLine stats={cleanSheets} name="Jogos sem sofrer gols" />
       </div>
 
       <div className="flex flex-col items-center justify-center mt-2 md:mt-8">
-        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[2rem]">Forma Atual</p>
-        <p className="text-[0.75rem] md:text-[1.5rem]">Contando todas as competições</p>
+        <p className="font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[2rem]">
+          Forma Atual
+        </p>
+        <p className="text-[0.75rem] md:text-[1.5rem]">
+          Contando todas as competições
+        </p>
       </div>
 
       {head2head.length !== 0 && (
@@ -153,7 +141,9 @@ export default function Head2Head({
                     src={match.team_home_badge}
                     alt=""
                   />
-                  <p className='text-[1rem md:text-[2rem]'>{match.match_hometeam_name}</p>
+                  <p className="text-[1rem md:text-[2rem]">
+                    {match.match_hometeam_name}
+                  </p>
                 </>
               ) : (
                 <>
@@ -162,7 +152,9 @@ export default function Head2Head({
                     src={match.team_away_badge}
                     alt=""
                   />
-                  <p className='text-[1rem md:text-[2rem]'>{match.match_awayteam_name}</p>
+                  <p className="text-[1rem md:text-[2rem]">
+                    {match.match_awayteam_name}
+                  </p>
                 </>
               )}
             </div>
@@ -202,25 +194,31 @@ export default function Head2Head({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 const StatsSquare = ({ stats, name }: { stats: any; name: string }) => {
   return (
     <div className="flex flex-col items-center justify-center bg-primary-800 w-full rounded-[0.625rem] p-2 gap-1 aspect-square">
-      <p className="text-[1.5rem] sm:text-[2rem] md:text-[4rem] text-primary-200 font-bold">{stats}</p>
-      <p className="text-white font-semibold text-[0.85rem] sm:text-[1rem] md:text-[2rem]">{name}</p>
+      <p className="text-[1.5rem] sm:text-[2rem] md:text-[4rem] text-primary-200 font-bold">
+        {stats}
+      </p>
+      <p className="text-white font-semibold text-[0.85rem] sm:text-[1rem] md:text-[2rem]">
+        {name}
+      </p>
     </div>
-  );
-};
+  )
+}
 
 const StatsLine = ({ stats, name }: { stats: any; name: string }) => {
   return (
     <div className="flex items-center justify-between w-full py-2 md:py-4 border-b">
-      <p className="text-primary-800 font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[1.5rem]">{name}</p>
+      <p className="text-primary-800 font-bold uppercase text-[0.85rem] sm:text-[1rem] md:text-[1.5rem]">
+        {name}
+      </p>
       <p className="text-primary-800 font-bold uppercase text-[1rem] sm:text-[1.25rem] md:text-[1.5rem]">
         {stats}
       </p>
     </div>
-  );
-};
+  )
+}

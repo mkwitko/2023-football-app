@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const Schema = z.object({
   email: z
@@ -6,6 +6,6 @@ export const Schema = z.object({
       required_error: 'E-mail é obrigatório',
     })
     .email('E-mail inválido'),
-});
+})
 
-export type Form = z.infer<typeof Schema>;
+export type Form = z.infer<typeof Schema>

@@ -1,25 +1,25 @@
-import { getCache, setCache } from './../../services/Cache';
-import { useState } from 'react';
+import { getCache, setCache } from './../../services/Cache'
+import { useState } from 'react'
 
 export default function usePropagandaHook() {
-    const [data, setData] = useState<any>(getCache('covenants') || []);
-    const [current, setCurrent] = useState<any>(null);
+  const [data, setData] = useState<any>(getCache('covenants') || [])
+  const [current, setCurrent] = useState<any>(null)
 
-    const handleSetCurrent = (current: any) => {
-        setCurrent(current);
-        setCache('currentCovenants', current);
-    }
+  const handleSetCurrent = (current: any) => {
+    setCurrent(current)
+    setCache('currentCovenants', current)
+  }
 
-    const getCurrent = () => {
-        return current ? current : getCache('currentCovenants');
-    }
+  const getCurrent = () => {
+    return current || getCache('currentCovenants')
+  }
 
-    return {
-        data,
-        setData,
-        current,
-        setCurrent,
-        handleSetCurrent,
-        getCurrent,
-    };
+  return {
+    data,
+    setData,
+    current,
+    setCurrent,
+    handleSetCurrent,
+    getCurrent,
+  }
 }

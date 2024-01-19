@@ -1,6 +1,6 @@
-import React from 'react';
-import { menuController } from '@ionic/core/components';
+import React from 'react'
+import { menuController } from '@ionic/core/components'
 
 export const menuOnOff = (bool: boolean) => {
-  bool ? menuController.open() : menuController.close();
-};
+  bool ? menuController.open() : menuController.close()
+}

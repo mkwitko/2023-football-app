@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 export default function Iframe({
   videoId,
   title = 'Youtube Video Player',
 }: {
-  videoId: string;
-  title?: string;
+  videoId: string
+  title?: string
 }) {
   return (
     <iframe
@@ -15,5 +15,5 @@ export default function Iframe({
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
     ></iframe>
-  );
+  )
 }

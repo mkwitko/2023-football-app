@@ -1,19 +1,19 @@
-import React from 'react';
-import Navigation from '../../../services/Navigation';
-import { setCache } from '../../../services/Cache';
-import { setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils';
+import React from 'react'
+import Navigation from '../../../services/Navigation'
+import { setCache } from '../../../services/Cache'
+import { setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils'
 
 export default function MatchCard({ match }: { match: any }) {
   //   const { name, city } = stadiumName(match);
-  const name = stadiumName(match.match_stadium);
-  const { navigateTo } = Navigation();
+  const name = stadiumName(match.match_stadium)
+  const { navigateTo } = Navigation()
   return (
     <div
       id={match.match_id}
       className="flex flex-col px-4 sm:px-8"
       onClick={async () => {
-        setCache('match', match);
-        navigateTo('matchDetails');
+        setCache('match', match)
+        navigateTo('matchDetails')
       }}
     >
       <div className="flex w-full justify-between items-center bg-primary-700 rounded-t-[0.625rem] px-4 py-1 font-bold ">
@@ -89,10 +89,12 @@ export default function MatchCard({ match }: { match: any }) {
               src={match.team_away_badge}
               alt=""
             />
-            <p className="text-[.75rem] md:text-[1.5rem]">{match.match_awayteam_name}</p>
+            <p className="text-[.75rem] md:text-[1.5rem]">
+              {match.match_awayteam_name}
+            </p>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

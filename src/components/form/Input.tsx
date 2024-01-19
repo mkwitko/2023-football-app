@@ -1,13 +1,13 @@
-import React, { InputHTMLAttributes } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import React, { InputHTMLAttributes } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  register?: UseFormRegisterReturn<string>;
+  register?: UseFormRegisterReturn<string>
 }
 
 interface Props extends InputProps {
-  errors: any;
-  errorType: string;
+  errors: any
+  errorType: string
 }
 
 export default function Input({
@@ -31,5 +31,5 @@ export default function Input({
         </p>
       )}
     </>
-  );
+  )
 }

@@ -1,25 +1,25 @@
-import React from 'react';
-import SingleStat from './SingleStat';
+import React from 'react'
+import SingleStat from './SingleStat'
 
 interface StatsInterface {
-  type: string;
-  home: string;
-  away: string;
+  type: string
+  home: string
+  away: string
 }
 
 interface StatsToUseInterface {
-  type: string;
-  translate: string;
-  home: number;
-  away: number;
+  type: string
+  translate: string
+  home: number
+  away: number
 }
 
 export default function Stats({
   stats,
   isHome,
 }: {
-  stats: StatsInterface[];
-  isHome: boolean;
+  stats: StatsInterface[]
+  isHome: boolean
 }) {
   const statsToUse: StatsToUseInterface[] = [
     {
@@ -100,22 +100,22 @@ export default function Stats({
       home: 0,
       away: 0,
     },
-  ];
+  ]
 
   const useableStats = stats
     .filter((e: StatsInterface) => {
-      return statsToUse.some((stat) => stat.type === e.type);
+      return statsToUse.some((stat) => stat.type === e.type)
     })
     .forEach((stat: any) => {
-      const index = statsToUse.findIndex((e) => e.type === stat.type);
+      const index = statsToUse.findIndex((e) => e.type === stat.type)
       if (stat.home.includes('%')) {
-        statsToUse[index].home = parseFloat(stat.home.replace('%', ''));
-        statsToUse[index].away = parseFloat(stat.away.replace('%', ''));
+        statsToUse[index].home = parseFloat(stat.home.replace('%', ''))
+        statsToUse[index].away = parseFloat(stat.away.replace('%', ''))
       } else {
-        statsToUse[index].home = +stat.home;
-        statsToUse[index].away = +stat.away;
+        statsToUse[index].home = +stat.home
+        statsToUse[index].away = +stat.away
       }
-    });
+    })
 
   return (
     <>
@@ -129,5 +129,5 @@ export default function Stats({
         />
       ))}
     </>
-  );
+  )
 }

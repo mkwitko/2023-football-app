@@ -1,17 +1,17 @@
-import React from 'react';
-import { StringCutter } from '../../utils/StringUtils';
+import React from 'react'
+import { StringCutter } from '../../utils/StringUtils'
 
 export default function LeagueTable({ league }: any) {
-  let group = '';
+  let group = ''
   const findGroup = () => {
     if (league[0].league_round.includes('Group')) {
       const team = league.find((e: any) => {
-        return e.team_id === process.env.REACT_APP_FOOTBALL_API_CLUB;
-      });
-      group = team.league_round;
+        return e.team_id === process.env.REACT_APP_FOOTBALL_API_CLUB
+      })
+      group = team.league_round
     }
-  };
-  findGroup();
+  }
+  findGroup()
 
   return (
     <div className="flex flex-col w-full gap-4 mb-8">
@@ -29,9 +29,9 @@ export default function LeagueTable({ league }: any) {
         league
           .filter((e: any) => {
             if (group.length > 0) {
-              if (e.league_round === group) return e;
+              if (e.league_round === group) return e
             } else {
-              return e;
+              return e
             }
           })
           .map((e: any, i: number) => (
@@ -53,10 +53,7 @@ export default function LeagueTable({ league }: any) {
             >
               <p className="col-span-1">{e.overall_league_position}</p>
               <p className="col-span-1">
-                <img
-                  src={e.team_badge}
-                  alt=""
-                />
+                <img src={e.team_badge} alt="" />
               </p>
               <p className="col-span-5">{StringCutter(e.team_name)}</p>
               <p className="col-span-1">{e.overall_league_PTS}</p>
@@ -67,5 +64,5 @@ export default function LeagueTable({ league }: any) {
             </div>
           ))}
     </div>
-  );
+  )
 }

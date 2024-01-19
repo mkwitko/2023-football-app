@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default function Player({
   team,
@@ -6,10 +6,10 @@ export default function Player({
   index,
   lineHas = 1,
 }: {
-  team: any;
-  isHome: boolean;
-  index: number;
-  lineHas?: number;
+  team: any
+  isHome: boolean
+  index: number
+  lineHas?: number
 }) {
   return (
     <div
@@ -31,5 +31,5 @@ export default function Player({
         {team.lineup.starting_lineups[index].lineup_player}
       </p>
     </div>
-  );
+  )
 }

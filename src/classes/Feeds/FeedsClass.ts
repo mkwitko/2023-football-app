@@ -1,7 +1,7 @@
-import CoreClass from '../Core/CoreClass';
-import useFeedsHook from './useFeedsHook';
+import CoreClass from '../Core/CoreClass'
+import useFeedsHook from './useFeedsHook'
 
 export default class FeedsClass extends CoreClass {
-    override collection = 'feeds';
-    override hook = useFeedsHook();
+  override collection = 'feeds'
+  override hook = useFeedsHook()
 }

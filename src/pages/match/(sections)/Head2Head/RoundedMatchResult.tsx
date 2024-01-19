@@ -1,23 +1,20 @@
-import React from 'react';
+import React from 'react'
 
 export default function RoundedMatchResult({ match, club }: any) {
   const findWinner = () => {
     if (+match.match_hometeam_score > +match.match_awayteam_score) {
-      return match.match_hometeam_id;
+      return match.match_hometeam_id
     } else if (+match.match_hometeam_score < +match.match_awayteam_score) {
-      return match.match_awayteam_id;
+      return match.match_awayteam_id
     } else {
-      return '0';
+      return '0'
     }
-  };
+  }
 
-  const winner = findWinner();
+  const winner = findWinner()
 
   return (
-    <div
-      key={match.match_id}
-      className="rounded-full"
-    >
+    <div key={match.match_id} className="rounded-full">
       {winner === club && (
         <div className="flex items-center justify-center w-4 h-4 sm:w-[1.25rem] sm:h-[1.25rem] md:h-8 md:w-8 rounded-full bg-green-500">
           <p className="text-[0.6rem] sm:text-[0.75rem] text-center text-white font-semibold">
@@ -41,5 +38,5 @@ export default function RoundedMatchResult({ match, club }: any) {
         </div>
       )}
     </div>
-  );
+  )
 }

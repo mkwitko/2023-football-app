@@ -24,7 +24,6 @@ export function Avatar({
   const customId = useId()
   const [file, setFile] = useState<string | null>(imagePreview || null)
 
-
   const { user } = useContext(Context)
 
   function createPreviewUrl(filelist: FileList | null) {
@@ -44,7 +43,7 @@ export function Avatar({
   }
 
   useEffect(() => {
-    if(user.hook.data && user.hook.data.avatar) setFile(user.hook.data.avatar);
+    if (user.hook.data && user.hook.data.avatar) setFile(user.hook.data.avatar)
   }, [user.hook.data])
 
   return (
@@ -75,7 +74,7 @@ export function Avatar({
           className="sr-only"
           onChange={(event) => {
             createPreviewUrl(event.target.files)
-            setValue('avatarChanged', true);
+            setValue('avatarChanged', true)
           }}
           disabled={disabled}
           {...register}
