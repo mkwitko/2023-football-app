@@ -96,7 +96,8 @@
     "fixTailwind": "npx tailwindcss -i src/theme/variables.css -o dist/output.css",
     "setVersion": "npx capacitor-set-version ./ -v 1.0.6 -b 006",
     "getDevelopSha1": "cd android && ./gradlew signingReport",
-    "generateApk": "rm -rf app-debug.apk && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ./../ && cd ../"
+    "generateApk": "rm -rf app-debug.apk && cd android && ./gradlew assembleDebug && cp app/build/outputs/apk/debug/app-debug.apk ./../ && cd ../",
+    "initProject": "./initProject.sh"
   },
   "browserslist": [
     "Chrome >=79",

@@ -1,11 +1,11 @@
 1o uso - 
-npm i 
-Adicionar pasta src/assets
-Adicionar pasta resources
-Adicionar e alterar tailwind.config.js
-Adicionar capacitor.config.js
-Adicionar .env
-Alterar src/theme/variables.css
+
+1 - npm run initProject
+2 - Alterar pasta src/assets
+3 - Alterar pasta resources
+4 - Alterar tailwind.config.js
+5 - Alterar .env
+6 - Alterar src/theme/variables.css
 
 
 ** Android **
