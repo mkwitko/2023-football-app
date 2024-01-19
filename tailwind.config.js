@@ -21,10 +21,10 @@ module.exports = {
                 sendShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'
             },
             backgroundImage: {
-                firstHeader: "url('/public/assets/header1.jpeg')",
+                firstHeader: "url('/src/assets/header.jpeg')",
                 field: "url('/public/field.jpg')",
                 bgFeed: 'linear-gradient(45deg, rgba(188,6,6,1) 0%, rgba(250,97,97,1) 80%)',
-                bgClub: "url('/public/assets/escudo.png'), linear-gradient(#F30707, #F30707)",
+                bgClub: "url('/src/assets/escudo.png'), linear-gradient(#F30707, #F30707)",
             },
             backgroundSize: {
                 '125%': '125%'

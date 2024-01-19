@@ -1,5 +1,5 @@
 import React from 'react'
-import noData from './../../../public/assets/noData.svg'
+import noData from 'src/assets/noData.svg'
 
 export default function NoData({ text }: { text?: string }) {
   return (

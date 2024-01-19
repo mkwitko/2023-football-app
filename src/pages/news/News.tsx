@@ -15,6 +15,8 @@ export default function News() {
 
   const isMd = screenWidth > 768
 
+  console.log(noticias.hook.data);
+
   return (
     <IonContent fullscreen>
       {noticias.hook.data.length > 0 && (
@@ -76,7 +78,7 @@ export default function News() {
           ))}
         </div>
       )}
-      {noticias.hook.data.length === 0 && <NoData text="notícias" />}
+      {Object.keys(noticias).length === 0 || noticias.hook.data.length === 0 && <NoData text="notícias" />}
     </IonContent>
   )
 }
