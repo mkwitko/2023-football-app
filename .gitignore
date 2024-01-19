@@ -42,5 +42,3 @@ app-debug.apk
 firestore.rules
 storage.rules
 
-_firestore.rules
-_storage.rules
