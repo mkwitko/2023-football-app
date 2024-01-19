@@ -69,7 +69,7 @@ export default function FootballApi() {
           },
         ),
       ).then((res: any) => {
-        setCache('events', res)
+        setCache('football_events', res)
         hook.setEvents(res)
       })
 
