@@ -41,4 +41,7 @@ app-debug.apk
 
 firestore.rules
 storage.rules
-
+.firebaserc
+components.json
+firestore.indexes.json
+firebase.json
