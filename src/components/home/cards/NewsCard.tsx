@@ -6,6 +6,7 @@ import { setCache } from '../../../services/Cache'
 export default function NewsCard({ noticias }: { noticias: any }) {
   const history = useHistory()
   const limit = 2
+
   return (
     <div className="flex overflow-x-auto gap-4">
       {noticias.hook.data.length > 0
@@ -20,7 +21,7 @@ export default function NewsCard({ noticias }: { noticias: any }) {
                   history.push('newsDetails')
                 }}
               >
-                <div className="h-[20rem] md:h-[30rem] md:w-[45vw] w-[55vw] rounded-[0.625rem] overflow-hidden mb-2 shadow-convenienceShadow">
+                <div className="h-[22.5rem] md:h-[30rem] md:w-[45vw] w-[55vw] rounded-[0.625rem] overflow-hidden mb-2 shadow-convenienceShadow">
                   <img
                     className="w-full"
                     src={e.imagePath}

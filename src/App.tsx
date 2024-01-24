@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   IonApp,
   IonRouterOutlet,
@@ -44,12 +44,16 @@ const App: React.FC = () => {
 
   GoogleAuthInitializer()
 
+  useEffect(() => {
+    console.log(isLogged)
+  }, [])
+
   return (
     <IonApp>
       <IonReactRouter>
         <ContextProvider>
           <IonSplitPane contentId="main">
-            <Menu />
+            <Menu isLogged={isLogged}/>
             <IonRouterOutlet id="main">
               <Route path="/" exact={true}>
                 <Redirect to={isLogged ? '/home' : '/login'} />

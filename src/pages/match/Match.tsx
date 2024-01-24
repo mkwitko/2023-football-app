@@ -14,6 +14,8 @@ export default function Match() {
 
   const match = getCache('match')
 
+  console.log('match - ', match)
+
   const findSurveys = (data?: any) => {
     const survey = data ?? surveys.hook.data
     const returner = survey

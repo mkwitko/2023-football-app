@@ -40,7 +40,6 @@ export default class YoutubeClass extends CoreClass {
   }
 
   sendComment = async (text: string, access_token: string, id?: string) => {
-    const token = await this.auth.auth.currentUser?.getIdToken()
     const url = `${'https://youtube.googleapis.com/youtube/v3/'}liveChat/messages?part=snippet`
     fetch(url, {
       method: 'POST',
@@ -54,7 +53,7 @@ export default class YoutubeClass extends CoreClass {
         },
       }),
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access_token}`,
         'Content-Type': 'application/json',
       },
     })

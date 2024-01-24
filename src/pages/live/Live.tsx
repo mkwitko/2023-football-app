@@ -69,12 +69,14 @@ export default function Live() {
           setIsSending(false)
         })
     }
-    if (user.hook.data.access_token && youtube.hook.liveChatId)
-      youtube.sendComment(
-        comment,
-        user.hook.data.access_token,
-        youtube.hook.liveChatId,
-      )
+
+    // TODO ajeitar envio para o youtube
+    // if (user.hook.data.access_token && youtube.hook.liveChatId)
+    //   youtube.sendComment(
+    //     comment,
+    //     user.hook.data.access_token,
+    //     youtube.hook.liveChatId,
+    //   )
   }
 
   return (

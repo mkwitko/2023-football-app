@@ -15,7 +15,7 @@ export default function Feed({ feeds }: { feeds: any }) {
                   onClick={() => {
                     navigateTo('feed')
                   }}
-                  className="border border-primary-800 rounded-[0.625rem] bg-transparent flex flex-col p-4 h-[9rem] w-[75vw] md:w-[45vw]  md:h-[13rem] gap-2"
+                  className="border border-primary-800 rounded-[0.625rem] bg-transparent flex flex-col p-4 h-[10rem] w-[75vw] md:w-[45vw]  md:h-[13rem] gap-2"
                 >
                   <div className="flex items-center gap-2">
                     <img
@@ -41,7 +41,7 @@ export default function Feed({ feeds }: { feeds: any }) {
                   <div
                     className="text-[0.75rem] md:text-[1rem] "
                     dangerouslySetInnerHTML={{
-                      __html: StringCutter(feed.description, 200, '...'),
+                      __html: StringCutter(feed.description, 150, '...'),
                     }}
                   ></div>
                 </div>

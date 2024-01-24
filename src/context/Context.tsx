@@ -126,14 +126,13 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
               method: 'POST',
               body: JSON.stringify({
                 client_id:
-                  '74278825081-0vk8jpjve3talba3gdtgbuaot5o5f39p.apps.googleusercontent.com',
-                client_secret: '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',
+                  process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+                client_secret: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET,
                 refresh_token: user.hook.data.refresh_token,
                 grant_type: 'refresh_token',
               }),
             }).then((response) => {
               response.json().then((data) => {
-                console.log('data - ', data)
                 user.update({
                   access_token: data.access_token,
                 })

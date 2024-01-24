@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
   IonContent,
   IonFooter,
@@ -87,15 +87,19 @@ const appPages: AppPage[] = [
   },
 ]
 
-const Menu: React.FC = () => {
+export default function Menu({isLogged}: any) {
   const { auth, signOut } = Auth()
   const { navigateTo } = Navigation()
   const location = useLocation()
 
   const { user } = useContext(Context)
 
+  useEffect(() => {
+    console.log(isLogged)
+  }, [])
+
   return (
-    <IonMenu disabled={!auth.currentUser?.uid} contentId="main" type="overlay">
+    <IonMenu disabled={!isLogged} contentId="main" type="overlay">
       <IonContent>
         <div className="flex flex-col">
           <div className="flex flex-col items-center gap-4">
@@ -166,4 +170,4 @@ const Menu: React.FC = () => {
   )
 }
 
-export default Menu
+

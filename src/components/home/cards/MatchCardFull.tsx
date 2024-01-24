@@ -30,12 +30,12 @@ export default function MatchCardFull({ match }: { match: any }) {
               {match.match_status !== '' ? (
                 <>
                   <div className="flex items-center justify-center w-[6rem] h-[6rem] rounded-[0.625rem]  bg-zinc-50">
-                    <p className="text-[5rem] text-center font-semibold">
+                    <p className="text-[4rem] text-center font-semibold">
                       {match.match_hometeam_score}
                     </p>
                   </div>
                   <div className="flex items-center justify-center w-[6rem] h-[6rem] rounded-[0.625rem]  bg-zinc-50">
-                    <p className="text-[5rem] text-center font-semibold">
+                    <p className="text-[4rem] text-center font-semibold">
                       {match.match_awayteam_score}
                     </p>
                   </div>

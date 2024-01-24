@@ -9,17 +9,20 @@ export default function LineUp({
   match: any
   isHome: boolean
 }) {
+  console.log(match);
   const ourTeam = {
     formation: isHome
-      ? match.match_hometeam_system.split('-').map((e: any) => +e)
-      : match.match_awayteam_system.split('-').map((e: any) => +e),
+      ? match.match_hometeam_system.split('-').map((e: any) => +e).length > 1 ? match.match_hometeam_system.split('-').map((e: any) => +e) : [4, 4, 2]
+      : match.match_awayteam_system.split('-').map((e: any) => +e).length > 1 ? match.match_awayteam_system.split('-').map((e: any) => +e) : [4,4,2],
     lineup: isHome ? match.lineup.home : match.lineup.away,
     name: isHome ? match.match_hometeam_name : match.match_awayteam_name,
   }
+
+  console.log(ourTeam)
   const otherTeam = {
     formation: isHome
-      ? match.match_awayteam_system.split('-').map((e: any) => +e)
-      : match.match_hometeam_system.split('-').map((e: any) => +e),
+      ? match.match_awayteam_system.split('-').map((e: any) => +e).length > 1 ? match.match_awayteam_system.split('-').map((e: any) => +e) : [4,4,2]
+      : match.match_hometeam_system.split('-').map((e: any) => +e).length > 1 ? match.match_hometeam_system.split('-').map((e: any) => +e) : [4, 4, 2],
     lineup: isHome ? match.lineup.away : match.lineup.home,
     name: isHome ? match.match_awayteam_name : match.match_hometeam_name,
   }

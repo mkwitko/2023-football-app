@@ -48,7 +48,6 @@ export default function MercadoPago({ componentProps }) {
     };
 
     const onSubmit = async ({ selectedPaymentMethod, formData }) => {
-
         const token = await auth.currentUser?.getIdToken()
         let bodyJson = {
             description: 'Adição de Fundos na Wallet',
@@ -57,7 +56,6 @@ export default function MercadoPago({ componentProps }) {
                 email: formData.payer.email,
                 identification: formData.payer.identification
             },
-            // application_fee: selectedPaymentMethod === 'bank_transfer' ? String(process.env.REACT_APP_MERCADO_PAGO_PIX_FEE) : String(process.env.REACT_APP_MERCADO_PAGO_CREDIT_CARD_FEE),
             token: formData.token || '',
             issuer_id: formData.issuer_id || '',
             payment_method_id: formData.payment_method_id || '',
