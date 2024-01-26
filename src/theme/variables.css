@@ -149,11 +149,15 @@ div h2 {
 :root {
   /** primary **/
   --ion-color-primary: #f93939;
-  --ion-color-primary-rgb: 249, 57, 57;
-  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-rgb: rgba(79,2,2,0.8);
+  --ion-color-primary-contrast: rgba(254,215,215, 0.5);
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #bc0606;
   --ion-color-primary-tint: #f93939;
+
+
+  --ion-color-primary-linear1: rgba(79,2,2,0.8)
+  --ion-color-primary-linear2: rgba(254,215,215, 0.5);
 
   /** success **/
   --ion-color-success: #2dd36f;

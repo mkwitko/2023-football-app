@@ -106,7 +106,6 @@ const Comment = ({
   style: any
   index: number
 }) => {
-  // TODO: add uer avatar
   return (
     <div
       style={style}
@@ -114,8 +113,8 @@ const Comment = ({
     >
       <div className="relative h-auto w-[15%]">
         <img
-          className="w-full h-12 object-cover rounded-[0.625rem] aspect-square"
-          src="https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.600.jpg"
+          className="w-full h-12 object-fill rounded-[0.625rem] aspect-square"
+          src={comment.user && comment.user.avatar ? comment.user.avatar : 'https://shorturl.at/qGJRY'}
           alt=""
         />
         <div className="absolute -top-2 -left-2 bg-primary rounded-full h-5 w-5 shadow-md border border-white"></div>

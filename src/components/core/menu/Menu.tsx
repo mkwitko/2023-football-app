@@ -106,7 +106,7 @@ export default function Menu({isLogged}: any) {
             {user.hook.data && (
               <>
                 <img
-                  className="h-24 w-24 md:h-48 md:w-48 rounded-full mt-12 border-2 border-white"
+                  className="h-24 w-24 object-cover md:h-48 md:w-48 rounded-full mt-12 border-2 border-white"
                   src={user.hook.data.avatar}
                 />
                 <p className="text-white font-bold">{user.hook.data.name}</p>

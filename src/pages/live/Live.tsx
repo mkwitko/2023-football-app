@@ -70,13 +70,12 @@ export default function Live() {
         })
     }
 
-    // TODO ajeitar envio para o youtube
-    // if (user.hook.data.access_token && youtube.hook.liveChatId)
-    //   youtube.sendComment(
-    //     comment,
-    //     user.hook.data.access_token,
-    //     youtube.hook.liveChatId,
-    //   )
+    if (user.hook.data.access_token && youtube.hook.liveChatId)
+      youtube.sendComment(
+        comment,
+        user.hook.data.access_token,
+        youtube.hook.liveChatId,
+      )
   }
 
   return (

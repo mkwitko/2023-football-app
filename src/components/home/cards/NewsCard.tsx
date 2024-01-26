@@ -23,7 +23,7 @@ export default function NewsCard({ noticias }: { noticias: any }) {
               >
                 <div className="h-[22.5rem] md:h-[30rem] md:w-[45vw] w-[55vw] rounded-[0.625rem] overflow-hidden mb-2 shadow-convenienceShadow">
                   <img
-                    className="w-full"
+                    className="w-full h-1/2"
                     src={e.imagePath}
                     alt="Sunset in the mountains"
                   />

@@ -53,9 +53,11 @@ const Page: React.FC = () => {
           <Categories />
         </div>
 
-        <div className="mt-[-.5rem]">
-          <HomeMatchCardSwiper gamesToShow={gamesToShow} />
-        </div>
+       {gamesToShow.length > 0 && (
+         <div className="mt-[-.5rem]">
+         <HomeMatchCardSwiper gamesToShow={gamesToShow} />
+       </div>
+       )}
 
         <div className="flex gap-6 px-4 sm:px-8">
           <Feed feeds={feeds.hook.data} />

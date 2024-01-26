@@ -10,6 +10,8 @@ export default class OrdersClass extends CoreClass {
     if (!this.hasObject(cache) || shouldUpdate) {
       const response: any = await this.getHttp(id)
 
+      if(!response || !response.orders) return
+
       const data = response.orders.sort((a: any, b: any) => {
         const data_a =
           typeof a.date === 'string'

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MatchCard from './../../components/home/cards/MatchCard';
@@ -10,6 +10,10 @@ export default function HomeMatchCardSwiper({ gamesToShow }) {
     const index = gamesToShow.length - 3
     return index > 0 ? index : 0
   }
+
+  useEffect(() => {
+    getInitialSlide()
+  }, [gamesToShow])
   return (
     <Swiper
       initialSlide={getInitialSlide()}

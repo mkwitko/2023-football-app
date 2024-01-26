@@ -31,7 +31,7 @@ export default function News() {
                 className="max-w-sm md:max-w-full h-[26rem] md:h-[45rem] rounded-[0.625rem] border border-borderColor/20 mb-4  overflow-hidden shadow-convenienceShadow"
               >
                 <img
-                  className="w-full rounded-t-[0.625rem] md:h-[27rem] object-cover object-center"
+                  className="w-full rounded-t-[0.625rem] h-1/2 object-cover object-center"
                   src={e.imagePath}
                   alt={e.title}
                 />

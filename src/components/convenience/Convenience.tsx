@@ -9,14 +9,13 @@ export default function ConvenienceCard({ data }: { data: any }) {
 
   return (
     <>
-      {/* TODO Ajeitar isso para white label */}
       <div
         onClick={() => {
           propaganda.hook.setCurrent(data)
           navigateTo('/convenience/details')
         }}
         style={{
-          backgroundImage: `linear-gradient(180deg, rgba(79,2,2,0.8) 20%, rgba(254,215,215, 0.5) 100%), url(${data.imagePath})`,
+          backgroundImage: `linear-gradient(180deg, var(--ion-color-primary-rgb) 20%, var(--ion-color-primary-contrast) 100%), url(${data.imagePath})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

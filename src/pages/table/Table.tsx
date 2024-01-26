@@ -9,8 +9,6 @@ import { Context } from '../../context/Context'
 import LeagueTable from '../../components/leagueTable/LeagueTable'
 
 export default function Table() {
-  // TODO - dinamicamente encontrar a liga para iniciar
-  // TODO remover competições que não tem table
   const { hook } = useContext(Context)
   const [league, setLeague] = React.useState<any>(hook.events[0][0].table)
   const [selected, setSelected] = React.useState<any>(0)
