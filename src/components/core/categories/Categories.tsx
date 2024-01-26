@@ -17,6 +17,12 @@ export default function Categories() {
       showAnon: true,
     },
     {
+      title: 'Carteira',
+      url: '/wallet',
+      icon: <BiSolidWallet />,
+      showAnon: false,
+    },
+    {
       title: 'Convênios',
       url: '/convenience',
       icon: <BsFillTicketPerforatedFill />,
@@ -34,18 +40,12 @@ export default function Categories() {
       icon: <AiFillCarryOut />,
       showAnon: true,
     },
-    {
-      title: 'Carteira',
-      url: '/wallet',
-      icon: <BiSolidWallet />,
-      showAnon: false,
-    },
   ]
 
   const { user } = useContext(Context)
 
   return (
-    <div className="flex overflow-x-auto gap-4 py-2">
+    <div className="flex overflow-x-auto gap-4 pb-[0.1rem]">
       {categories.map((e, i) => {
         if (!user.hook.data && !e.showAnon) return
         return (

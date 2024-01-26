@@ -136,7 +136,11 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
               </RenderLoggedPage>
             </Route>
             <Route path="/login" exact={true}>
-              <AuthPage />
+              {!isLogged ? (
+                <AuthPage />
+              ) : (
+                <Redirect to="/home" />
+              )}
             </Route>
           </Switch>
           {isLogged && (
