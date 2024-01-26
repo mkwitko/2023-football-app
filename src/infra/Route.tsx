@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 import Page from '../pages/Page'
 import Calendar from '../pages/calendar/Calendar'
 import News from '../pages/news/News'
@@ -34,83 +34,132 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
   return (
     <>
       <IonPage>
-        {isLogged ? (
-          <>
-            {
-              <Header
-                className={
-                  location.includes('club/details')
-                    ? 'opacity-0 hidden transition-all'
-                    : 'opacity-100'
-                }
-              />
-            }
-            <Switch>
-              <Route path="/home" exact={true}>
+        <>
+          {isLogged && (
+            <Header
+              className={
+                location.includes('club/details')
+                  ? 'opacity-0 hidden transition-all'
+                  : 'opacity-100'
+              }
+            />
+          )}
+          <Switch>
+            <Route path="/home" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Page />
-              </Route>
-              <Route path="/channels" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/channels" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Channels />
-              </Route>
-              <Route path="/calendar" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/calendar" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Calendar />
-              </Route>
-              <Route path="/surveys" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/surveys" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <SurveysPage />
-              </Route>
-              <Route path="/news" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/news" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <News />
-              </Route>
-              <Route path="/feed" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/feed" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Feed />
-              </Route>
-              <Route path="/newsDetails" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/newsDetails" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <NewsDetails />
-              </Route>
-              <Route path="/table" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/table" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Table />
-              </Route>
-              <Route path="/matchDetails" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/matchDetails" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Match />
-              </Route>
-              <Route path="/profile" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/profile" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Profile />
-              </Route>
-              <Route path="/purchases" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/purchases" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Purchases />
-              </Route>
+              </RenderLoggedPage>
+            </Route>
 
-              <Route path="/convenience" exact={true}>
+            <Route path="/convenience" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Convenience />
-              </Route>
+              </RenderLoggedPage>
+            </Route>
 
-              <Route path="/convenience/details" exact={true}>
+            <Route path="/convenience/details" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <ConvenienceDetails />
-              </Route>
-              <Route path="/club" exact={true}>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/club" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Club />
-              </Route>
+              </RenderLoggedPage>
+            </Route>
 
-              <Route path="/club/details" exact={true}>
+            <Route path="/club/details" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <ClubDetails />
-              </Route>
+              </RenderLoggedPage>
+            </Route>
 
-              <Route path="/live" exact={true}>
+            <Route path="/live" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Live />
-              </Route>
+              </RenderLoggedPage>
+            </Route>
 
-              <Route path="/wallet" exact={true}>
+            <Route path="/wallet" exact={true}>
+              <RenderLoggedPage isLogged={isLogged}>
                 <Wallet />
-              </Route>
-            </Switch>
+              </RenderLoggedPage>
+            </Route>
+            <Route path="/login" exact={true}>
+              <AuthPage />
+            </Route>
+          </Switch>
+          {isLogged && (
             <Footer />
-          </>
-        ) : (
-          <Route path="/login" exact={true}>
-            <AuthPage />
-          </Route>
-        )}
+          )}
+        </>
       </IonPage>
+    </>
+  )
+}
+
+
+const RenderLoggedPage = ({ children, isLogged }: {
+  children: React.ReactNode
+  isLogged: boolean
+}) => {
+  return (
+    <>
+      {isLogged ? (
+        children
+      ) : (
+        <Redirect to="/login" />
+      )}
     </>
   )
 }

@@ -40,13 +40,14 @@ const App: React.FC = () => {
 
   auth.onAuthStateChanged((user) => {
     setIsLogged(user !== null)
+
+    if(user === null) {
+      localStorage.clear()
+    }
   })
 
   GoogleAuthInitializer()
 
-  useEffect(() => {
-    console.log(isLogged)
-  }, [])
 
   return (
     <IonApp>

@@ -9,7 +9,6 @@ export default function LineUp({
   match: any
   isHome: boolean
 }) {
-  console.log(match);
   const ourTeam = {
     formation: isHome
       ? match.match_hometeam_system.split('-').map((e: any) => +e).length > 1 ? match.match_hometeam_system.split('-').map((e: any) => +e) : [4, 4, 2]

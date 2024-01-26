@@ -14,8 +14,6 @@ export default function Match() {
 
   const match = getCache('match')
 
-  console.log('match - ', match)
-
   const findSurveys = (data?: any) => {
     const survey = data ?? surveys.hook.data
     const returner = survey
@@ -24,6 +22,13 @@ export default function Match() {
       })
       .filter((e: any) => e)
     return returner
+  }
+
+  const hasLineUp = () => {
+    if (match.lineup.home.starting_lineups.length > 0 && match.lineup.away.starting_lineups.length > 0) {
+      return false
+    }
+    return true
   }
 
   const tabs = [
@@ -35,6 +40,7 @@ export default function Match() {
     },
     {
       title: 'Escalação',
+      disabled: hasLineUp()
     },
     {
       title: 'Enquete',

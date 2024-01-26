@@ -29,13 +29,13 @@ export default function MatchCardFull({ match }: { match: any }) {
             <div className="flex items-center justify-center gap-1 md:gap-4">
               {match.match_status !== '' ? (
                 <>
-                  <div className="flex items-center justify-center w-[6rem] h-[6rem] rounded-[0.625rem]  bg-zinc-50">
-                    <p className="text-[4rem] text-center font-semibold">
+                  <div className="flex items-center justify-center w-[5rem] h-[5rem] rounded-[0.625rem]  bg-zinc-50">
+                    <p className="text-[3rem] text-center font-semibold">
                       {match.match_hometeam_score}
                     </p>
                   </div>
-                  <div className="flex items-center justify-center w-[6rem] h-[6rem] rounded-[0.625rem]  bg-zinc-50">
-                    <p className="text-[4rem] text-center font-semibold">
+                  <div className="flex items-center justify-center w-[5rem] h-[5rem] rounded-[0.625rem]  bg-zinc-50">
+                    <p className="text-[3rem] text-center font-semibold">
                       {match.match_awayteam_score}
                     </p>
                   </div>
