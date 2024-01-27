@@ -80,22 +80,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
           const tokenId = await auth.currentUser?.getIdToken()
           user.hook.setTokenId(tokenId || '')
           user.hook.setData(res)
-
-          fetch(
-            `${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query/key' : process.env.REACT_APP_BACKEND_DEV + '/query/key'}`, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${tokenId}`
-              }
-            }).then((response: any) => {
-              response.json().then((res: any) => {
-                const { data } = res
-                const key = decrypt(data[0].public)
-                user.hook.setKey(key)
-              })
-            })
-
             fetch(
               `${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query/configs' : process.env.REACT_APP_BACKEND_DEV + '/query/configs'}`, {
                 method: 'GET',
@@ -106,7 +90,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
               }).then((response: any) => {
                 response.json().then((res: any) => {
                   const { data } = res
+                  const key = decrypt(data[0].public)
+                  delete data[0].public
+                  delete data[0].access
                   user.hook.setConfigs(data[0])
+                  user.hook.setKey(key)
                 })
               })
         })
