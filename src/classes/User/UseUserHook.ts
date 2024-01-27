@@ -4,9 +4,7 @@ export default function useUserHook() {
   const [data, setData] = useState<any>(null)
   const [tokenId, setTokenId] = useState<string>('')
   const [key, setKey] = useState<string>('')
-  const [configs, setConfigs] = useState<{
-    enableGoogleOAuth: boolean
-  }>({
+  const [configs, setConfigs] = useState<any>({
     enableGoogleOAuth: false,
   })
   return {

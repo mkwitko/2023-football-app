@@ -17,9 +17,10 @@ import OrdersClass from 'src/classes/Orders/OrdersClass'
 import { decrypt } from 'src/services/Encrypt'
 import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass'
 import ChannelsClass from '@/classes/Channels/ChannelsClass'
+import { setCache } from 'src/services/Cache'
 
 interface ContextProps {
-  banner: BannerClass
+  banners: BannerClass
   channels: ChannelsClass
   noticias: NoticiasClass
   notificacoes: NotificacoesClass
@@ -44,7 +45,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   const classes: any = Classes()
   const { auth } = Authentication()
   const {
-    banner,
+    banners,
     channels,
     noticias,
     notificacoes,
@@ -61,67 +62,98 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
   const { findGames, findTable, head2Head, hook }: any = FootballApi()
 
+  const shouldUpdate = (key: string, configs: any) => {
+    const configsCache: any = localStorage.getItem('configs')
+    const configsCacheJson = JSON.parse(configsCache);
+
+    if(!configsCache || Object.keys(configsCacheJson).length === 0) return true
+
+    const currentState = configsCacheJson[key]
+
+    if(!currentState) return true
+
+    const newState = configs[key]
+
+    if(!newState) return true
+
+    const shouldUpdate = newState > currentState
+
+    if(shouldUpdate) {
+      setCache('configs', {
+        ...configsCacheJson,
+        [key]: newState
+      })
+    }
+
+    return shouldUpdate
+  }
+
   useEffect(() => {
     delete classes.user
     delete classes.userPurchases
     delete classes.orders
     delete classes.wallets
-    Object.keys(classes).forEach((classe: any) => {
-      classes[classe].setClass(true).then((res: any) => {
-        if (res && res.length > 0) {
-          classes[classe].hook.setData(res)
-        }
-      })
-    })
+    delete classes.youtube
+    delete classes.notifications
 
-    auth.onAuthStateChanged((res: any) => {
+    auth.onAuthStateChanged(async (res: any) => {
       if (res) {
-        user.setClassById(true, res.uid).then(async (res) => {
-          const tokenId = await auth.currentUser?.getIdToken()
-          user.hook.setTokenId(tokenId || '')
-          user.hook.setData(res)
-            fetch(
-              `${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query/configs' : process.env.REACT_APP_BACKEND_DEV + '/query/configs'}`, {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${tokenId}`
-                }
-              }).then((response: any) => {
-                response.json().then((res: any) => {
-                  const { data } = res
-                  const key = decrypt(data[0].public)
-                  delete data[0].public
-                  delete data[0].access
-                  user.hook.setConfigs(data[0])
-                  user.hook.setKey(key)
+        const tokenId = await auth.currentUser?.getIdToken()
+        fetch(
+          `${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query/configs' : process.env.REACT_APP_BACKEND_DEV + '/query/configs'}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${tokenId}`
+            }
+          }).then((response: any) => {
+            response.json().then((configRes: any) => {
+              const { data } = configRes
+              const key = decrypt(data[0].public)
+              delete data[0].public
+              delete data[0].access
+              user.hook.setConfigs(data[0])
+              user.hook.setKey(key)
+
+              Object.keys(classes).forEach((classe: any) => {
+                const should = shouldUpdate(classe, data[0])
+                classes[classe].setClass(should).then((res: any) => {
+                  if (res && res.length > 0) {
+                    classes[classe].hook.setData(res)
+                  }
                 })
               })
+
+              if (!res.isAnonymous) {
+                orders.setClassById(shouldUpdate('orders', data[0]), res.uid).then((res) => {
+                  orders.hook.setData(res)
+                })
+                userPurchases.setClassById(shouldUpdate('userPurchases', data[0]), res.uid).then((res) => {
+                  userPurchases.hook.setData(
+                    res && res.historic ? res.historic : null,
+                  )
+                })
+                wallets.setClassById(shouldUpdate('wallets', data[0]), res.uid).then((res: any) => {
+                  if (res) {
+                    const balance = +decrypt(res.balance ?? 0)
+                    wallets.hook.setData({
+                      id: res.id,
+                      balance,
+                    })
+                  } else {
+                    wallets.hook.setData(null)
+                  }
+                })
+              }
+            })
+          })
+
+        user.setClassById(true, res.uid).then(async (res) => {
+          user.hook.setTokenId(tokenId || '')
+          user.hook.setData(res)
         })
 
         youtube.getLive()
-
-        if (!res.isAnonymous) {
-          orders.setClassById(true, res.uid).then((res) => {
-            orders.hook.setData(res)
-          })
-          userPurchases.setClassById(true, res.uid).then((res) => {
-            userPurchases.hook.setData(
-              res && res.historic ? res.historic : null,
-            )
-          })
-          wallets.getHttp(res.uid).then((res: any) => {
-            if (res) {
-              const balance = +decrypt(res.balance ?? 0)
-              wallets.hook.setData({
-                id: res.id,
-                balance,
-              })
-            } else {
-              wallets.hook.setData(null)
-            }
-          })
-        }
       }
     })
 
@@ -171,7 +203,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
   return (
     <Context.Provider
       value={{
-        banner,
+        banners,
         channels,
         noticias,
         notificacoes,

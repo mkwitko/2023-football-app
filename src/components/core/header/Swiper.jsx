@@ -5,9 +5,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Context } from '../../../context/Context';
 
 export default function HeaderSwiper() {
-    const { banner } = useContext(Context);
+    const { banners } = useContext(Context);
 
-    const banners = banner.hook.data && banner.hook.data.lengthj > 0 && banner.hook.data.filter((e) => e.active);
+    const banner = banners.hook.data && banners.hook.data.lengthj > 0 && banners.hook.data.filter((e) => e.active);
 
     return (
         <>
@@ -21,11 +21,11 @@ export default function HeaderSwiper() {
                 onSlideChange={(e) => {
                     const index = e.realIndex - 1;
                    if(index && e) {
-                    if(banners[index] !== undefined) {
+                    if(banner[index] !== undefined) {
                         e.autoplay.stop();
                         setTimeout(() => {
                             if(e.autoplay) e.autoplay.start();
-                          }, banners[index].highlighted ? 10000 : 5000);
+                          }, banner[index].highlighted ? 10000 : 5000);
                     } else {
                         if(e.autoplay) e.autoplay.stop();
                         setTimeout(() => {
@@ -37,8 +37,8 @@ export default function HeaderSwiper() {
             >
                 <SwiperSlide className="bg-firstHeader bg-cover bg-no-repeat"></SwiperSlide>
 
-                {banners.length > 0 &&
-                    banners.map((e, i) => {
+                {banner.length > 0 &&
+                    banner.map((e, i) => {
                         return (
                             <SwiperSlide
                                 key={i}

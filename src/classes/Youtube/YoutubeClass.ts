@@ -14,12 +14,10 @@ export default class YoutubeClass extends CoreClass {
     return fetch(url)
       .then((response) => response.json())
       .then(async (data) => {
-        console.log('live - ', data.items)
         const findLive = data.items.find((e: any) => {
           return e.snippet.liveBroadcastContent === 'live' && e.id.videoId
         })
         this.hook.setLive(findLive)
-        console.log('find live - ', findLive)
         if (findLive) {
           fetch(
             `${'https://yt.lemnoslife.com/noKey/'}videos?part=liveStreamingDetails&id=${findLive.id.videoId}`,

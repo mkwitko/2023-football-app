@@ -1,7 +1,7 @@
 import CoreClass from '../Core/CoreClass'
 import useBannerHook from './UseBannerHook'
 
-export default class BannerClass extends CoreClass {
+export default class BannersClass extends CoreClass {
   override collection = 'banners'
   override hook = useBannerHook()
 }

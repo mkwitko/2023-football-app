@@ -1,4 +1,4 @@
-import BannerClass from './Banners/BannerClass'
+import BannersClass from './Banners/BannerClass'
 import ChannelsClass from './Channels/ChannelsClass'
 import EventosClass from './Eventos/EventosClass'
 import FeedsClass from './Feeds/FeedsClass'
@@ -13,7 +13,7 @@ import WalletClass from './Wallet/WalletClass'
 import YoutubeClass from './Youtube/YoutubeClass'
 
 export default function Classes() {
-  const banner = new BannerClass()
+  const banners = new BannersClass()
   const channels = new ChannelsClass()
   const noticias = new NoticiasClass()
   const eventos = new EventosClass()
@@ -28,7 +28,7 @@ export default function Classes() {
   const orders = new OrdersClass()
 
   return {
-    banner,
+    banners,
     channels,
     noticias,
     notificacoes,

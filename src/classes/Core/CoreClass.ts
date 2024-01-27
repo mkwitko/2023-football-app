@@ -89,7 +89,7 @@ export default class CoreClass {
 
   async setClass(shouldUpdate = true, collection?: string) {
     const cache = this.getCache()
-    if (!this.hasObject(cache) || shouldUpdate) {
+    if (shouldUpdate || !this.hasObject(cache)) {
       const response = await this.getAll(collection || this.collection)
       this.setCache(response, shouldUpdate, this.collection)
       return response
