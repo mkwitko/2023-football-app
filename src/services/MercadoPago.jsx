@@ -16,8 +16,7 @@ import Authentication from './Auth';
 
 export default function MercadoPago({ componentProps }) {
     const { auth } = Authentication()
-    const key = process.env.REACT_APP_MERCADO_PAGO_PUBLIC_KEY_PROSPER_APPS
-    initMercadoPago(key);
+    initMercadoPago(componentProps.key);
 
     const [qrCode, setQrCode] = React.useState(null);
 
