@@ -30,6 +30,7 @@ export default function FootballApi() {
 
   const findGames = async () => {
     const response = await axios(gamesUrl)
+    console.log('find games - ', response)
     if (response) {
       competitions = []
       competitions = findCompetitions(response.data)

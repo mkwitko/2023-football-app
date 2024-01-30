@@ -10,7 +10,6 @@ import firebase_app from '../infra/Firebase'
 import Toast from './Toast'
 import { setCache } from './Cache'
 import { verifyErrors } from './FirebaseErrors'
-import Navigation from './Navigation'
 
 const auth = getAuth(firebase_app)
 
@@ -20,6 +19,7 @@ async function signIn(email: string, password: string) {
   let error = null
   try {
     result = await signInWithEmailAndPassword(auth, email, password)
+    localStorage.clear()
     Toast().success('Bem Vindo!')
   } catch (e: any) {
     console.log('error - ', e)
@@ -43,7 +43,7 @@ async function exclude() {
     error = e
   }
 
-  setCache('user')
+  localStorage.clear()
 
   return { result, error }
 }
@@ -53,6 +53,7 @@ async function signInAnon() {
   let error = null
   try {
     result = await signInAnonymously(auth)
+    localStorage.clear()
   } catch (e) {
     error = e
   }
@@ -77,6 +78,7 @@ async function signUp(
   }
   try {
     result = await createUserWithEmailAndPassword(auth, email, password)
+    localStorage.clear()
   } catch (e: any) {
     Toast().error(verifyErrors(e.code))
     error = e

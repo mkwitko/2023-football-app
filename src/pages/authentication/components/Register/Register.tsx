@@ -1,8 +1,13 @@
 import React from 'react'
 import LoginForm from './form/useForm'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
+import Navigation from 'src/services/Navigation'
+import { Capacitor } from '@capacitor/core'
+import { Browser } from '@capacitor/browser'
 
 export default function Register({ set }: { set: (value: number) => void }) {
+
+  const { navigateTo } = Navigation()
   const { register, handleSubmit, errors, isSubmitting, submit } = LoginForm()
 
   const [type, setType] = React.useState('password')
@@ -120,6 +125,22 @@ export default function Register({ set }: { set: (value: number) => void }) {
           className="font-semibold leading-6 text-primary-600 text-[1rem] md:text-[1.25rem] hover:text-primary-500 ml-2"
         >
           Voltar para Login
+        </button>
+      </p>
+
+      <p className="mt-10 text-center text-sm md:text-[1rem] text-gray-500">
+        Ao clicar em "Cadastrar", você concorda com a nossa 
+        <button
+          type="button"
+          onClick={() => {
+            const url: any = process.env.REACT_APP_PRIVACY_LINK
+            if (Capacitor.getPlatform() === 'web') window.open(url)
+            else Browser.open({ url })
+          }}
+          disabled={isSubmitting}
+          className="font-semibold leading-6 text-primary-600 text-[1rem] md:text-[1.25rem] hover:text-primary-500 ml-2"
+        >
+          Política de privacidade
         </button>
       </p>
     </>

@@ -85,7 +85,7 @@ export default function Profile() {
             response.json().then((data) => {
               fetch(
                 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' +
-                  data.access_token,
+                data.access_token,
               ).then((response) => {
                 response.json().then((data2) => {
                   if (data2.email) {
@@ -163,9 +163,8 @@ export default function Profile() {
               }}
             >
               <AiFillEdit
-                className={`${
-                  edit ? 'opacity-50' : ''
-                } bg-primary-700 text-white p-2 rounded-full`}
+                className={`${edit ? 'opacity-50' : ''
+                  } bg-primary-700 text-white p-2 rounded-full`}
               />
             </button>
           </div>
@@ -227,67 +226,69 @@ export default function Profile() {
               </div>
             </div>
 
-            <div>
-              <label
-                htmlFor="youtubeEmail"
-                className="block text-sm font-medium leading-6 text-gray-900 text-[1rem] md:text-[1.5rem]"
-              >
-                Sincronizar conta do Youtube
-              </label>
-              {!watch('youtubeEmail') ? (
-                <button
-                disabled={!user.hook.configs.enableGoogleOAuth}
-                  className="disabled:opacity-25 mt-2 text-start w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-white pl-3 flex items-center gap-2"
-                  type="button"
-                  onClick={() => {
-                    login()
-                  }}
+            {user.hook.configs.enableGoogleOAuth && (
+              <div>
+                <label
+                  htmlFor="youtubeEmail"
+                  className="block text-sm font-medium leading-6 text-gray-900 text-[1rem] md:text-[1.5rem]"
                 >
-                  <FcGoogle />
-                  <p>Fazer Login com a Google</p>
-                </button>
-              ) : (
-                <div className="mt-2">
-                  <div className="flex relative gap-2">
-                    <input
-                      disabled={true}
-                      id="youtubeEmail"
-                      {...register('youtubeEmail')}
-                      type="email"
-                      autoComplete="youtubeEmail"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-zinc-200 pl-2"
-                    />
-                    <button
-                      onClick={async () => {
-                        if (!edit) return
-                        setValue('youtubeEmail', '')
-                        setValue('access_token', '')
-                        setValue('refresh_token', '')
-                        await submit({
-                          youtubeEmail: '',
-                          access_token: '',
-                          refresh_token: '',
-                          username: watch('username'),
-                          email: watch('email'),
-                          cpf: watch('cpf'),
-                          cellphone: watch('cellphone'),
-                          avatar: watch('avatar'),
-                        })
-                      }}
-                      className="font-bold text-[0.75rem] md:text-[1.5rem] absolute right-2 h-full"
-                      type="button"
-                    >
-                      Desconectar
-                    </button>
+                  Sincronizar conta do Youtube
+                </label>
+                {!watch('youtubeEmail') ? (
+                  <button
+                    disabled={!user.hook.configs.enableGoogleOAuth}
+                    className="disabled:opacity-25 mt-2 text-start w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-white pl-3 flex items-center gap-2"
+                    type="button"
+                    onClick={() => {
+                      login()
+                    }}
+                  >
+                    <FcGoogle />
+                    <p>Fazer Login com a Google</p>
+                  </button>
+                ) : (
+                  <div className="mt-2">
+                    <div className="flex relative gap-2">
+                      <input
+                        disabled={true}
+                        id="youtubeEmail"
+                        {...register('youtubeEmail')}
+                        type="email"
+                        autoComplete="youtubeEmail"
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-zinc-200 pl-2"
+                      />
+                      <button
+                        onClick={async () => {
+                          if (!edit) return
+                          setValue('youtubeEmail', '')
+                          setValue('access_token', '')
+                          setValue('refresh_token', '')
+                          await submit({
+                            youtubeEmail: '',
+                            access_token: '',
+                            refresh_token: '',
+                            username: watch('username'),
+                            email: watch('email'),
+                            cpf: watch('cpf'),
+                            cellphone: watch('cellphone'),
+                            avatar: watch('avatar'),
+                          })
+                        }}
+                        className="font-bold text-[0.75rem] md:text-[1.5rem] absolute right-2 h-full"
+                        type="button"
+                      >
+                        Desconectar
+                      </button>
+                    </div>
+                    {errors.youtubeEmail && (
+                      <p className="text-red-500 text-[0.75rem] w-full mt-1">
+                        {errors.youtubeEmail?.message}
+                      </p>
+                    )}
                   </div>
-                  {errors.youtubeEmail && (
-                    <p className="text-red-500 text-[0.75rem] w-full mt-1">
-                      {errors.youtubeEmail?.message}
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
 
             <div>
               <label

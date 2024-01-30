@@ -12,7 +12,6 @@ export default function Calendar() {
     const nextGame = games.findIndex((e: any) => {
       return e.match_status === ''
     })
-    console.log(nextGame)
     setTimeout(() => {
       document?.getElementById(games[nextGame].match_id)?.scrollIntoView({
         behavior: 'auto',

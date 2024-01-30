@@ -24,7 +24,7 @@ const Page: React.FC = () => {
   const [gamesToShow, setGamesToShow] = React.useState<any[]>([])
 
   useEffect(() => {
-    if (hook.games) {
+    if (hook.games && hook.games.length > 0) {
       const matches = findMatches()
       setGamesToShow(matches)
     }
@@ -35,7 +35,7 @@ const Page: React.FC = () => {
   useEffect(() => {
     if (
       user.hook.data &&
-      !user.hook.data.youtubeEmail &&
+      !user.hook.data.youtubeEmail && user.hook.configs.enableGoogleOAuth && 
       Cookies.get('showProfileToast') !== 'true'
     ) {
       Toast().info(

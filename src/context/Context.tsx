@@ -18,6 +18,8 @@ import { decrypt } from 'src/services/Encrypt'
 import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass'
 import ChannelsClass from '@/classes/Channels/ChannelsClass'
 import { setCache } from 'src/services/Cache'
+import Toast from 'src/services/Toast'
+import ConfigsClass from 'src/classes/Configs/ConfigsClass'
 
 interface ContextProps {
   banners: BannerClass
@@ -37,6 +39,7 @@ interface ContextProps {
   orders: OrdersClass
   surveys: SurveysClass
   wallets: WalletClass
+  configs: ConfigsClass
 }
 
 export const Context = React.createContext({} as ContextProps)
@@ -58,6 +61,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     orders,
     surveys,
     wallets,
+    configs,
   }: ContextProps = classes
 
   const { findGames, findTable, head2Head, hook }: any = FootballApi()
@@ -66,7 +70,13 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     const configsCache: any = localStorage.getItem('configs')
     const configsCacheJson = JSON.parse(configsCache);
 
-    if(!configsCache || Object.keys(configsCacheJson).length === 0) return true
+    if(!configsCache || Object.keys(configsCacheJson).length === 0 || !configsCacheJson[key]) {
+      setCache('configs', {
+        ...configsCacheJson,
+        [key]: new Date().getTime()
+      })
+      return true
+    }
 
     const currentState = configsCacheJson[key]
 
@@ -88,6 +98,43 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     return shouldUpdate
   }
 
+  const get = ({res, data}: {
+    res: any,
+    data: any
+  }) => {
+    Object.keys(classes).forEach((classe: any) => {
+      const should = shouldUpdate(classe, data)
+      console.log('should update - ', should, 'class - ', classe);
+      classes[classe].setClass(should).then((res: any) => {
+        if (res && res.length > 0) {
+          classes[classe].hook.setData(res)
+        }
+      })
+    })
+
+    if (!res.isAnonymous) {
+      orders.setClassById(shouldUpdate('orders', data), res.uid).then((res) => {
+        orders.hook.setData(res)
+      })
+      userPurchases.setClassById(shouldUpdate('userPurchases', data), res.uid).then((res) => {
+        userPurchases.hook.setData(
+          res && res.historic ? res.historic : null,
+        )
+      })
+      wallets.setClassById(shouldUpdate('wallets', data), res.uid).then((res: any) => {
+        if (res) {
+          const balance = +decrypt(res.balance ?? 0)
+          wallets.hook.setData({
+            id: res.id,
+            balance,
+          })
+        } else {
+          wallets.hook.setData(null)
+        }
+      })
+    }
+  }
+
   useEffect(() => {
     delete classes.user
     delete classes.userPurchases
@@ -95,59 +142,20 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     delete classes.wallets
     delete classes.youtube
     delete classes.notifications
+    delete classes.configs
 
     auth.onAuthStateChanged(async (res: any) => {
       if (res) {
         const tokenId = await auth.currentUser?.getIdToken()
-        fetch(
-          `${process.env.REACT_APP_ENVIRONMENT === 'production' ? process.env.REACT_APP_BACKEND + '/query/configs' : process.env.REACT_APP_BACKEND_DEV + '/query/configs'}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${tokenId}`
-            }
-          }).then((response: any) => {
-            response.json().then((configRes: any) => {
-              const { data } = configRes
-              const key = decrypt(data[0].public)
-              delete data[0].public
-              delete data[0].access
-              user.hook.setConfigs(data[0])
-              user.hook.setKey(key)
-
-              Object.keys(classes).forEach((classe: any) => {
-                const should = shouldUpdate(classe, data[0])
-                classes[classe].setClass(should).then((res: any) => {
-                  if (res && res.length > 0) {
-                    classes[classe].hook.setData(res)
-                  }
-                })
-              })
-
-              if (!res.isAnonymous) {
-                orders.setClassById(shouldUpdate('orders', data[0]), res.uid).then((res) => {
-                  orders.hook.setData(res)
-                })
-                userPurchases.setClassById(shouldUpdate('userPurchases', data[0]), res.uid).then((res) => {
-                  userPurchases.hook.setData(
-                    res && res.historic ? res.historic : null,
-                  )
-                })
-                wallets.setClassById(shouldUpdate('wallets', data[0]), res.uid).then((res: any) => {
-                  if (res) {
-                    const balance = +decrypt(res.balance ?? 0)
-                    wallets.hook.setData({
-                      id: res.id,
-                      balance,
-                    })
-                  } else {
-                    wallets.hook.setData(null)
-                  }
-                })
-              }
-            })
-          })
-
+        configs.getHttp(process.env.REACT_APP_FIREBASE_CONFIG_ID ?? '').then((configRes) => {
+          const data: any = configRes
+          const key = decrypt(data.public)
+          delete data.public
+          delete data.access
+          user.hook.setConfigs(data)
+          user.hook.setKey(key)
+          get({res, data})
+        })
         user.setClassById(true, res.uid).then(async (res) => {
           user.hook.setTokenId(tokenId || '')
           user.hook.setData(res)
@@ -220,6 +228,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         orders,
         surveys,
         wallets,
+        configs
       }}
     >
       {children}

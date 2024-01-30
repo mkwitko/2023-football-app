@@ -1,5 +1,6 @@
 import BannersClass from './Banners/BannerClass'
 import ChannelsClass from './Channels/ChannelsClass'
+import ConfigsClass from './Configs/ConfigsClass'
 import EventosClass from './Eventos/EventosClass'
 import FeedsClass from './Feeds/FeedsClass'
 import NoticiasClass from './Noticias/NoticiaClass'
@@ -26,6 +27,7 @@ export default function Classes() {
   const surveys = new SurveysClass()
   const wallets = new WalletClass()
   const orders = new OrdersClass()
+  const configs = new ConfigsClass()
 
   return {
     banners,
@@ -41,5 +43,6 @@ export default function Classes() {
     feeds,
     surveys,
     wallets,
+    configs
   }
 }
