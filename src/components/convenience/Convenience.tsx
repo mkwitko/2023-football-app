@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StringCutter } from '../../utils/StringUtils'
 import { Context } from 'src/context/Context'
 import Navigation from 'src/services/Navigation'
@@ -16,7 +16,7 @@ export default function ConvenienceCard({ data }: { data: any }) {
         }}
         style={{
           backgroundImage: `linear-gradient(180deg, var(--ion-color-primary-rgb) 20%, var(--ion-color-primary-contrast) 100%), url(${data.imagePath})`,
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}

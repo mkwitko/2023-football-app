@@ -12,7 +12,7 @@ import Authentication from 'src/services/Auth'
 
 export default function ClubDetails() {
   const { eventos, wallets, user, userPurchases } = useContext(Context)
-  const { balance } = wallets.hook.data
+  const balance = wallets.hook.data
   const { currentEvent } = eventos.hook
   const [open, setOpen] = React.useState(false)
   const { navigateTo } = Navigation()

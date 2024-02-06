@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { IonButtons, IonMenuButton, IonToolbar } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Context } from '../../../context/Context';
@@ -7,7 +6,7 @@ import { Context } from '../../../context/Context';
 export default function HeaderSwiper() {
     const { banners } = useContext(Context);
 
-    const banner = banners.hook.data && banners.hook.data.lengthj > 0 && banners.hook.data.filter((e) => e.active);
+    const banner = banners.hook.data && banners.hook.data.length > 0 && banners.hook.data.filter((e) => e.active);
 
     return (
         <>
@@ -20,19 +19,17 @@ export default function HeaderSwiper() {
                 }}
                 onSlideChange={(e) => {
                     const index = e.realIndex - 1;
-                   if(index && e) {
-                    if(banner[index] !== undefined) {
+                    if (banner[index] !== undefined) {
                         e.autoplay.stop();
                         setTimeout(() => {
-                            if(e.autoplay) e.autoplay.start();
-                          }, banner[index].highlighted ? 10000 : 5000);
+                            if (e.autoplay) e.autoplay.start();
+                        }, banner[index].highlighted ? 30000 : 15000);
                     } else {
-                        if(e.autoplay) e.autoplay.stop();
+                        if (e.autoplay) e.autoplay.stop();
                         setTimeout(() => {
-                            if(e.autoplay) e.autoplay.start();
-                          }, 5000);
+                            if (e.autoplay) e.autoplay.start();
+                        }, 15000);
                     }
-                   }
                 }}
             >
                 <SwiperSlide className="bg-firstHeader bg-cover bg-no-repeat"></SwiperSlide>

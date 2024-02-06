@@ -53,22 +53,11 @@ export default function ConvenienceDetails() {
                 Voltar
               </button>
             </div>
-            {(propaganda.hook.current.link ||
-              propaganda.hook.current.qrCode) && (
+
+           <div className='flex flex-col gap-4'>
+             {propaganda.hook.current.qrCode && (
               <div className="bg-primary-700 text-[0.75rem] md:text-[1.5rem] text-white py-2 px-6 rounded-[0.625rem] font-bold">
-                {propaganda.hook.current.link && (
-                  <button
-                    onClick={() => {
-                      if (Capacitor.getPlatform() === 'web')
-                        window.open(propaganda.hook.current.link)
-                      else Browser.open({ url: propaganda.hook.current.link })
-                    }}
-                    type="button"
-                  >
-                    Participar
-                  </button>
-                )}
-                {propaganda.hook.current.qrCode && (
+                 {propaganda.hook.current.qrCode && (
                   <ModalProsper.Modal>
                     <ModalProsper.ModalTrigger>
                       <button>Ver QR Code</button>
@@ -106,6 +95,25 @@ export default function ConvenienceDetails() {
                 )}
               </div>
             )}
+
+            {propaganda.hook.current.link && (
+              <div className="bg-primary-700 text-[0.75rem] md:text-[1.5rem] text-white py-2 px-6 rounded-[0.625rem] font-bold text-center">
+                {propaganda.hook.current.link && (
+                  <button
+                  className='text-center'
+                    onClick={() => {
+                      if (Capacitor.getPlatform() === 'web')
+                        window.open(propaganda.hook.current.link)
+                      else Browser.open({ url: propaganda.hook.current.link })
+                    }}
+                    type="button"
+                  >
+                    Participar
+                  </button>
+                )}
+              </div>
+            )}
+           </div>
           </div>
         </div>
       )}

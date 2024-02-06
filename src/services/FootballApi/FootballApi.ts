@@ -3,8 +3,13 @@ import FootballApiUtils from './FootballApiUtils'
 import axios from 'axios'
 import useFootballApiHook from './useFootballApiHook'
 import { CompareObjects } from '../../utils/CompareObjects'
+import { Context } from 'src/context/Context'
+import { useContext } from 'react'
 
 export default function FootballApi() {
+
+  const { hook } = useContext(Context)
+
   const apiFootball = {
     base: 'https://apiv3.apifootball.com/?action=',
     events: 'get_events',
@@ -14,7 +19,7 @@ export default function FootballApi() {
     club: 'team_id=',
   }
 
-  const hook = useFootballApiHook()
+  const footballHook = useFootballApiHook()
 
   let competitions: any = []
 
@@ -28,9 +33,12 @@ export default function FootballApi() {
     apiFootball,
   })
 
+  const findMatchById = (id: string) => {
+    return hook && hook.games && hook.games.find((e: any) => e.match_id === id)
+  }
+
   const findGames = async () => {
     const response = await axios(gamesUrl)
-    console.log('find games - ', response)
     if (response) {
       competitions = []
       competitions = findCompetitions(response.data)
@@ -40,7 +48,7 @@ export default function FootballApi() {
         competitions,
       )
       if (hasToUpdate) {
-        hook.setCompetitions(competitions)
+        footballHook.setCompetitions(competitions)
         setCache('competitions', competitions)
       }
       Promise.all(
@@ -71,10 +79,11 @@ export default function FootballApi() {
         ),
       ).then((res: any) => {
         setCache('football_events', res)
-        hook.setEvents(res)
+        footballHook.setEvents(res)
       })
 
-      hook.setGames(response.data)
+      console.log('response games - ', response.data)
+      footballHook.setGames(response.data)
       setCache('games', response.data)
     }
     return response
@@ -111,6 +120,7 @@ export default function FootballApi() {
     findGames,
     findTable,
     head2Head,
-    hook,
+    hook: footballHook,
+    findMatchById
   }
 }

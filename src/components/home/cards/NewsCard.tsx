@@ -21,9 +21,9 @@ export default function NewsCard({ noticias }: { noticias: any }) {
                   history.push('newsDetails')
                 }}
               >
-                <div className="h-[22.5rem] md:h-[30rem] md:w-[45vw] w-[55vw] rounded-[0.625rem] overflow-hidden mb-2 shadow-convenienceShadow">
+                <div className="h-[25rem] md:h-[30rem] md:w-[45vw] w-[55vw] rounded-[0.625rem] overflow-hidden mb-2 shadow-convenienceShadow">
                   <img
-                    className="w-full h-1/2"
+                    className="w-full h-[40%]"
                     src={e.imagePath}
                     alt="Sunset in the mountains"
                   />
@@ -45,17 +45,17 @@ export default function NewsCard({ noticias }: { noticias: any }) {
                             : 'Autor Desconhecido'}
                         </span>
                         <span className="text-primary-900 text-[0.6rem] md:text-[0.85rem]">
-                          {e.createdAt}
+                          {new Date(e.date).toLocaleDateString('pt-BR')}
                         </span>
                       </div>
                     </div>
-                    <div className="font-bold text-[1rem] md:text-[1.25rem]">
-                      {StringCutter(e.title, 40, '...')}
+                    <div className="font-bold text-[1rem] md:text-[1.25rem] line-clamp-2">
+                      {e.title}
                     </div>
                     <div
-                      className="text-[1rem] md:text-[1.25rem]"
+                      className="text-[1rem] md:text-[1.25rem] line-clamp-5"
                       dangerouslySetInnerHTML={{
-                        __html: StringCutter(e.description, 100, '...'),
+                        __html: e.description,
                       }}
                     ></div>
                   </div>

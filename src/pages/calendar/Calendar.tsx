@@ -6,6 +6,8 @@ import Navigation from '../../services/Navigation'
 
 export default function Calendar() {
   const { games } = useFootballApiHook()
+
+  console.log('games - ', games);
   const { navigateTo } = Navigation()
 
   const findNextGame = () => {

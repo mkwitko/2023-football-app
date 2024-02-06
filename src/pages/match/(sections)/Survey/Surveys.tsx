@@ -4,7 +4,7 @@ import Survey from './Survey'
 import NoData from 'src/pages/components/NoData'
 
 export default function Surveys({ findSurveys }: { findSurveys: any }) {
-  const { user } = useContext(Context)
+  const { surveys, user } = useContext(Context)
 
   const [survey, setSurveys] = useState<any[]>([])
   const [currentSurvey, setCurrentSurvey] = useState<any>(0)
@@ -22,9 +22,15 @@ export default function Surveys({ findSurveys }: { findSurveys: any }) {
   useEffect(() => {
     if (user.hook.data && user.hook.data.id) {
       const voters = findVoter(survey[currentSurvey], user.hook.data.id)
-      if (voters) setHasVoted(voters)
+      setHasVoted(voters)
     }
-  }, [user.hook.data, survey])
+  }, [user.hook.data, survey, surveys.hook.data])
+
+  useEffect(() => {
+    if (surveys.hook.data && surveys.hook.data.length > 0) {
+      setSurveys(findSurveys())
+    }
+  }, [surveys.hook.data])
 
   return survey.length > 0 ? (
     <div className="m-4 flex flex-col gap-4">

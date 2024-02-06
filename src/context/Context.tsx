@@ -98,13 +98,14 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     return shouldUpdate
   }
 
+  const [initial, setInitial] = React.useState(true)
+
   const get = ({res, data}: {
     res: any,
     data: any
   }) => {
     Object.keys(classes).forEach((classe: any) => {
       const should = shouldUpdate(classe, data)
-      console.log('should update - ', should, 'class - ', classe);
       classes[classe].setClass(should).then((res: any) => {
         if (res && res.length > 0) {
           classes[classe].hook.setData(res)
@@ -162,10 +163,10 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         })
 
         youtube.getLive()
+        findGames()
+        setInitial(false);
       }
     })
-
-    findGames()
   }, [])
 
   useEffect(() => {
@@ -207,6 +208,13 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       })
     }
   }, [user.hook.data])
+
+  useEffect(() => {
+    if(!initial) {
+      feeds.realTime();
+      surveys.realTime();
+    }
+  }, [initial])
 
   return (
     <Context.Provider

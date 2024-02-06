@@ -10,6 +10,7 @@ import { Context } from 'src/context/Context'
 import { Capacitor } from '@capacitor/core'
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth'
 import Authentication from 'src/services/Auth'
+import { Browser } from '@capacitor/browser'
 
 export default function Profile() {
   const { user } = useContext(Context)
@@ -343,7 +344,7 @@ export default function Profile() {
             <div className="flex flex-col gap-2">
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={!edit || isSubmitting}
                 className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-1.5 md:text-[1.5rem] md:py-[0.75rem] text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
               >
                 Salvar
@@ -351,7 +352,7 @@ export default function Profile() {
 
               <button
                 type="button"
-                disabled={isSubmitting}
+                disabled={!edit || isSubmitting}
                 onClick={() => {
                   setEdit(false)
                   navigateTo('/home')
@@ -362,7 +363,7 @@ export default function Profile() {
               </button>
               <button
                 type="button"
-                disabled={isSubmitting}
+                disabled={!edit || isSubmitting}
                 onClick={() => {
                   deleteAccount()
                 }}
@@ -373,6 +374,18 @@ export default function Profile() {
             </div>
           </div>
         </form>
+        <button
+          type="button"
+          onClick={() => {
+            const url: any = process.env.REACT_APP_PRIVACY_LINK
+            if (Capacitor.getPlatform() === 'web') window.open(url)
+            else Browser.open({ url })
+          }}
+          disabled={isSubmitting}
+          className="font-semibold leading-6 text-primary-600 text-[1rem] md:text-[1.25rem] hover:text-primary-500 ml-2"
+        >
+          Política de privacidade
+        </button>
       </div>
     </IonContent>
   )

@@ -77,6 +77,10 @@ export default function Match() {
     getHead2Head()
   }, [])
 
+  useEffect(() => {
+    tabs[3].disabled = findSurveys().length === 0
+  }, [surveys.hook.data])
+
   return (
     <IonContent fullscreen>
       <MatchCardFull match={match} />

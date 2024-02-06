@@ -24,7 +24,7 @@ export default function Survey({
 
   useEffect(() => {
     setDisplaySurvey(survey[currentSurvey])
-  }, [currentSurvey])
+  }, [survey, currentSurvey])
 
   const findVoteWidth = (options: any, each: any) => {
     let total = 0
@@ -50,7 +50,7 @@ export default function Survey({
     return false
   }
 
-  const isValid = validityDateHour(
+  const isExpired = validityDateHour(
     survey[currentSurvey].validityDate,
     survey[currentSurvey].validityHour,
   )
@@ -105,7 +105,7 @@ export default function Survey({
                 key={i}
                 className="p-2 bg-white cursor-pointer rounded-[0.625rem]"
               >
-                {!isValid || hasVoted ? (
+                {isExpired || hasVoted ? (
                   <Percentual
                     highest={findHighestVote(displaySurvey.options, e)}
                     width={findVoteWidth(displaySurvey.options, e.votes)}

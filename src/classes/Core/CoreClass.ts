@@ -2,12 +2,16 @@
 import { getCache, setCache } from './../../services/Cache'
 import useCoreHook from './UseCoreHook'
 import Crud from './../..//services/Crud'
+import { query, where, onSnapshot, getFirestore, collection, WhereFilterOp } from 'firebase/firestore'
+import firebase_app from 'src/infra/Firebase'
 
 export default class CoreClass {
   collection = ''
 
   crud = Crud()
   hook: any = useCoreHook()
+
+
 
   getCache(key?: string) {
     return getCache(key || this.collection)
@@ -27,11 +31,19 @@ export default class CoreClass {
     return error || result
   }
 
-  async getRealTime(collection?: string) {
-    const { result, error } = await this.crud.getRealTime(
-      collection || this.collection,
-    )
-    return error || result
+  async createRealTime({ search }: {
+    search?: {
+      field: string,
+      operator: WhereFilterOp,
+      value: string
+    }
+  }) {
+    const db = getFirestore(firebase_app)
+    let q = query(collection(db, this.collection))
+    if (search) {
+      q = query(collection(db, this.collection), where(search.field, search.operator, search.value))
+    }
+    return q;
   }
 
   async getAll(collection?: string) {
