@@ -20,6 +20,10 @@ import ChannelsClass from '@/classes/Channels/ChannelsClass'
 import { setCache } from 'src/services/Cache'
 import Toast from 'src/services/Toast'
 import ConfigsClass from 'src/classes/Configs/ConfigsClass'
+import { platform } from 'os'
+import { Capacitor } from '@capacitor/core'
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
 
 interface ContextProps {
   banners: BannerClass
@@ -70,7 +74,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     const configsCache: any = localStorage.getItem('configs')
     const configsCacheJson = JSON.parse(configsCache);
 
-    if(!configsCache || Object.keys(configsCacheJson).length === 0 || !configsCacheJson[key]) {
+    if (!configsCache || Object.keys(configsCacheJson).length === 0 || !configsCacheJson[key]) {
       setCache('configs', {
         ...configsCacheJson,
         [key]: new Date().getTime()
@@ -80,15 +84,15 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
     const currentState = configsCacheJson[key]
 
-    if(!currentState) return true
+    if (!currentState) return true
 
     const newState = configs[key]
 
-    if(!newState) return true
+    if (!newState) return true
 
     const shouldUpdate = newState > currentState
 
-    if(shouldUpdate) {
+    if (shouldUpdate) {
       setCache('configs', {
         ...configsCacheJson,
         [key]: newState
@@ -98,19 +102,22 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     return shouldUpdate
   }
 
-  const [initial, setInitial] = React.useState(true)
-
-  const get = ({res, data}: {
+  const get = ({ res, data }: {
     res: any,
     data: any
   }) => {
     Object.keys(classes).forEach((classe: any) => {
-      const should = shouldUpdate(classe, data)
-      classes[classe].setClass(should).then((res: any) => {
-        if (res && res.length > 0) {
-          classes[classe].hook.setData(res)
-        }
-      })
+      if (classes[classe].hasRealTime && classes[classe].realTime) {
+        classes[classe].clearCache()
+        classes[classe].realTime(res)
+      } else {
+        const should = shouldUpdate(classe, data)
+        classes[classe].setClass(should).then((res: any) => {
+          if (res && res.length > 0) {
+            classes[classe].hook.setData(res)
+          }
+        })
+      }
     })
 
     if (!res.isAnonymous) {
@@ -145,6 +152,8 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     delete classes.notifications
     delete classes.configs
 
+    if (Capacitor.getPlatform() !== 'web') ScreenOrientation.lock(ScreenOrientation.ORIENTATIONS.PORTRAIT)
+
     auth.onAuthStateChanged(async (res: any) => {
       if (res) {
         const tokenId = await auth.currentUser?.getIdToken()
@@ -155,7 +164,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
           delete data.access
           user.hook.setConfigs(data)
           user.hook.setKey(key)
-          get({res, data})
+          get({ res, data })
         })
         user.setClassById(true, res.uid).then(async (res) => {
           user.hook.setTokenId(tokenId || '')
@@ -164,7 +173,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
         youtube.getLive()
         findGames()
-        setInitial(false);
       }
     })
   }, [])
@@ -177,7 +185,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
     ) {
       fetch(
         'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' +
-          user.hook.data.access_token,
+        user.hook.data.access_token,
       ).then((response) => {
         response.json().then((data) => {
           if (data.error) {
@@ -208,13 +216,6 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
       })
     }
   }, [user.hook.data])
-
-  useEffect(() => {
-    if(!initial) {
-      feeds.realTime();
-      surveys.realTime();
-    }
-  }, [initial])
 
   return (
     <Context.Provider

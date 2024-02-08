@@ -8,15 +8,13 @@ import ModalProsper from 'src/components/Shadcn/Modal/index'
 import Toast from 'src/services/Toast'
 import Authentication from 'src/services/Auth'
 import Chat from './Chat'
+import LiveForm from './form/useForm'
 
 export default function Live() {
   const { youtube, user, wallets } = useContext(Context)
+  const { hook: { comment, setComment } } = youtube
   const [value, setValue] = React.useState(5.0)
   const id = youtube.hook.live?.id?.videoId
-
-  const [comment, setComment] = useState('')
-
-  const [comments, setComments] = useState<any>([])
 
   const [open, setOpen] = useState(false)
   const [isSending, setIsSending] = useState(false)
@@ -25,7 +23,7 @@ export default function Live() {
 
   const handleComment = async (isPaid = false) => {
     await youtube.insert({
-      comment,
+      comment: comment,
       value: isPaid ? value : 0,
       isPaid,
       user: user.hook.data,
@@ -51,7 +49,7 @@ export default function Live() {
             purchase: {
               date: new Date(),
               type: 'live',
-              comment,
+              comment: comment,
               isPaid,
               value,
             },
@@ -82,7 +80,7 @@ export default function Live() {
     <IonContent fullscreen>
       <div className="flex flex-col h-full items-center justify-between pb-2 relative">
         <Iframe videoId={id} />
-        <Chat comments={comments} setComments={setComments} id={id} />
+        <Chat id={id} />
         <div className="w-[95%] flex items-end gap-2 border-t-2 pt-4">
           <IonTextarea
             className="w-full rounded-[0.625rem] border border-borderColor p-2"
@@ -128,7 +126,7 @@ export default function Live() {
                   </p>
                   <input
                     step="0.5"
-                    className="w-full leading-8 text-center  text-[5rem] bg-transparent font-bold text-primary-900"
+                    className="w-full leading-8 text-center text-[5rem] bg-transparent font-bold text-primary-900"
                     type="number"
                     value={+Number(value).toFixed(2)}
                     onChange={(e) => {

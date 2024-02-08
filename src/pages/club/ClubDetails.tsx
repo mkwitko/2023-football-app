@@ -115,9 +115,10 @@ export default function ClubDetails() {
       <div
         className="h-56"
         style={{
-          backgroundImage: `url(${currentEvent?.imagePath})`,
-          backgroundSize: 'cover',
+          backgroundImage: `linear-gradient(180deg, var(--ion-color-primary-rgb) 20%, var(--ion-color-primary-contrast) 100%), url(${currentEvent?.imagePath})`,
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
       >
         <div className="flex flex-col h-full w-full items-center justify-center px-8 sm:px-12 divide-y gap-4">

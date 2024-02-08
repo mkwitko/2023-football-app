@@ -4,27 +4,14 @@ import Survey from './Survey'
 import NoData from 'src/pages/components/NoData'
 
 export default function Surveys({ findSurveys }: { findSurveys: any }) {
-  const { surveys, user } = useContext(Context)
+  const { surveys } = useContext(Context)
 
   const [survey, setSurveys] = useState<any[]>([])
   const [currentSurvey, setCurrentSurvey] = useState<any>(0)
-  const [hasVoted, setHasVoted] = useState<boolean>(false)
-
-  const findVoter = (survey: any, userId: string) => {
-    if (!survey || !survey.voters) return
-    return survey.voters[userId]
-  }
 
   useEffect(() => {
     if (survey.length === 0) setSurveys(findSurveys())
   }, [])
-
-  useEffect(() => {
-    if (user.hook.data && user.hook.data.id) {
-      const voters = findVoter(survey[currentSurvey], user.hook.data.id)
-      setHasVoted(voters)
-    }
-  }, [user.hook.data, survey, surveys.hook.data])
 
   useEffect(() => {
     if (surveys.hook.data && surveys.hook.data.length > 0) {
@@ -40,8 +27,6 @@ export default function Surveys({ findSurveys }: { findSurveys: any }) {
           setSurveys={setSurveys}
           findSurveys={findSurveys}
           currentSurvey={currentSurvey}
-          hasVoted={hasVoted}
-          setHasVoted={setHasVoted}
         />
       )}
 
@@ -60,9 +45,6 @@ export default function Surveys({ findSurveys }: { findSurveys: any }) {
                       (each: any) => each.id === e.id,
                     )
                     setCurrentSurvey(index)
-                    const voters = findVoter(survey[index], user.hook.data.id)
-                    if (voters) setHasVoted(voters)
-                    else setHasVoted(false)
                   }}
                   className="shadow-sendShadow bg-white flex flex-col border border-primary rounded-[0.625rem] w-full p-4"
                   key={`other_surveys_${i}`}

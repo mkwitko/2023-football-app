@@ -2,29 +2,41 @@ import React, { useContext, useEffect, useState } from 'react'
 import Percentual from './Percentual'
 import { Context } from 'src/context/Context'
 import { validityDateHour } from 'src/utils/DateUtils'
+import { useIonLoading } from '@ionic/react'
+import { findVoter } from 'src/utils/SurveysUtil'
 
 export default function Survey({
   survey,
   setSurveys,
   findSurveys,
   currentSurvey,
-  hasVoted,
-  setHasVoted,
 }: {
   survey: any
   setSurveys: any
   findSurveys: any
   currentSurvey: number
-  hasVoted: boolean
-  setHasVoted: any
 }) {
   const { user, surveys } = useContext(Context)
 
   const [displaySurvey, setDisplaySurvey] = useState<any>(survey[currentSurvey])
 
+  const [voted, setVoted] = useState(false)
+
   useEffect(() => {
     setDisplaySurvey(survey[currentSurvey])
   }, [survey, currentSurvey])
+
+  useEffect(() => {
+    if (user.hook.data && user.hook.data.id) {
+      surveys
+      .getHttp(surveys.hook.data[currentSurvey].id)
+      .then((response: any) => {
+        const voters = findVoter(response, user.hook.data.id)
+        setVoted(voters)
+      })
+     
+    }
+  }, [user.hook.data, survey, currentSurvey])
 
   const findVoteWidth = (options: any, each: any) => {
     let total = 0
@@ -55,6 +67,8 @@ export default function Survey({
     survey[currentSurvey].validityHour,
   )
 
+  const [present, dismiss] = useIonLoading()
+
   return (
     <div className="bg-primary rounded-[0.625rem] p-4 flex flex-col">
       <div className="flex flex-col text-white">
@@ -67,7 +81,8 @@ export default function Survey({
             return (
               <div
                 onClick={() => {
-                  if (!hasVoted) {
+                  if (!voted && !isExpired) {
+                    present()
                     const options = displaySurvey.options
                     options.find((each: any) => {
                       if (each.value === e.value) {
@@ -86,26 +101,26 @@ export default function Survey({
                       surveys
                         .getHttp(displaySurvey.id)
                         .then((response: any) => {
-                          setDisplaySurvey(response)
-                          let data
-                          surveys.hook.setData((prev: any) => {
-                            const index = prev.findIndex(
+                          surveys.hook.setData(() => {
+                            const index = survey.findIndex(
                               (each: any) => each.id === response.id,
                             )
-                            prev[index] = response
-                            data = prev
-                            return prev
+                            const indexSetter = index === -1 ? 0 : index
+                            const data = survey
+                            data[indexSetter] = response
+                            return data
                           })
-                          setSurveys(findSurveys(data))
-                          setHasVoted(true)
+                          setDisplaySurvey(response)
                         })
+                    }).finally(() => {
+                      dismiss()
                     })
                   }
                 }}
                 key={i}
                 className="p-2 bg-white cursor-pointer rounded-[0.625rem]"
               >
-                {isExpired || hasVoted ? (
+                {isExpired || voted ? (
                   <Percentual
                     highest={findHighestVote(displaySurvey.options, e)}
                     width={findVoteWidth(displaySurvey.options, e.votes)}

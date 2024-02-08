@@ -16,8 +16,6 @@ export default function Club() {
     }
   }
 
-  console.log(eventos.hook.data)
-
   return (
     <IonContent fullscreen>
       {eventos.hook.data.length > 0 ? (

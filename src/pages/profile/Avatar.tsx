@@ -84,7 +84,7 @@ export function Avatar({
       </label>
 
       {errorMessage && (
-        <p className="text-xs font-bold text-red-400">{errorMessage}</p>
+        <p className="text-xs font-bold text-center text-red-400 mt-2">{errorMessage}</p>
       )}
     </>
   )

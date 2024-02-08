@@ -16,6 +16,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@codetrix-studio/capacitor-google-auth": "^3.3.6",
     "@hookform/resolvers": "^3.2.0",
+    "@ionic-native/screen-orientation": "^5.36.0",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "@mercadopago/sdk-react": "^0.0.14",
@@ -31,6 +32,7 @@
     "capacitor-set-version": "^2.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cordova-plugin-screen-orientation": "^3.0.4",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
@@ -73,6 +75,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@capacitor/assets": "^3.0.1",
     "@capacitor/cli": "5.2.2",
     "@tailwindcss/typography": "^0.5.10",

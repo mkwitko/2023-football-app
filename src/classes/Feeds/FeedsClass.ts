@@ -1,12 +1,11 @@
 import { onSnapshot } from 'firebase/firestore'
 import CoreClass from '../Core/CoreClass'
 import useFeedsHook from './useFeedsHook'
-import Toast from 'src/services/Toast'
 
 export default class FeedsClass extends CoreClass {
   override collection = 'feeds'
   override hook = useFeedsHook()
-
+  override hasRealTime = true;
 
   realTime = async () => {
     const feedRealTime = await this.createRealTime({})
@@ -14,27 +13,43 @@ export default class FeedsClass extends CoreClass {
       if (querySnapshot.empty) {
         console.log('empty')
       }
+      const cache = this.getCache()
+      const current = Object.keys(cache).length > 0 ? cache : []
 
-      const toAdd: any[] = []
+      const toAdd: any = []
+
       querySnapshot.docChanges().forEach((change: any) => {
         const data = change.doc.data()
         if (change.type === 'added') {
-          const current = this.hook.data
-          const exist = current.find((item: any) => item.id !== data.id)
-          if(!exist) toAdd.push(data)
+          const exist = current ? current.find((item: any) => item.id === data.id) : false
+          if(exist) {
+            this.hook.setData(current)
+            return;
+          }
+          toAdd.push(data)
+        }
+        if (change.type === 'modified') {
+          const findIndex = current.findIndex((item: any) => item.id === data.id)
+          if (findIndex === -1) return
+          this.hook.setData(() => {
+            current[findIndex] = data
+            this.setCache(current, true)
+            return [...current]
+          })
         }
         if (change.type === 'removed') {
-          const current = this.hook.data
+          if(!current) return;
           const filtering = current.filter((item: any) => item.id !== data.id)
+          this.setCache(filtering, true)
           this.hook.setData(filtering)
         }
       })
-      this.hook.setData((prev: any) => {
-        return [...toAdd, ...prev]
-      })
 
       if(toAdd.length > 0) {
-        Toast().success('Novo Feed disponível!')
+        this.hook.setData(() => {
+          this.setCache([...toAdd, ...current], true)
+          return [...toAdd, ...current]
+        })
       }
     })
   }

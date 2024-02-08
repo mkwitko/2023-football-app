@@ -11,6 +11,8 @@ export default class CoreClass {
   crud = Crud()
   hook: any = useCoreHook()
 
+  hasRealTime = false;
+
 
 
   getCache(key?: string) {
@@ -21,6 +23,10 @@ export default class CoreClass {
     const cache = this.getCache(key || this.collection)
     if (this.hasObject(cache) && !shouldUpdate) return
     setCache(key || this.collection, value)
+  }
+
+  clearCache(key?: string) {
+    setCache(key || this.collection, {})
   }
 
   async getHttp(id: string, collection?: string) {

@@ -227,7 +227,7 @@ export default function Profile() {
               </div>
             </div>
 
-            {user.hook.configs.enableGoogleOAuth && (
+            {true && (
               <div>
                 <label
                   htmlFor="youtubeEmail"
@@ -237,7 +237,6 @@ export default function Profile() {
                 </label>
                 {!watch('youtubeEmail') ? (
                   <button
-                    disabled={!user.hook.configs.enableGoogleOAuth}
                     className="disabled:opacity-25 mt-2 text-start w-full rounded-md border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 md:text-[1.25rem] md:leading[1.25rem] md:py-[0.75rem] bg-white pl-3 flex items-center gap-2"
                     type="button"
                     onClick={() => {

@@ -6,6 +6,9 @@ export default function useYoutubeHook() {
   const [live, setLive] = useState<any>(getCache('live') || [])
   const [liveChatId, setLiveChatId] = useState<any>('')
 
+  const [comment, setComment] = useState<any>('')
+  const [comments, setComments] = useState<any>([])
+
   return {
     data,
     setData,
@@ -13,5 +16,9 @@ export default function useYoutubeHook() {
     setLive,
     liveChatId,
     setLiveChatId,
+    comment,
+    setComment,
+    comments,
+    setComments,
   }
 }

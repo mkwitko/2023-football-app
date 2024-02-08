@@ -81,8 +81,6 @@ export default function FootballApi() {
         setCache('football_events', res)
         footballHook.setEvents(res)
       })
-
-      console.log('response games - ', response.data)
       footballHook.setGames(response.data)
       setCache('games', response.data)
     }

@@ -36,16 +36,16 @@ export const Schema = z
         if (data.avatar && data.avatar.size > MAX_FILE_SIZE) {
           ctx.addIssue({
             code: 'custom',
-            message: 'Imagem muito grande',
-            path: ['imagem'],
+            message: 'Imagem muito grande, tamanho máximo 2mb',
+            path: ['avatar'],
           })
         }
 
         if (data.avatar && !ALLOWED_FILE_TYPES.includes(data.avatar.type)) {
           ctx.addIssue({
             code: 'custom',
-            message: 'Tipo de arquivo não permitido',
-            path: ['imagem'],
+            message: 'Os tipode de arquivo permitidos são .png, .jpg, .jpeg e .webp',
+            path: ['avatar'],
           })
         }
       }

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import { StringCutter } from 'src/utils/StringUtils'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList as List } from 'react-window'
@@ -10,18 +10,18 @@ import {
   where,
 } from 'firebase/firestore'
 import firebase_app from 'src/infra/Firebase'
-import { getCache, setCache } from 'src/services/Cache'
+import { setCache } from 'src/services/Cache'
+import { Context } from 'src/context/Context'
 
 export default function Chat({
-  comments,
-  setComments,
   id,
 }: {
-  comments: any
-  setComments: any
   id: string
 }) {
   const listRef = useRef<any>(null)
+
+  const { youtube } = useContext(Context)
+  const { hook: { comments, setComments } } = youtube
 
   const sortComments = (currentComments: any) => {
     const joining = [...currentComments]
@@ -47,15 +47,10 @@ export default function Chat({
           }
         })
         setComments(sortComments(currentComments))
-        // if(holdChat) return;
         listRef.current?.scrollToItem(currentComments.length - 1, 'end')
       })
     }
   }, [id])
-
-  // const holdChat = Object.values(getCache('holdChat'))[0] === '1' || false;
-
-  // console.log(holdChat)
 
   return (
     <div className="h-full w-full">
@@ -66,19 +61,14 @@ export default function Chat({
             itemKey={(index) => {
               return `each_comment_${index}`
             }}
-            // onScroll={(e) => {
-            //   if(e.scrollDirection === 'backward' && !holdChat) setCache('holdChat', '1');
-
-            //   if(e.scrollDirection === 'forward' && holdChat) setCache('holdChat', '0');
-            // }}
             className="List"
             height={height}
-            itemCount={comments.length}
+            itemCount={comments ? comments.length : 0}
             itemSize={100}
             width={width}
           >
             {({ index, style }) => {
-              if (comments.length === 0) return null
+              if (!comments || comments.length === 0) return null
               const e: any = comments[index]
               return (
                 <div key={`each_comment_${index}`}>
