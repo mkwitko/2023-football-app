@@ -21,6 +21,7 @@ import Footer from 'src/components/core/footer/Footer'
 import ClubDetails from 'src/pages/club/ClubDetails'
 import Purchases from 'src/pages/purchases/Purchases'
 import Channels from 'src/pages/channels/Channels'
+import { isIos } from 'src/utils/PlatformUtil'
 
 export default function Routing({ isLogged }: { isLogged: boolean }) {
   const history = useHistory()
@@ -33,7 +34,7 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
 
   return (
     <>
-      <IonPage>
+      <IonPage className={'mt-12'}>
         <>
           {isLogged && (
             <Header

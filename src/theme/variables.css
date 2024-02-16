@@ -15,76 +15,77 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .customClass .alert-wrapper {
-    border-radius: 0.625rem;
+  border-radius: 0.625rem;
 }
 
 .customClass .alert-wrapper .alert-head {
-    background: #f93939;
-    padding: 0.5rem 1rem;
+  background: #f93939;
+  padding: 0.5rem 1rem;
 }
+
 .customClass .alert-wrapper .alert-head h2 {
-   color: #fff;
-   margin: 0;
-   padding: 0;
+  color: #fff;
+  margin: 0;
+  padding: 0;
 }
 
 .customClass .alert-wrapper .alert-head .alert-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
 }
 
 .customClass .alert-wrapper .alert-head .alert-sub-title {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .customClass .alert-wrapper .alert-input-group {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .customClass .alert-wrapper input {
-    background: transparent;
-    border: 0px solid black;
-    font-size: 3rem;
-    text-align: center;
-    color: #4f0202;
-    font-weight: 800;
-    margin: 0;
-    padding: 0;
+  background: transparent;
+  border: 0px solid black;
+  font-size: 3rem;
+  text-align: center;
+  color: #4f0202;
+  font-weight: 800;
+  margin: 0;
+  padding: 0;
 }
 
 .customClass .alert-wrapper input::placeholder {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .customClass .alert-wrapper .alert-button-group {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
 }
 
 .customClass .alert-wrapper .alert-button-group .alert-button {
-    min-width: 0px;
-    border: 0px solid black;
+  min-width: 0px;
+  border: 0px solid black;
 }
 
 .customClass .alert-wrapper .alert-button-group .alert-button-role-confirm {
-    background: #f93939;
-    border-radius: 0.625rem;
-    padding: 0.5rem 1rem;
-    margin: 0 0.5rem;
+  background: #f93939;
+  border-radius: 0.625rem;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
 }
 
 .customClass .alert-wrapper .alert-button-group .alert-button-role-confirm span {
   color: white;
-    font-size: 1rem;
-    font-weight: 800;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 ion-header ion-toolbar {
@@ -117,28 +118,29 @@ p {
   color: #fff;
 }
 
-div.text-white p, div.text-white h1, div.text-white h2 {
-  color: inherit; /* or whatever color value you want to set, or 'initial' to reset to the browser's default */
+div.text-white p,
+div.text-white h1,
+div.text-white h2 {
+  color: inherit;
+  /* or whatever color value you want to set, or 'initial' to reset to the browser's default */
 }
 
 div h2 {
-    font-size: 1.5rem;
-    font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 800;
 }
 
 @media only screen and (min-width: 768px) {
-    div h2 {
-        font-size: 2rem;
-    }
+  div h2 {
+    font-size: 2rem;
   }
+}
 
 .card.image-full:before {
   opacity: 0 !important;
-  background: linear-gradient(
-    180deg,
-    rgba(254, 215, 215, 0.2) 0%,
-    rgba(79, 2, 2, 0.8) 80%
-  ) !important;
+  background: linear-gradient(180deg,
+      rgba(254, 215, 215, 0.2) 0%,
+      rgba(79, 2, 2, 0.8) 80%) !important;
 }
 
 .match-segment ::part(indicator-background) {
@@ -149,15 +151,14 @@ div h2 {
 :root {
   /** primary **/
   --ion-color-primary: #f93939;
-  --ion-color-primary-rgb: rgba(79,2,2,0.8);
-  --ion-color-primary-contrast: rgba(254,215,215, 0.5);
+  --ion-color-primary-rgb: rgba(79, 2, 2, 0.8);
+  --ion-color-primary-contrast: rgba(254, 215, 215, 0.5);
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #bc0606;
   --ion-color-primary-tint: #f93939;
 
 
-  --ion-color-primary-linear1: rgba(79,2,2,0.8)
-  --ion-color-primary-linear2: rgba(254,215,215, 0.5);
+  --ion-color-primary-linear1: rgba(79, 2, 2, 0.8) --ion-color-primary-linear2: rgba(254, 215, 215, 0.5);
 
   /** success **/
   --ion-color-success: #2dd36f;
@@ -210,79 +211,84 @@ div h2 {
 
 
 @layer base {
-    :root {
-      --background: 0 0% 100%;
-      --foreground: 222.2 47.4% 11.2%;
-   
-      --muted: 210 40% 96.1%;
-      --muted-foreground: 215.4 16.3% 46.9%;
-   
-      --popover: 0 0% 100%;
-      --popover-foreground: 222.2 47.4% 11.2%;
-   
-      --border: 214.3 31.8% 91.4%;
-      --input: 214.3 31.8% 91.4%;
-   
-      --card: 0 0% 100%;
-      --card-foreground: 222.2 47.4% 11.2%;
-   
-      --primary: 222.2 47.4% 11.2%;
-      --primary-foreground: 210 40% 98%;
-   
-      --secondary: 210 40% 96.1%;
-      --secondary-foreground: 222.2 47.4% 11.2%;
-   
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 222.2 47.4% 11.2%;
-   
-      --destructive: 0 100% 50%;
-      --destructive-foreground: 210 40% 98%;
-   
-      --ring: 215 20.2% 65.1%;
-   
-      --radius: 0.5rem;
-    }
-   
-    .dark {
-      --background: 224 71% 4%;
-      --foreground: 213 31% 91%;
-   
-      --muted: 223 47% 11%;
-      --muted-foreground: 215.4 16.3% 56.9%;
-   
-      --accent: 216 34% 17%;
-      --accent-foreground: 210 40% 98%;
-   
-      --popover: 224 71% 4%;
-      --popover-foreground: 215 20.2% 65.1%;
-   
-      --border: 216 34% 17%;
-      --input: 216 34% 17%;
-   
-      --card: 224 71% 4%;
-      --card-foreground: 213 31% 91%;
-   
-      --primary: 210 40% 98%;
-      --primary-foreground: 222.2 47.4% 1.2%;
-   
-      --secondary: 222.2 47.4% 11.2%;
-      --secondary-foreground: 210 40% 98%;
-   
-      --destructive: 0 63% 31%;
-      --destructive-foreground: 210 40% 98%;
-   
-      --ring: 216 34% 17%;
-   
-      --radius: 0.5rem;
-    }
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
   }
-   
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-      font-feature-settings: "rlig" 1, "calt" 1;
-    }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
   }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+ion-header {
+  --ion-safe-area-top: 0
+}

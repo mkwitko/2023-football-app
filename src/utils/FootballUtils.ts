@@ -32,5 +32,8 @@ export const setNomeCompeticao = (who: string) => {
   if (w.includes('Serie C')) who = 'Serie C'
   if (w.includes('Serie D')) who = 'Serie D'
 
+  if(w.includes('Round')) who = who.replace('Round', 'Rodada')
+  if(w.includes('st')) who = who.replace('st', 'ª')
+
   return who
 }
