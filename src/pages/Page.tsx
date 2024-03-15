@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react'
 import { IonContent } from '@ionic/react'
+import Cookies from 'js-cookie'
+import React, { useContext, useEffect } from 'react'
+import Navigation from 'src/services/Navigation'
+import Toast from 'src/services/Toast'
 import Categories from '../components/core/categories/Categories'
 import NewsCard from '../components/home/cards/NewsCard'
 import { Context } from '../context/Context'
-import HomeMatchCardSwiper from './components/HomeMatchCardSwiper'
 import Feed from './components/Feed'
-import Navigation from 'src/services/Navigation'
-import Toast from 'src/services/Toast'
-import Cookies from 'js-cookie'
+import HomeMatchCardSwiper from './components/HomeMatchCardSwiper'
 
 const Page: React.FC = () => {
   const { user, noticias, hook, feeds } = useContext(Context)

@@ -65,6 +65,7 @@ export default function FootballApiUtils({ apiFootball }: any) {
     if (w.includes('Libertadores')) who = 'Libertadores'
     // if (w.includes('Semi-finals')) who += ' Semi Final';
     // if (w.includes('Copa do Brasil')) who = 'Copa do Brasil';
+    if(w.includes('nd')) who = who.replace('nd', 'a')
     if (w.includes('Serie A')) who = 'Brasileiro'
     if (w.includes('Serie B')) who = 'Serie B'
     if (w.includes('Serie C')) who = 'Serie C'
@@ -114,6 +115,7 @@ export default function FootballApiUtils({ apiFootball }: any) {
       element.league_name.includes('finals')
     )
   }
+
 
   return {
     gamesUrl,

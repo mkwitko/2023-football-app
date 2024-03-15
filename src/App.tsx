@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import {
   IonApp,
   IonRouterOutlet,
@@ -6,16 +5,17 @@ import {
   setupIonicReact,
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
+import React, { useState } from 'react'
 
 /* Theme variables */
-import './theme/variables.css'
 import './global'
+import './theme/variables.css'
 
 import Menu from './components/core/menu/Menu'
 import { ContextProvider } from './context/Context'
 
+import { Redirect, Route } from 'react-router'
 import Routing from './infra/Route'
-import { Route, Redirect } from 'react-router'
 
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle'
@@ -24,7 +24,6 @@ import { getCache } from './services/Cache'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth'
 import { GoogleAuthInitializer, GoogleAuthMetaTags } from './assets/GoogleAuthInitializer'
 
 setupIonicReact()

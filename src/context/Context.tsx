@@ -11,18 +11,16 @@ import Authentication from '../services/Auth'
 import FootballApi from '../services/FootballApi/FootballApi'
 import Classes from './../classes'
 
-import React, { useEffect } from 'react'
-import WalletClass from 'src/classes/Wallet/WalletClass'
-import OrdersClass from 'src/classes/Orders/OrdersClass'
-import { decrypt } from 'src/services/Encrypt'
-import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass'
 import ChannelsClass from '@/classes/Channels/ChannelsClass'
-import { setCache } from 'src/services/Cache'
-import Toast from 'src/services/Toast'
-import ConfigsClass from 'src/classes/Configs/ConfigsClass'
-import { platform } from 'os'
+import UserPurchaseClass from '@/classes/UserPurchase/UserPurchasesClass'
 import { Capacitor } from '@capacitor/core'
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientation } from '@ionic-native/screen-orientation'
+import React, { useEffect } from 'react'
+import ConfigsClass from 'src/classes/Configs/ConfigsClass'
+import OrdersClass from 'src/classes/Orders/OrdersClass'
+import WalletClass from 'src/classes/Wallet/WalletClass'
+import { setCache } from 'src/services/Cache'
+import { decrypt } from 'src/services/Encrypt'
 
 
 interface ContextProps {
@@ -159,6 +157,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
         const tokenId = await auth.currentUser?.getIdToken()
         configs.getHttp(process.env.REACT_APP_FIREBASE_CONFIG_ID ?? '').then((configRes) => {
           const data: any = configRes
+          console.log('data - ', data)
           const key = decrypt(data.public)
           delete data.public
           delete data.access

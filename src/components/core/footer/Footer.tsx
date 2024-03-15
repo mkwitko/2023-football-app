@@ -60,7 +60,8 @@ export default function Footer() {
             key={i}
             onClick={() => {
               if (e.highlight && isLive) {
-                history.push('/live')
+                // history.push('/live')
+                history.push(e.path)
               } else {
                 if (e.path) {
                   history.push(e.path)

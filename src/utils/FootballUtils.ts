@@ -37,3 +37,8 @@ export const setNomeCompeticao = (who: string) => {
 
   return who
 }
+
+
+export const hasHappened = (match: any) => {
+  return match.match_status === 'Finished'
+}

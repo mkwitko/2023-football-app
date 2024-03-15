@@ -1,7 +1,6 @@
-import React from 'react'
-import Navigation from '../../../services/Navigation'
 import { setCache } from '../../../services/Cache'
-import { setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils'
+import Navigation from '../../../services/Navigation'
+import { hasHappened, setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils'
 
 export default function MatchCard({ match }: { match: any }) {
   //   const { name, city } = stadiumName(match);
@@ -39,7 +38,7 @@ export default function MatchCard({ match }: { match: any }) {
 
           <div className="flex flex-col items-center gap-4">
             <div className="flex items-center justify-center gap-1">
-              {match.match_status !== '' ? (
+              {hasHappened(match) ? (
                 <>
                   <div className="flex items-center justify-center w-[4rem] h-[4rem] rounded-[0.625rem]  bg-zinc-50">
                     <p className="text-[2rem] md:text-[3rem] text-center font-semibold">
@@ -73,7 +72,7 @@ export default function MatchCard({ match }: { match: any }) {
                 </p>
               </div>
             ) : (
-              match.match_status !== '' && (
+              hasHappened(match) && (
                 <div className="px-4 bg-primary-700 rounded-[0.325rem]">
                   <p className="text-[.6rem] md:text-[1rem] py-1 md:py-2 text-white uppercase font-bold">
                     ver mais

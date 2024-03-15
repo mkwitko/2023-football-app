@@ -1,16 +1,16 @@
-import { IonContent, useIonAlert, useIonLoading } from '@ionic/react'
-import React, { useContext } from 'react'
-import ProfileForm from './form/useForm'
-import { AiFillEdit } from 'react-icons/ai'
-import { Avatar } from './Avatar'
-import { FcGoogle } from 'react-icons/fc'
-import Toast from 'src/services/Toast'
-import Navigation from 'src/services/Navigation'
-import { Context } from 'src/context/Context'
+import { Browser } from '@capacitor/browser'
 import { Capacitor } from '@capacitor/core'
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth'
+import { IonContent, useIonAlert, useIonLoading } from '@ionic/react'
+import React, { useContext } from 'react'
+import { AiFillEdit } from 'react-icons/ai'
+import { FcGoogle } from 'react-icons/fc'
+import { Context } from 'src/context/Context'
 import Authentication from 'src/services/Auth'
-import { Browser } from '@capacitor/browser'
+import Navigation from 'src/services/Navigation'
+import Toast from 'src/services/Toast'
+import { Avatar } from './Avatar'
+import ProfileForm from './form/useForm'
 
 export default function Profile() {
   const { user } = useContext(Context)
@@ -66,6 +66,7 @@ export default function Profile() {
     present()
 
     const token = await auth.currentUser?.getIdToken()
+
     GoogleAuth.signIn()
       .then((res) => {
         fetch(
