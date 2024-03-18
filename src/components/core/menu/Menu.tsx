@@ -1,4 +1,3 @@
-import React, { useContext, useEffect } from 'react'
 import {
   IonContent,
   IonFooter,
@@ -7,21 +6,22 @@ import {
   IonMenuToggle,
   IonToolbar,
 } from '@ionic/react'
+import { useContext, useEffect } from 'react'
 
-import { useLocation } from 'react-router-dom'
-import './Menu.css'
-import Auth from '../../../services/Auth'
-import Navigation from '../../../services/Navigation'
-import { menuOnOff } from '../../../services/Menu'
-import { AiFillIdcard, AiFillTrophy, AiFillCarryOut } from 'react-icons/ai'
+import { AiFillCarryOut, AiFillIdcard, AiFillTrophy } from 'react-icons/ai'
 import {
   BsFillHouseFill,
-  BsPersonCircle,
   BsFillTicketPerforatedFill,
+  BsPersonCircle,
   BsYoutube,
 } from 'react-icons/bs'
 import { MdWorkHistory } from 'react-icons/md'
+import { useLocation } from 'react-router-dom'
 import { Context } from 'src/context/Context'
+import Auth from '../../../services/Auth'
+import { menuOnOff } from '../../../services/Menu'
+import Navigation from '../../../services/Navigation'
+import './Menu.css'
 
 interface AppPage {
   url: string
@@ -108,6 +108,7 @@ export default function Menu({ isLogged }: any) {
                 <img
                   className="h-24 w-24 object-cover md:h-48 md:w-48 rounded-full mt-12 border-2 border-white"
                   src={user.hook.data.avatar}
+                  alt=""
                 />
                 <p className="text-white font-bold">{user.hook.data.name}</p>
               </>
@@ -115,7 +116,7 @@ export default function Menu({ isLogged }: any) {
           </div>
           <div className="flex flex-col gap-4 overflow-y-auto mt-8 md:gap-8">
             {appPages.map((appPage, index) => {
-              if (!user.hook.data && !appPage.showAnon) return
+              if (!user.hook.data && !appPage.showAnon) return null
               return (
                 <IonMenuToggle
                   className="bg-transparent"

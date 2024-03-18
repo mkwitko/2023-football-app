@@ -1,4 +1,3 @@
-import React from 'react'
 import { StringCutter } from '../../utils/StringUtils'
 
 export default function LeagueTable({ league }: any) {
@@ -30,9 +29,8 @@ export default function LeagueTable({ league }: any) {
           .filter((e: any) => {
             if (group.length > 0) {
               if (e.league_round === group) return e
-            } else {
-              return e
             }
+            return e
           })
           .map((e: any, i: number) => (
             <div

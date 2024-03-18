@@ -1,10 +1,10 @@
+import axios from 'axios'
+import { useContext } from 'react'
+import { Context } from 'src/context/Context'
+import { CompareObjects } from '../../utils/CompareObjects'
 import { getCache, setCache } from '../Cache'
 import FootballApiUtils from './FootballApiUtils'
-import axios from 'axios'
 import useFootballApiHook from './useFootballApiHook'
-import { CompareObjects } from '../../utils/CompareObjects'
-import { Context } from 'src/context/Context'
-import { useContext } from 'react'
 
 export default function FootballApi() {
   const { hook } = useContext(Context)
@@ -99,6 +99,7 @@ export default function FootballApi() {
   ) => {
     const findKnockOutMatches = games.filter((e: any) => {
       if (e.league_id === league.id && filterKnockOutGames(e)) return e
+      return null
     })
     return findKnockOutMatches
   }

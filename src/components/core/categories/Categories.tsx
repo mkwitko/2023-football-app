@@ -1,10 +1,10 @@
-import React, { useContext } from 'react'
-import { BsFillTicketPerforatedFill } from 'react-icons/bs'
-import { AiFillShop, AiFillTrophy, AiFillCarryOut } from 'react-icons/ai'
-import { BiSolidWallet } from 'react-icons/bi'
-import { useHistory } from 'react-router-dom'
 import { Browser } from '@capacitor/browser'
 import { Capacitor } from '@capacitor/core'
+import { useContext } from 'react'
+import { AiFillCarryOut, AiFillShop, AiFillTrophy } from 'react-icons/ai'
+import { BiSolidWallet } from 'react-icons/bi'
+import { BsFillTicketPerforatedFill } from 'react-icons/bs'
+import { useHistory } from 'react-router-dom'
 import { Context } from 'src/context/Context'
 
 export default function Categories() {
@@ -47,7 +47,7 @@ export default function Categories() {
   return (
     <div className="flex overflow-x-auto gap-4 pb-[0.1rem]">
       {categories.map((e, i) => {
-        if (!user.hook.data && !e.showAnon) return
+        if (!user.hook.data && !e.showAnon) return null
         return (
           <div
             key={i}

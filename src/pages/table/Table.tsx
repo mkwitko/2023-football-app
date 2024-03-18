@@ -5,8 +5,8 @@ import {
   IonSegmentButton,
 } from '@ionic/react'
 import React, { useContext } from 'react'
-import { Context } from '../../context/Context'
 import LeagueTable from '../../components/leagueTable/LeagueTable'
+import { Context } from '../../context/Context'
 
 export default function Table() {
   const { hook } = useContext(Context)
@@ -36,9 +36,7 @@ export default function Table() {
         {/* FIXME - gambiarra dos guri */}
         {hook.competitions &&
           hook.competitions
-            .filter((e: any) => {
-              if (!e.league.includes('Copa')) return e
-            })
+            .filter((e: any) => e.league.includes('Copa'))
             .map((e: any, i: number) => (
               <IonSegmentButton key={i} value={e.id}>
                 <IonLabel className="text-[1rem] md:text-[1.5rem] md:py-4">

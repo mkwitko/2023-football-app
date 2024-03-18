@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { getCache } from '../../services/Cache'
 import { IonContent, IonSegment, IonSegmentButton } from '@ionic/react'
-import { Context } from '../../context/Context'
+import { useContext, useEffect, useState } from 'react'
 import MatchCardFull from '../../components/home/cards/MatchCardFull'
-import Stats from './(sections)/Stats/Stats'
+import { Context } from '../../context/Context'
+import { getCache } from '../../services/Cache'
 import { otherTeamId } from '../../utils/FootballUtils'
 import Head2Head from './(sections)/Head2Head/Head2Head'
 import LineUp from './(sections)/LineUp/LineUp'
+import Stats from './(sections)/Stats/Stats'
 import Surveys from './(sections)/Survey/Surveys'
 
 export default function Match() {
@@ -17,8 +17,9 @@ export default function Match() {
   const findSurveys = (data?: any) => {
     const survey = data ?? surveys.hook.data
     const returner = survey
+      .filter((e: any) => +e.associatedMatchId === +match.match_id)
       .map((e: any) => {
-        if (+e.associatedMatchId === +match.match_id) return e
+        return e
       })
       .filter((e: any) => e)
     return returner

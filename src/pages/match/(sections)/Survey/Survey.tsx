@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Percentual from './Percentual'
+import { useIonLoading } from '@ionic/react'
+import { useContext, useEffect, useState } from 'react'
 import { Context } from 'src/context/Context'
 import { validityDateHour } from 'src/utils/DateUtils'
-import { useIonLoading } from '@ionic/react'
 import { findVoter } from 'src/utils/SurveysUtil'
+import Percentual from './Percentual'
 
 export default function Survey({
   survey,
@@ -53,9 +53,7 @@ export default function Survey({
     options.forEach((e: any) => {
       if (e.votes > highest) highest = e.votes
     })
-    const who = options.find((e: any) => {
-      if (e.votes === highest) return e
-    })
+    const who = options.find((e: any) => e.votes === highest)
 
     if (who.value === each.value) return true
     return false
@@ -83,7 +81,7 @@ export default function Survey({
                   if (!voted && !isExpired) {
                     present()
                     const options = displaySurvey.options
-                    options.find((each: any) => {
+                    options.forEach((each: any) => {
                       if (each.value === e.value) {
                         each.votes += 1
                       }
