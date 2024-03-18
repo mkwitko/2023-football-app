@@ -87,7 +87,7 @@ export default function Profile() {
             response.json().then((data) => {
               fetch(
                 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' +
-                data.access_token,
+                  data.access_token,
               ).then((response) => {
                 response.json().then((data2) => {
                   if (data2.email) {
@@ -165,8 +165,9 @@ export default function Profile() {
               }}
             >
               <AiFillEdit
-                className={`${edit ? 'opacity-50' : ''
-                  } bg-primary-700 text-white p-2 rounded-full`}
+                className={`${
+                  edit ? 'opacity-50' : ''
+                } bg-primary-700 text-white p-2 rounded-full`}
               />
             </button>
           </div>

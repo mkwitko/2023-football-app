@@ -1,6 +1,10 @@
 import { setCache } from '../../../services/Cache'
 import Navigation from '../../../services/Navigation'
-import { hasHappened, setNomeCompeticao, stadiumName } from '../../../utils/FootballUtils'
+import {
+  hasHappened,
+  setNomeCompeticao,
+  stadiumName,
+} from '../../../utils/FootballUtils'
 
 export default function MatchCard({ match }: { match: any }) {
   //   const { name, city } = stadiumName(match);

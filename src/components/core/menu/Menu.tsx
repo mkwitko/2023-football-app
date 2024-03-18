@@ -87,7 +87,7 @@ const appPages: AppPage[] = [
   },
 ]
 
-export default function Menu({isLogged}: any) {
+export default function Menu({ isLogged }: any) {
   const { auth, signOut } = Auth()
   const { navigateTo } = Navigation()
   const location = useLocation()
@@ -169,5 +169,3 @@ export default function Menu({isLogged}: any) {
     </IonMenu>
   )
 }
-
-

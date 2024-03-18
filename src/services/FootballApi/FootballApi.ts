@@ -7,7 +7,6 @@ import { Context } from 'src/context/Context'
 import { useContext } from 'react'
 
 export default function FootballApi() {
-
   const { hook } = useContext(Context)
 
   const apiFootball = {
@@ -119,6 +118,6 @@ export default function FootballApi() {
     findTable,
     head2Head,
     hook: footballHook,
-    findMatchById
+    findMatchById,
   }
 }

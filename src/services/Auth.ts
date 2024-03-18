@@ -13,7 +13,6 @@ import { verifyErrors } from './FirebaseErrors'
 
 const auth = getAuth(firebase_app)
 
-
 async function signIn(email: string, password: string) {
   let result = null
   let error = null

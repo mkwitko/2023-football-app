@@ -15,7 +15,7 @@ export default function News() {
 
   const isMd = screenWidth > 768
 
-  console.log(noticias.hook.data);
+  console.log(noticias.hook.data)
 
   return (
     <IonContent fullscreen>
@@ -53,7 +53,7 @@ export default function News() {
                           : 'Autor Desconhecido'}
                       </span>
                       <span className="text-primary-900 text-[0.6rem] md:text-[0.85rem]">
-                      {new Date(e.date).toLocaleDateString('pt-BR')}
+                        {new Date(e.date).toLocaleDateString('pt-BR')}
                       </span>
                     </div>
                   </div>
@@ -78,7 +78,8 @@ export default function News() {
           ))}
         </div>
       )}
-      {Object.keys(noticias).length === 0 || noticias.hook.data.length === 0 && <NoData text="notícias" />}
+      {Object.keys(noticias).length === 0 ||
+        (noticias.hook.data.length === 0 && <NoData text="notícias" />)}
     </IonContent>
   )
 }

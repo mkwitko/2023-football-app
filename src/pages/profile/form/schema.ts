@@ -44,7 +44,8 @@ export const Schema = z
         if (data.avatar && !ALLOWED_FILE_TYPES.includes(data.avatar.type)) {
           ctx.addIssue({
             code: 'custom',
-            message: 'Os tipode de arquivo permitidos são .png, .jpg, .jpeg e .webp',
+            message:
+              'Os tipode de arquivo permitidos são .png, .jpg, .jpeg e .webp',
             path: ['avatar'],
           })
         }

@@ -49,7 +49,7 @@ export default function NewsDetails() {
                       : 'Autor Desconhecido'}
                   </span>
                   <span className="text-primary-900 text-[0.6rem] md:text-[1rem]">
-                  {new Date(news.date).toLocaleDateString('pt-BR')}
+                    {new Date(news.date).toLocaleDateString('pt-BR')}
                   </span>
                 </div>
               </div>

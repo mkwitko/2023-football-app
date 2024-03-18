@@ -24,7 +24,10 @@ import { getCache } from './services/Cache'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { GoogleAuthInitializer, GoogleAuthMetaTags } from './assets/GoogleAuthInitializer'
+import {
+  GoogleAuthInitializer,
+  GoogleAuthMetaTags,
+} from './assets/GoogleAuthInitializer'
 
 setupIonicReact()
 
@@ -40,20 +43,19 @@ const App: React.FC = () => {
   auth.onAuthStateChanged((user) => {
     setIsLogged(user !== null)
 
-    if(user === null) {
+    if (user === null) {
       localStorage.clear()
     }
   })
 
   GoogleAuthInitializer()
 
-
   return (
     <IonApp>
       <IonReactRouter>
         <ContextProvider>
           <IonSplitPane contentId="main">
-            <Menu isLogged={isLogged}/>
+            <Menu isLogged={isLogged} />
             <IonRouterOutlet id="main">
               <Route path="/" exact={true}>
                 <Redirect to={isLogged ? '/home' : '/login'} />
@@ -64,7 +66,7 @@ const App: React.FC = () => {
         </ContextProvider>
       </IonReactRouter>
 
-     <GoogleAuthMetaTags />
+      <GoogleAuthMetaTags />
 
       <ToastContainer
         limit={1}

@@ -28,7 +28,7 @@ export default function LoginForm() {
   const submit = async ({ email, password }: Form) => {
     const res: any = await signIn(email, password)
 
-    console.log('res - ', res.result);
+    console.log('res - ', res.result)
 
     if (res.result) {
       navigateTo('/')

@@ -33,7 +33,9 @@ export default function Calendar() {
               <PurchaseCard key={`each_purchase_${index}`} data={item} />
             ))}
           {orders.hook.data &&
-            orders.hook.data?.map((item: any, index: number) => <OrderCard key={`each_order_${index}`} data={item} />)}
+            orders.hook.data?.map((item: any, index: number) => (
+              <OrderCard key={`each_order_${index}`} data={item} />
+            ))}
         </div>
       </div>
     </IonContent>
@@ -47,7 +49,7 @@ const PurchaseCard = ({ data }: { data: any }) => {
   console.log('purchase - ', data)
 
   return (
-    <div className='flex flex-col border-b border-primary-700/50 pb-4 gap-4'>
+    <div className="flex flex-col border-b border-primary-700/50 pb-4 gap-4">
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">
           <p className="text-primary-700 font-bold">Compra</p>
@@ -71,7 +73,9 @@ const PurchaseCard = ({ data }: { data: any }) => {
       {data.qrCode && (
         <ModalProsper.Modal>
           <ModalProsper.ModalTrigger>
-            <button className='bg-primary text-white w-full p-2 rounded-[0.325rem]'>Ver QR Code</button>
+            <button className="bg-primary text-white w-full p-2 rounded-[0.325rem]">
+              Ver QR Code
+            </button>
           </ModalProsper.ModalTrigger>
           <ModalProsper.ModalContent className="w-4/5 rounded-[0.625rem] gap-0 p-0">
             <ModalProsper.ModalHeader className="bg-primary rounded-t-[0.625rem]">
@@ -80,27 +84,17 @@ const PurchaseCard = ({ data }: { data: any }) => {
               </p>
             </ModalProsper.ModalHeader>
             <div className="flex flex-col gap-4 p-4 items-center justify-center">
-             {data.event_image && (
-               <img
-               className="w-3/5 h-auto"
-               src={data.event_image}
-               alt=""
-             />
-             )}
+              {data.event_image && (
+                <img className="w-3/5 h-auto" src={data.event_image} alt="" />
+              )}
               <div
                 className="text-primary-900 text-center text-[0.75rem] md:text-[1.25rem]  md:px-16 md:mt-4 font-light"
                 dangerouslySetInnerHTML={{
-                  __html: StringCutter(
-                    data.description,
-                    125,
-                  ),
+                  __html: StringCutter(data.description, 125),
                 }}
               ></div>
               <div className="border-2 p-3 md:mt-4 md:mb-8 rounded-[0.625rem]">
-                <QRCode
-                  value={data.qrCode ?? '123'}
-                  size={isMd ? 240 : 180}
-                />
+                <QRCode value={data.qrCode ?? '123'} size={isMd ? 240 : 180} />
               </div>
             </div>
           </ModalProsper.ModalContent>
@@ -122,8 +116,13 @@ const OrderCard = ({ data }: { data: any }) => {
       <div className="flex flex-col items-start">
         <p className="text-primary-700 font-bold">Compra de Saldo</p>
         {data.date && (
-          <p className='font-[300] text-[0.75rem]'>Data da Compra - {makeDate(data.date)}</p>)}
-        <p className='capitalize'>Metódo de Pagamento - {data.payment_method_id}</p>
+          <p className="font-[300] text-[0.75rem]">
+            Data da Compra - {makeDate(data.date)}
+          </p>
+        )}
+        <p className="capitalize">
+          Metódo de Pagamento - {data.payment_method_id}
+        </p>
         <p>Valor adicionado R${data.transaction_amount}</p>
       </div>
     </div>

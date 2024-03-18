@@ -5,7 +5,7 @@ import useFeedsHook from './useFeedsHook'
 export default class FeedsClass extends CoreClass {
   override collection = 'feeds'
   override hook = useFeedsHook()
-  override hasRealTime = true;
+  override hasRealTime = true
 
   realTime = async () => {
     const feedRealTime = await this.createRealTime({})
@@ -21,15 +21,19 @@ export default class FeedsClass extends CoreClass {
       querySnapshot.docChanges().forEach((change: any) => {
         const data = change.doc.data()
         if (change.type === 'added') {
-          const exist = current ? current.find((item: any) => item.id === data.id) : false
-          if(exist) {
+          const exist = current
+            ? current.find((item: any) => item.id === data.id)
+            : false
+          if (exist) {
             this.hook.setData(current)
-            return;
+            return
           }
           toAdd.push(data)
         }
         if (change.type === 'modified') {
-          const findIndex = current.findIndex((item: any) => item.id === data.id)
+          const findIndex = current.findIndex(
+            (item: any) => item.id === data.id,
+          )
           if (findIndex === -1) return
           this.hook.setData(() => {
             current[findIndex] = data
@@ -38,14 +42,14 @@ export default class FeedsClass extends CoreClass {
           })
         }
         if (change.type === 'removed') {
-          if(!current) return;
+          if (!current) return
           const filtering = current.filter((item: any) => item.id !== data.id)
           this.setCache(filtering, true)
           this.hook.setData(filtering)
         }
       })
 
-      if(toAdd.length > 0) {
+      if (toAdd.length > 0) {
         this.hook.setData(() => {
           this.setCache([...toAdd, ...current], true)
           return [...toAdd, ...current]

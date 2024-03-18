@@ -30,9 +30,12 @@ const FeedCards = ({ feed }: any) => {
   const [showImage, setShowImage] = React.useState(false)
   return (
     <>
-      <button type='button' onClick={() => {
-        setShowImage(!showImage)
-      }}>
+      <button
+        type="button"
+        onClick={() => {
+          setShowImage(!showImage)
+        }}
+      >
         <div className="border border-primary-800 bg-transparent rounded-[0.625rem] flex flex-col">
           {feed.imagePath && (
             <img
@@ -74,7 +77,7 @@ const FeedCards = ({ feed }: any) => {
       </button>
 
       <ModalProsper.Modal open={showImage} setOpen={setShowImage}>
-        <ModalProsper.ModalContent className='bg-transparent border-none'>
+        <ModalProsper.ModalContent className="bg-transparent border-none">
           <div className="flex justify-center items-center h-full">
             <img
               className="object-contain h-full w-full rounded-[0.625rem] border-2 border-white"
@@ -84,7 +87,6 @@ const FeedCards = ({ feed }: any) => {
           </div>
         </ModalProsper.ModalContent>
       </ModalProsper.Modal>
-
     </>
   )
 }

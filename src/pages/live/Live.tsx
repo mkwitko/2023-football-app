@@ -12,7 +12,9 @@ import LiveForm from './form/useForm'
 
 export default function Live() {
   const { youtube, user, wallets } = useContext(Context)
-  const { hook: { comment, setComment } } = youtube
+  const {
+    hook: { comment, setComment },
+  } = youtube
   const [value, setValue] = React.useState(5.0)
   const id = youtube.hook.live?.id?.videoId
 
@@ -23,7 +25,7 @@ export default function Live() {
 
   const handleComment = async (isPaid = false) => {
     await youtube.insert({
-      comment: comment,
+      comment,
       value: isPaid ? value : 0,
       isPaid,
       user: user.hook.data,
@@ -49,7 +51,7 @@ export default function Live() {
             purchase: {
               date: new Date(),
               type: 'live',
-              comment: comment,
+              comment,
               isPaid,
               value,
             },

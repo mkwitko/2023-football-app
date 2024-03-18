@@ -43,6 +43,6 @@ export default function Classes() {
     feeds,
     surveys,
     wallets,
-    configs
+    configs,
   }
 }

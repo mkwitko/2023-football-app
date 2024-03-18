@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core'
 import { useEffect } from 'react'
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientation } from '@ionic-native/screen-orientation'
 
 export default function Iframe({
   videoId,
@@ -9,7 +9,6 @@ export default function Iframe({
   videoId: string
   title?: string
 }) {
-
   useEffect(() => {
     const iframe = document.getElementById('iframe') as HTMLIFrameElement
     iframe.onfullscreenchange = () => {
@@ -20,7 +19,7 @@ export default function Iframe({
 
   return (
     <iframe
-      id='iframe'
+      id="iframe"
       className="w-full aspect-video"
       src={`https://www.youtube.com/embed/${videoId}`}
       title={title}

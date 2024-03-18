@@ -13,15 +13,13 @@ import firebase_app from 'src/infra/Firebase'
 import { setCache } from 'src/services/Cache'
 import { Context } from 'src/context/Context'
 
-export default function Chat({
-  id,
-}: {
-  id: string
-}) {
+export default function Chat({ id }: { id: string }) {
   const listRef = useRef<any>(null)
 
   const { youtube } = useContext(Context)
-  const { hook: { comments, setComments } } = youtube
+  const {
+    hook: { comments, setComments },
+  } = youtube
 
   const sortComments = (currentComments: any) => {
     const joining = [...currentComments]
@@ -104,7 +102,11 @@ const Comment = ({
       <div className="relative h-auto w-[15%]">
         <img
           className="w-full h-12 object-fill rounded-[0.625rem] aspect-square"
-          src={comment.user && comment.user.avatar ? comment.user.avatar : 'https://shorturl.at/qGJRY'}
+          src={
+            comment.user && comment.user.avatar
+              ? comment.user.avatar
+              : 'https://shorturl.at/qGJRY'
+          }
           alt=""
         />
         <div className="absolute -top-2 -left-2 bg-primary rounded-full h-5 w-5 shadow-md border border-white"></div>

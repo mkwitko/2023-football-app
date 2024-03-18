@@ -38,7 +38,8 @@ export default class YoutubeClass extends CoreClass {
   }
 
   sendComment = async (text: string, access_token: string, id?: string) => {
-    const url = 'https://youtube.googleapis.com/youtube/v3/liveChat/messages?part=snippet'
+    const url =
+      'https://youtube.googleapis.com/youtube/v3/liveChat/messages?part=snippet'
     fetch(url, {
       method: 'POST',
       body: JSON.stringify({
@@ -53,7 +54,7 @@ export default class YoutubeClass extends CoreClass {
       headers: {
         Authorization: `Bearer ${access_token}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     })
       .then((response) => response.json())

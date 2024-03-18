@@ -1,12 +1,11 @@
-import React from 'react'
-import LoginForm from './form/useForm'
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
-import Navigation from 'src/services/Navigation'
-import { Capacitor } from '@capacitor/core'
 import { Browser } from '@capacitor/browser'
+import { Capacitor } from '@capacitor/core'
+import React from 'react'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import Navigation from 'src/services/Navigation'
+import LoginForm from './form/useForm'
 
 export default function Register({ set }: { set: (value: number) => void }) {
-
   const { navigateTo } = Navigation()
   const { register, handleSubmit, errors, isSubmitting, submit } = LoginForm()
 
@@ -129,7 +128,7 @@ export default function Register({ set }: { set: (value: number) => void }) {
       </p>
 
       <p className="mt-10 text-center text-sm md:text-[1rem] text-gray-500">
-        Ao clicar em "Cadastrar", você concorda com a nossa 
+        Ao clicar em Cadastrar, você concorda com a nossa
         <button
           type="button"
           onClick={() => {

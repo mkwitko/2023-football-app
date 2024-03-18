@@ -8,8 +8,6 @@ import { Capacitor } from '@capacitor/core'
 import { Context } from 'src/context/Context'
 
 export default function Categories() {
-
-
   const history = useHistory()
   const categories = [
     {

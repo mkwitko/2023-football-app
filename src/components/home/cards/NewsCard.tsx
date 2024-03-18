@@ -64,7 +64,7 @@ export default function NewsCard({ noticias }: { noticias: any }) {
             ))
             .slice(0, limit)
         : Array.of(limit).map((e, i) => {
-            <p>carregando</p>
+            ;<p>carregando</p>
           })}
     </div>
   )

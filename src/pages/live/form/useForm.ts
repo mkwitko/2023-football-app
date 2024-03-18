@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
 export default function LiveForm() {
-
   const {
     register,
     handleSubmit,
@@ -13,7 +12,7 @@ export default function LiveForm() {
   } = useForm<Form>({
     resolver: zodResolver(Schema),
     defaultValues: {
-      comment: ''
+      comment: '',
     },
   })
 

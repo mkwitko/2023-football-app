@@ -25,7 +25,7 @@ export default function Wallet() {
       tokenId: user.hook.tokenId,
       close: () => handleCloseModal(),
       value: parseInt(value.replace('R$', '').replace(/\./g, ''), 10) / 100,
-      key: user.hook.key
+      key: user.hook.key,
     },
     onDismiss: () => dismiss(),
   })
@@ -74,7 +74,10 @@ export default function Wallet() {
           if (change.type === 'modified') {
             updateWallet(data)
           }
-          if(change.type === 'added' && (!wallets.hook.data || wallets.hook.data.balance === 0)) {
+          if (
+            change.type === 'added' &&
+            (!wallets.hook.data || wallets.hook.data.balance === 0)
+          ) {
             updateWallet(data)
           }
         })

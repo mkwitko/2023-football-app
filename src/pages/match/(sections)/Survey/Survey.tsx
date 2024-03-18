@@ -29,12 +29,11 @@ export default function Survey({
   useEffect(() => {
     if (user.hook.data && user.hook.data.id) {
       surveys
-      .getHttp(surveys.hook.data[currentSurvey].id)
-      .then((response: any) => {
-        const voters = findVoter(response, user.hook.data.id)
-        setVoted(voters)
-      })
-     
+        .getHttp(surveys.hook.data[currentSurvey].id)
+        .then((response: any) => {
+          const voters = findVoter(response, user.hook.data.id)
+          setVoted(voters)
+        })
     }
   }, [user.hook.data, survey, currentSurvey])
 
@@ -97,24 +96,27 @@ export default function Survey({
                         [user.hook.data.id]: true,
                       },
                     }
-                    surveys.update(data).then(() => {
-                      surveys
-                        .getHttp(displaySurvey.id)
-                        .then((response: any) => {
-                          surveys.hook.setData(() => {
-                            const index = survey.findIndex(
-                              (each: any) => each.id === response.id,
-                            )
-                            const indexSetter = index === -1 ? 0 : index
-                            const data = survey
-                            data[indexSetter] = response
-                            return data
+                    surveys
+                      .update(data)
+                      .then(() => {
+                        surveys
+                          .getHttp(displaySurvey.id)
+                          .then((response: any) => {
+                            surveys.hook.setData(() => {
+                              const index = survey.findIndex(
+                                (each: any) => each.id === response.id,
+                              )
+                              const indexSetter = index === -1 ? 0 : index
+                              const data = survey
+                              data[indexSetter] = response
+                              return data
+                            })
+                            setDisplaySurvey(response)
                           })
-                          setDisplaySurvey(response)
-                        })
-                    }).finally(() => {
-                      dismiss()
-                    })
+                      })
+                      .finally(() => {
+                        dismiss()
+                      })
                   }
                 }}
                 key={i}

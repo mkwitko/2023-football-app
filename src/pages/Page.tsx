@@ -35,7 +35,8 @@ const Page: React.FC = () => {
   useEffect(() => {
     if (
       user.hook.data &&
-      !user.hook.data.youtubeEmail && user.hook.configs.enableGoogleOAuth && 
+      !user.hook.data.youtubeEmail &&
+      user.hook.configs.enableGoogleOAuth &&
       Cookies.get('showProfileToast') !== 'true'
     ) {
       Toast().info(
@@ -53,11 +54,11 @@ const Page: React.FC = () => {
           <Categories />
         </div>
 
-       {gamesToShow.length > 0 && (
-         <div className="mt-[-.5rem]">
-         <HomeMatchCardSwiper gamesToShow={gamesToShow} />
-       </div>
-       )}
+        {gamesToShow.length > 0 && (
+          <div className="mt-[-.5rem]">
+            <HomeMatchCardSwiper gamesToShow={gamesToShow} />
+          </div>
+        )}
 
         <div className="flex gap-6 px-4 sm:px-8">
           <Feed feeds={feeds.hook.data} />

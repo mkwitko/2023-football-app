@@ -106,40 +106,55 @@ export default function Stats({
     },
   ]
 
-  if(stats.find((e) => e.type === 'On Target') && !stats.find((e) => e.type === 'Total Shots')) {
+  if (
+    stats.find((e) => e.type === 'On Target') &&
+    !stats.find((e) => e.type === 'Total Shots')
+  ) {
     stats.push({
       type: 'Total Shots',
-      home: (parseInt(stats.find((e) => e.type === 'On Target')?.home || '0') + parseInt(stats.find((e) => e.type === 'Off Target')?.home || '0')).toString(),
-      away: (parseInt(stats.find((e) => e.type === 'On Target')?.away || '0') + parseInt(stats.find((e) => e.type === 'Off Target')?.away || '0')).toString(),
+      home: (
+        parseInt(stats.find((e) => e.type === 'On Target')?.home || '0') +
+        parseInt(stats.find((e) => e.type === 'Off Target')?.home || '0')
+      ).toString(),
+      away: (
+        parseInt(stats.find((e) => e.type === 'On Target')?.away || '0') +
+        parseInt(stats.find((e) => e.type === 'Off Target')?.away || '0')
+      ).toString(),
     })
   }
-  
+
   stats
-  .filter((e: StatsInterface) => {
-    return statsToUse.some((stat) => stat.type === e.type || stat.type2 === e.type)
-  })
-  .forEach((stat: any) => {
-    const index = statsToUse.findIndex((e) => e.type === stat.type || e.type2 === stat.type)
-    if (stat.home.includes('%')) {
-      statsToUse[index].home = parseFloat(stat.home.replace('%', ''))
-      statsToUse[index].away = parseFloat(stat.away.replace('%', ''))
-    } else {
-      statsToUse[index].home = +stat.home
-      statsToUse[index].away = +stat.away
-    }
-  })
+    .filter((e: StatsInterface) => {
+      return statsToUse.some(
+        (stat) => stat.type === e.type || stat.type2 === e.type,
+      )
+    })
+    .forEach((stat: any) => {
+      const index = statsToUse.findIndex(
+        (e) => e.type === stat.type || e.type2 === stat.type,
+      )
+      if (stat.home.includes('%')) {
+        statsToUse[index].home = parseFloat(stat.home.replace('%', ''))
+        statsToUse[index].away = parseFloat(stat.away.replace('%', ''))
+      } else {
+        statsToUse[index].home = +stat.home
+        statsToUse[index].away = +stat.away
+      }
+    })
 
   return (
     <>
-      {statsToUse.filter((e) => e.home && e.away).map((e: StatsToUseInterface) => (
-        <SingleStat
-          key={e.type}
-          name={e.translate}
-          value1={e.home}
-          value2={e.away}
-          isHome={isHome}
-        />
-      ))}
+      {statsToUse
+        .filter((e) => e.home && e.away)
+        .map((e: StatsToUseInterface) => (
+          <SingleStat
+            key={e.type}
+            name={e.translate}
+            value1={e.home}
+            value2={e.away}
+            isHome={isHome}
+          />
+        ))}
     </>
   )
 }

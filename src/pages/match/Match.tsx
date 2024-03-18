@@ -25,7 +25,10 @@ export default function Match() {
   }
 
   const hasLineUp = () => {
-    if (match.lineup.home.starting_lineups.length > 0 && match.lineup.away.starting_lineups.length > 0) {
+    if (
+      match.lineup.home.starting_lineups.length > 0 &&
+      match.lineup.away.starting_lineups.length > 0
+    ) {
       return false
     }
     return true
@@ -40,7 +43,7 @@ export default function Match() {
     },
     {
       title: 'Escalação',
-      disabled: hasLineUp()
+      disabled: hasLineUp(),
     },
     {
       title: 'Enquete',

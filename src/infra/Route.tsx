@@ -137,34 +137,22 @@ export default function Routing({ isLogged }: { isLogged: boolean }) {
               </RenderLoggedPage>
             </Route>
             <Route path="/login" exact={true}>
-              {!isLogged ? (
-                <AuthPage />
-              ) : (
-                <Redirect to="/home" />
-              )}
+              {!isLogged ? <AuthPage /> : <Redirect to="/home" />}
             </Route>
           </Switch>
-          {isLogged && (
-            <Footer />
-          )}
+          {isLogged && <Footer />}
         </>
       </IonPage>
     </>
   )
 }
 
-
-const RenderLoggedPage = ({ children, isLogged }: {
+const RenderLoggedPage = ({
+  children,
+  isLogged,
+}: {
   children: React.ReactNode
   isLogged: boolean
 }) => {
-  return (
-    <>
-      {isLogged ? (
-        children
-      ) : (
-        <Redirect to="/login" />
-      )}
-    </>
-  )
+  return <>{isLogged ? children : <Redirect to="/login" />}</>
 }
